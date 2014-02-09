@@ -19,6 +19,7 @@ class RbacAction extends AdminBaseAction {
 	 * 节点管理
 	 */
 	public function rbac_node () {
+		
 		$pid = $this->_get('pid');
 		$pid2 = $this->_get('pid2');
 		$Node = D('Node');
