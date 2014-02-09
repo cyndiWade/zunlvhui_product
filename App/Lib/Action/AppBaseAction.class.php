@@ -66,19 +66,6 @@ class AppBaseAction extends GlobalParameterAction {
 	
 	
 	/**
-	 * 生成订单号
-	 * @param String $from  W，A		(订单来源，W网站，A：app客户端)
-	 * @return string
-	 */
-	protected  function create_order_num($from) {
-		if (!array_key_exists($from,$this->order_from)) {
-			return array('status'=>false,'info'=>'订单来源错误！');
-		}
-		return array('status'=>true,'info'=>$from.date('YmdHis').mt_rand(10000,99999));
-	}
-	
-		
-	/**
 	 * 统一数据返回
 	 * @param unknown_type $status
 	 * @param unknown_type $msg
