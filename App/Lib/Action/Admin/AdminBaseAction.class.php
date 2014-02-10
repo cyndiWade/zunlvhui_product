@@ -121,11 +121,17 @@ class AdminBaseAction extends AppBaseAction {
 	/**
 	 * 全局模板变量
 	 */
-	private function global_tpl_view () {
+	protected  function global_tpl_view (Array $extend) {
 
-		//上一页地址
-		$this->global_tpl_view['button']['prve'] = C('PREV_URL');
-
+		if (is_array($extend)) {
+			foreach ($extend as $key=>$val) {
+				$this->global_tpl_view[$key] = $val;
+			}
+		} else {
+			//上一页地址
+			$this->global_tpl_view['button']['prve'] = C('PREV_URL');
+		}
+			
 		//写入模板
 		$this->assign('global_tpl_view',$this->global_tpl_view);
 	}
