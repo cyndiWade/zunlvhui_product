@@ -51,7 +51,7 @@ class LoginAction extends AdminBaseAction {
     				);
     			}
     				
-    			$_SESSION['user_info'] = $tmp_arr;		//写入session
+    			$_SESSION['zun']['user_info'] = $tmp_arr;		//写入session
     			//更新用户信息
     			$Users->up_login_info($user_info['id']);
     			$this->redirect('/Admin/Rbac/rbac_node');

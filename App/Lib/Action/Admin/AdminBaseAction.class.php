@@ -85,7 +85,7 @@ class AdminBaseAction extends AppBaseAction {
 	//初始化用户数据
 	private function admin_base_init() {
 		/* SESSION信息验证保存 */
-		$session_userinfo = $_SESSION['user_info'];				//保存用户信息
+		$session_userinfo = $_SESSION['zun']['user_info'];				//保存用户信息
 		if (!empty($session_userinfo)) {
 			$this->oUser = (object) $session_userinfo;					//转换成对象
 		}  		
