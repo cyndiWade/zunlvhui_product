@@ -94,8 +94,13 @@ $custom= array (
 			
 		//用户类型
 		'ACCOUNT_TYPE' => array (
+<<<<<<< HEAD
+				'ADMIN' => 0,			//管理员
+				'HOTEL' => 1,			//普通用户
+=======
 				'ADMIN' => 0,			    //管理员
 				'USER' => 1,				//普通用户
+>>>>>>> f01e5f01ab70f0d7714221c20e664dda23700203
 		),
 		'ACCOUNT_STATUS' => array (
 				-2 => '删除',
