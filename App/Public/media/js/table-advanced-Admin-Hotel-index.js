@@ -7,10 +7,9 @@ var TableAdvanced = function () {
         {
             var aData = oTable.fnGetData( nTr );
             var sOut = '<table>';
-            sOut += '<tr><td>Platform(s):</td><td>'+aData[2]+'</td></tr>';
-            sOut += '<tr><td>Engine version:</td><td>'+aData[3]+'</td></tr>';
-            sOut += '<tr><td>CSS grade:</td><td>'+aData[4]+'</td></tr>';
-            sOut += '<tr><td>Others:</td><td>Could provide a link here</td></tr>';
+            sOut += '<tr><td>酒店名称:</td><td>'+aData[2]+'</td></tr>';
+            sOut += '<tr><td>星级:</td><td>'+aData[3]+'</td></tr>';
+            sOut += '<tr><td>省份:</td><td>'+aData[4]+'</td></tr>';
             sOut += '</table>';
              
             return sOut;
@@ -35,6 +34,19 @@ var TableAdvanced = function () {
          * Initialse DataTables, with no sorting on the 'details' column
          */
         var oTable = $('#sample_1').dataTable( {
+			"aoColumns" : [
+				null,
+			 	 { "bSortable": true },
+				 { "bSortable": false },
+				{ "bSortable": true },
+				{ "bSortable": true },
+				 { "bSortable": true },
+				 { "bSortable": false },
+				 { "bSortable": false },
+				 { "bSortable": false },
+				 { "bSortable": true },
+				 { "bSortable": false },
+			],
             "aoColumnDefs": [
                 {"bSortable": false, "aTargets": [ 0 ] }
 
@@ -42,10 +54,10 @@ var TableAdvanced = function () {
             "oLanguage": {
         		"sLengthMenu": "_MENU_ 每页条数"
         	},
-            "aaSorting": [[1, 'asc']],
+            "aaSorting": [[1, 'asc']],		//排序
              "aLengthMenu": [
-                [5, 15, 20, -1],
-                [5, 15, 20, "All"] // change per page values here
+                [10, 20, 30, -1],
+                [10, 20, 30, "所有"] // change per page values here
             ],
             // set the initial value
             "iDisplayLength": 10,

@@ -33,12 +33,18 @@ class LoginAction extends AdminBaseAction {
     		if (!Validate::check_string_num($account)) $this->error('账号密码只能输入英文或数字');
     	
     		//读取用户数据
-    		$user_info = $Users->get_user_info(array('account'=>$account,'status'=>0));
+    		$user_info = $Users->get_user_info(array('account'=>$account,'is_del'=>0));
     	
     		//验证用户数据
     		if (empty($user_info)) {
-    			$this->error('此用户不存在！');
+    			$this->error('此用户不存在或被删除！');
     		} else {
+    			//状态验证
+    			if ($user_info['status'] != 0) {
+  					$status_info = C('ACCOUNT_STATUS');
+    				$this->error($status_info[$user_info['status']]);
+    			}
+    			
     			//验证密码
     			if (md5($password) != $user_info['password']) {
     				$this->error('密码错误！');

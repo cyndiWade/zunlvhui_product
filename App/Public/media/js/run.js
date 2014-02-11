@@ -67,9 +67,7 @@
 			cookie.setCookie('menu_index',_this.parent().parent().index());		//保存导航名到Cookie
 		});
 		
-		
-		
-		
+
 	})(jQuery);
 	
 	
@@ -92,8 +90,7 @@
 	
 	//返回方法处理
 	(function ($) {
-		
-		
+			
 		//点击返回
 		$('.btn_bak').click(function () {
 			var _this = $(this);

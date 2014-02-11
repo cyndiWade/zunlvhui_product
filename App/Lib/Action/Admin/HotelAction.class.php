@@ -6,11 +6,34 @@ class HotelAction extends AdminBaseAction {
   	
 	private $module_name = '商家管理';
 	
+	private $hotel_xj = array(
+		1=> array(
+			'num'=>1,
+			'explain'=>'一星级'
+		),
+		2=> array(
+			'num'=>2,
+			'explain'=>'二星级'
+		),
+		3=> array(
+			'num'=>3,
+			'explain'=>'三星级'
+		),
+		4=> array(
+			'num'=>4,
+			'explain'=>'四星级'
+		),
+		5=> array(
+			'num'=>5,
+			'explain'=>'五星级'
+		)
+	);
+	
 	//初始化数据库连接
 	protected  $db = array(
 		'Hotel'=>'Hotel',
-			
-			
+		'Users' =>'Users',
+		'UsersHotel' => 'UsersHotel'	
 	);
 	
 	
@@ -24,44 +47,73 @@ class HotelAction extends AdminBaseAction {
 		parent::global_tpl_view(array('module_name'=>$this->module_name));
 	}
 	
+	
+	
 	//酒店列表
 	public function index () {
 
 		$Hotel = $this->db['Hotel'];	
 		$html['list'] = $Hotel->field('id,hotel_name,hotel_sf,hotel_cs,hotel_q,hotel_xj,hotel_pf,hotel_syq,hotel_dz,hotel_tel')->where(array('is_del'=>0))->select();
 
-	//	dump($html);
 		parent::global_tpl_view( array(
 			'action_name'=>'酒店管理',
 			'title_name'=>'酒店列表',
 		));
 		$this->assign('html',$html);
-		$this->display('table_advanced');
+		$this->display();
 	}
 	
 	
-	/*
-	
-	
-			foreach ($list as $key=>$val) {
-			$Hotel->hotel_name = $val['hotel_name'];
-			$Hotel->hotel_sf = $val['hotel_sf'];
-			$Hotel->hotel_cs = $val['hotel_cs'];
-			$Hotel->hotel_q = $val['hotel_q'];
-			$Hotel->hotel_xj = $val['hotel_xj'];
-			$Hotel->hotel_pf = $val['hotel_pf'];
-			$Hotel->hotel_pfrs = $val['hotel_pfrs'];
-			$Hotel->hotel_tel = $val['hotel_tel'];
-			$Hotel->hotel_kynf = $val['hotel_kynf'];
-			$Hotel->hotel_zxnf = $val['hotel_zxnf'];
-			$Hotel->hotel_syq = $val['hotel_syq'];
-			$Hotel->hotel_dz = $val['hotel_dz'];
-			$Hotel->hotel_location_x = $val['hotel_location_x'];
-			$Hotel->hotel_location_y = $val['hotel_location_y'];
-			$Hotel->hotel_jj = $val['hotel_jj'];
-			$Hotel->hotel_ll = $val['hotel_ll'];
-			$Hotel->add();
-		}
+	/**
+	 * 编辑酒店
 	 */
+	public function hotel_edit () {
+		$Users = $this->db['Users'];				//用户表
+		$Hotel = $this->db['Hotel'];				//酒店表
+		$UsersHotel = $this->db['UsersHotel'];		//酒店用户关系表
+		$act = $this->_get('act');						//操作类型
+		$user_id = $this->_get('user_id');			//酒店账号ID
+		
+		$account_info = $Users->get_account(array('id'=>$user_id));
+		if (empty($account_info)) $this->error('此酒店账号不存在或已被删除');
+
+		if ($act == 'add') {								//添加
+			if ($this->isPost()) {
+				$Hotel->create();
+				$hotel_id = $Hotel->add();
+				if ($hotel_id == true) {
+					$UsersHotel->user_id = $user_id;
+					$UsersHotel->hotel_id = $hotel_id;
+					$UsersHotel->add() ? $this->success('添加成功！') : $this->error('添加失败请重新尝试！');
+				} else {
+					
+				}
+				exit;
+			}
+			
+			$html['account'] = $account_info['account'];
+		
+		} else if ($act == 'update') {			//修改
+			if ($this->isPost()) {
+				exit;
+			}
+
+		} else if ($act == 'delete') {			//删除
+		
+			exit;
+		}
+		
+		
+		parent::global_tpl_view( array(
+				'action_name'=>'酒店编辑',
+				'title_name' => '编辑信息'
+		));
+		
+		$html['hotel_xj'] = $this->hotel_xj; 
+		$this->assign('html',$html);
+		$this->display();
+	}
+	
+
     
 }
