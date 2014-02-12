@@ -37,7 +37,7 @@ var TableAdvanced = function () {
 			"aoColumns" : [
 				null,
 			 	 { "bSortable": true },
-				 { "bSortable": false },
+				 { "bSortable": true },
 				{ "bSortable": true },
 				{ "bSortable": true },
 				 { "bSortable": true },
@@ -45,7 +45,7 @@ var TableAdvanced = function () {
 				 { "bSortable": false },
 				 { "bSortable": false },
 				 { "bSortable": true },
-				 { "bSortable": false },
+				 { "bSortable": false }
 			],
             "aoColumnDefs": [
                 {"bSortable": false, "aTargets": [ 0 ] }

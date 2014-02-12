@@ -45,8 +45,8 @@
 									<thead>
 										<tr>											<th>标识</th>											<th>酒店名称</th>											<th>星级</th>
 											<th class="hidden-480">省份</th>
-											<th class="hidden-480">城市</th>																					<th class="hidden-480">区域</th>																				<th class="hidden-480">商圈</th>											<th class="hidden-480">地址</th>										
-											<th class="hidden-480">评分</th>																					<th class="hidden-480">电话</th>																		
+											<th class="hidden-480">城市</th>																					<th class="hidden-480">区域</th>																				<th class="hidden-480">地址</th>										
+											<th class="hidden-480">评分</th>																					<th class="hidden-480">电话</th>											<th >操作</th>											
 										</tr>
 									</thead>
 									<tbody>										<volist name="html['list']" id="vo">
@@ -55,7 +55,7 @@
 											<td>{$vo.hotel_xj}</td>
 											<td class="hidden-480">{$vo.hotel_sf}</td>
 											<td class="hidden-480">{$vo.hotel_cs}</td>
-											<td class="hidden-480">{$vo.hotel_q}</td>																			<td class="hidden-480">{$vo.hotel_syq}</td>																		<td class="hidden-480">{$vo.hotel_dz}</td>												<td class="hidden-480">{$vo.hotel_pf}</td>											<td class="hidden-480">{$vo.hotel_tel}</td>
+											<td class="hidden-480">{$vo.hotel_q}</td>																							<td class="hidden-480">{$vo.hotel_dz}</td>												<td class="hidden-480">{$vo.hotel_pf}</td>											<td class="hidden-480">{$vo.hotel_tel}</td>											<td class="center">												<a href="javascript:;" class="btn_bak" data-target="1" data-url="{:U('Admin/Hotel/hotel_edit',array('act'=>'update','hotel_id'=>$vo['id']))}">编辑</a>												| <a href="javascript:;" class="btn_bak" data-target="1" data-url="{:U('Admin/Hotel/hotel_img',array('hotel_id'=>$vo['id']))}">图片</a>												| <a  href="{:U('Admin/Hotel/hotel_edit',array('act'=>'delete','hotel_id'=>$vo['id']))}" class="check" >删除</a>											</td>
 										</tr>										</volist>
 								</table>
 							</div>
