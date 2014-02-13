@@ -15,23 +15,11 @@
 		<!-- 左侧导航 -->		<include file="Public:sidebar" />
 		<!-- BEGIN PAGE -->
 		<div class="page-content">
-			<!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
-			<div id="portlet-config" class="modal hide">
-				<div class="modal-header">
-					<button data-dismiss="modal" class="close" type="button"></button>
-					<h3>portlet Settings</h3>
-				</div>
-				<div class="modal-body">
-					<p>Here will be a configuration form</p>
-				</div>
-			</div>
-			<!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
 			<!-- BEGIN PAGE CONTAINER-->        
 			<div class="container-fluid">
 				<!-- BEGIN PAGE HEADER-->
 				<div class="row-fluid">
 					<div class="span12">
-					
 						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
 						<h3 class="page-title">
 							{$global_tpl_view.module_name}<small> {$global_tpl_view.action_name}</small>
@@ -54,28 +42,25 @@
 							</div>
 							<div class="portlet-body">
 								<div class="clearfix">
-									<div class="btn-group">																		<a href="?s=/Admin/Member/member_edit/act/add">
-											<button id="sample_editable_1_new" class="btn green">
-											添加新用户 <i class="icon-plus"></i>
-											</button>										</a>								
+									<div class="btn-group">								
+										<button  class="btn green btn_bak" data-url="{:U('Admin/HotelRoom/room_edit',array('act'=>'add','hotel_id'=>$html['hotel_id']))}" data-record_prev="1">
+										{$global_tpl_view.add_name} <i class="icon-plus"></i>
+										</button>					
 									</div>								</div>
 								<table class="table table-striped table-bordered table-hover sample_1">
 									<thead>
 										<tr>
-											<th>用户标识</th>
-											<th class="hidden-480">用户账号</th>
-											<th class="hidden-480">用户昵称</th>
-											<th class="hidden-480">最后登录时间</th>											<th class="hidden-480">登录次数</th>											<th class="hidden-480">创建时间</th>											
-											<th >操作</th>
+											<th>序号</th>
+											<th>房型名称</th>
+											<th class="hidden-480">房型介绍</th>		
+											<th>操作</th>
 										</tr>
 									</thead>
-									<tbody>																		<volist name="member_list" id="vo">
+									<tbody>																		<volist name="html['list']" id="vo" key="i">
 										<tr class="odd gradeX">
-											<td>{$vo.id}</td>
-											<td class="hidden-480">{$vo.account}</a></td>
-											<td class="hidden-480">{$vo.nickname}</td>											<td class="center hidden-480">{$vo.last_login_time}</td>
-											<td class="center hidden-480">{$vo.login_count}</td>											<td class="center hidden-480">{$vo.create_time}</td>
-											<td >												<a href="?s=/Admin/Member/member_edit/act/update/id/{$vo.id}">编辑</a>												| <a href="?s=/Admin/Member/member_edit/act/delete/id/{$vo.id}" class="check">删除</a>																							</td>
+											<td >{$i}</td>
+											<td>{$vo.title}</a></td>											<td class="hidden-480" >{$vo.info}</td>
+											<td class="center">												<a href="javascript:;" class="btn_bak" data-target="1" data-url="{:U('Admin/HotelRoom/room_edit',array('act'=>'update','hotel_room_id'=>$vo['id']))}" data-record_prev="1">编辑</a>											| <a  href="{:U('Admin/HotelRoom/room_edit',array('act'=>'delete','hotel_room_id'=>$vo['id']))}" class="check" >删除</a>											</td>
 										</tr>										</volist>
 									</tbody>
 								</table>
@@ -97,7 +82,7 @@
 	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/DT_bootstrap.js"></script>
 	<!-- END PAGE LEVEL PLUGINS -->
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
-	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/app.js"></script>	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/table-managed-Member-user_list.js"></script>   	
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/app.js"></script>	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/table-managed-Admin-HotelRoom-index.js"></script>   	
 	<script type="text/javascript">
 		jQuery(document).ready(function() {       
 		   App.init();
