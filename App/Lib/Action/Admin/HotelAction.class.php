@@ -56,6 +56,10 @@ class HotelAction extends AdminBaseAction {
 		4 => array(
 			'num'=>4,
 			'explain'=>'酒店长图',		
+		),
+		5 => array(
+			'num'=>5,
+			'explain'=>'酒店logo',
 		)
 	);
 	
