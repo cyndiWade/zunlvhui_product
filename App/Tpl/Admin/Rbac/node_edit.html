@@ -18,18 +18,7 @@
 	<div class="page-container row-fluid">
 		<!-- 左侧导航 -->		<include file="Public:sidebar" />
 		<!-- BEGIN PAGE -->  
-		<div class="page-content">
-			<!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
-			<div id="portlet-config" class="modal hide">
-				<div class="modal-header">
-					<button data-dismiss="modal" class="close" type="button"></button>
-					<h3>portlet Settings</h3>
-				</div>
-				<div class="modal-body">
-					<p>Here will be a configuration form</p>
-				</div>
-			</div>
-			<!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+		<div class="page-content">
 			<!-- BEGIN PAGE CONTAINER-->
 			<div class="container-fluid">
 				<!-- BEGIN PAGE HEADER-->   
@@ -72,8 +61,8 @@
 										</div>
 									</div>																		<div class="control-group">										<label class="control-label">节点说明<span class="required">*</span></label>										<div class="controls">											<input type="text" name="title" value="{$nodeFind.title}" data-required="1"class="span6 m-wrap"/>										</div>									</div>
 									<div class="form-actions">										
-										<button type="submit" class="btn purple">添加</button>
-										<button type="button" class="btn">取消</button>
+										<button type="submit" class="btn purple">提交</button>
+										<button type="button" class="btn btn_bak" data-return_prev="!">取消</button>
 									</div>
 								</form>
 								<!-- END FORM-->
