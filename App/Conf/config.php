@@ -39,7 +39,7 @@ $system  = array(
 		'OUTPUT_ENCODE'         =>  false, 			// 页面压缩输出
 
 		//项目分组
-		'APP_GROUP_LIST'        => 'Home,Admin,Api',  	// 项目分组设定,多个组之间用逗号分隔,例如'Home,Admin'
+		'APP_GROUP_LIST'        => 'Home,Admin,Api,Main,Hotel',  	// 项目分组设定,多个组之间用逗号分隔,例如'Home,Admin'
 		'DEFAULT_GROUP'         => 'Admin',  					// 默认分组
 		'DEFAULT_ACTION'        => 'index', 						// 默认操作名称
 		'APP_GROUP_MODE'        =>  0, 							 // 分组模式 0 普通分组 1 独立分组
@@ -90,29 +90,30 @@ $system  = array(
 
 
 /* 自定设置 */
-$custom= array (
-			
+$custom= array (		
 		//用户类型
 		'ACCOUNT_TYPE' => array (
 				'ADMIN' => 0,			//管理员
-				'USER' => 1,				//普通用户
+				'HOTEL' => 1,			//酒店用户
+
 		),
 		'ACCOUNT_STATUS' => array (
-				-2 => '删除',
 				0 => '正常',
-				1 => '禁用',
+				1 => '审核中',
+				2=> '禁用'
 		),
 			
 		//上传文件目录
 		'UPLOAD_DIR' => array(
 				'web_dir' => $_SERVER['DOCUMENT_ROOT'],
-				'image' => '/files/cheshenOA/images/',		//图片地址
+				'image' => 'files/zun/images/',		//图片地址
 		),
+
 		
 		//外部文件访问地址(用来填写专用的文件服务器)
 		'PUBLIC_VISIT' => array(
-				'domain' =>	'http://'.$_SERVER['SERVER_NAME'],
-				'dir' => '/files/cheshenOA/',							//项目文件目录
+ 				'domain' =>	'http://'.$_SERVER['SERVER_NAME'].'/',
+ 				'dir' => 'files/zun/',							//项目文件目录
 		),
 
 		//短信平台账号

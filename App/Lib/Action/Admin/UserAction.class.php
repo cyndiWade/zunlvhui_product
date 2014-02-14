@@ -5,14 +5,19 @@
  */
 class UserAction extends AdminBaseAction {
    
-	private $MODULE = '权限管理';
+	private $module_name = '系统管理';
+	
+	protected  $db = array(
+		'Users' => 'Users'		
+	);
 	
 	/**
 	 * 构造方法
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->assign('MODULE_NAME',$this->MODULE);
+		
+		parent::global_tpl_view(array('module_name'=>$this->module_name));
 	}
 	
 	//用户列表	
@@ -20,13 +25,17 @@ class UserAction extends AdminBaseAction {
 		$Users = D('Users');
 		$user_status = C('ACCOUNT_STATUS');		//状态
 		$user_list = $Users->seek_all_data();
-		
+
 		foreach ($user_list AS $key=>$val) {
-			$user_list[$key]['status'] = $user_status[$val['status']];
+			$user_list[$key]['status_info'] = $user_status[$val['status']];
 		}
 		
+		parent::global_tpl_view( array(
+				'action_name'=>'账号管理',
+				'title_name'=>'账号列表',
+				'add_name' => '添加账号'
+		));
 		$this->assign('user_list',$user_list);
-		$this->assign('ACTION_NAME','用户管理');
 		$this->display();
 	}
 	
@@ -41,8 +50,16 @@ class UserAction extends AdminBaseAction {
 		$Users->save_one_data(array('id'=>$id)) ? $this->success('已修改') : $this->error('没有做出修改');
 	}
 	
+	
+	public function del_account() {
+		$id = $this->_get('id');
+		$Users = $this->db['Users'];
+		$Users->is_del = -2;
+		$Users->save_one_data(array('id'=>$id)) ? $this->success('删除成功！') : $this->error('删除失败，请稍后再试！');
+	}
+	
 	/**
-	 * 修改用户账号状态
+	 * 修改用户账号密码
 	 */
 	public function modifi_password () {
 		$password = $this->_post('password');
@@ -80,6 +97,90 @@ class UserAction extends AdminBaseAction {
 		$this->display();
 	}
 
+	
+	
+	/* 注册用户编辑 */
+	public function edit () {
+		$id = $this->_get('id');				//id
+		$act = $this->_get('act');			//动作
+		$Users = D('Users');			//注册用户表
+	
+		switch ($act) {
+			case 'add' :
+				if ($this->isPost()) {
+					$this->check_data($act);		//验证提交数据			
+					/* 验证账号是否存在 */
+					$account_is_have = $Users->account_is_have($_POST['account']);
+					if ($account_is_have) $this->error('此账号已存在');
+						
+					$Users->create();
+					$user_id = $Users->add_account(C('ACCOUNT_TYPE.HOTEL'));
+					$user_id ? $this->success('添加成功！',U('Admin/Hotel/hotel_edit',array('act'=>'add','user_id'=>$user_id))) : $this->error('添加失败，请重新尝试！');
+					exit;
+				}
+				$tpl = 'account_add';	//模板名称
+				break;
+	
+			case 'update' :
+				if ($this->isPost()) {
+					$this->check_data($act);		//验证提交数据
+						
+					$Users->create();
+					if (!Validate::checkNull($_POST['password_old'])) {
+						$Users->password = md5($_POST['password_old']);
+					}
+					$Users->update_user_info($id) ? $this->success('修改成功！') : $this->error('没有做出修改');
+					exit;
+				}
+				//获取用户数据
+				$member_info = $Users->seek_account_info($id);
+				if (empty($member_info)) $this->error('此用户不存在');
+	
+				$this->assign('member_info',$member_info);
+				$tpl = 'account_update';	//模板名称
+				break;
+	
+			case 'delete' :
+				$Users->del(array('id'=>$id)) ? $this->success('删除成功！') : $this->error('删除失败，请重新尝试！');
+				exit;
+				break;
+	
+			default:
+				$this->error('非法操作');
+				exit;
+		}
+	
+		parent::global_tpl_view( array(
+				'action_name'=>'酒店用户',
+				'title_name'=>'酒店列表',
+				'title_name' => '编辑账号'
+		));
+		$this->display($tpl);
+	}
+	
+	
+	//验证提交数据
+	private function check_data($act) {
+		import("@.Tool.Validate");							//验证类
+	
+		if ($act == 'add') {
+			/* 账号验证 */
+			if (Validate::checkNull($_POST['account'])) $this->error('账号不得为空');
+			if (!Validate::checkAccount($_POST['account'])) $this->error('账号必须以字母开头,只能是字符与数字组成,不得超过30位');
+	
+			if (Validate::checkNull($_POST['password'])) $this->error('昵称不得为空');
+			if (!Validate::checkEquals($_POST['password'],$_POST['password_affirm'])) $this->error('二次输入的密码不相同');
+		} elseif ($act == 'update') {
+			if (!Validate::checkNull($_POST['password_old'])) {
+				if (!Validate::checkEquals($_POST['password_old'],$_POST['password_affirm'])) $this->error('二次输入的密码不相同');
+			}
+	
+		}
+	
+	}
+	
+	
+	
 	
 
 }

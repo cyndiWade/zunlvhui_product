@@ -20,17 +20,6 @@
 		<!-- 左侧导航 -->		<include file="Public:sidebar" />		
 		<!-- BEGIN PAGE -->
 		<div class="page-content">
-			<!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
-			<div id="portlet-config" class="modal hide">
-				<div class="modal-header">
-					<button data-dismiss="modal" class="close" type="button"></button>
-					<h3>portlet Settings</h3>
-				</div>
-				<div class="modal-body">
-					<p>Here will be a configuration form</p>
-				</div>
-			</div>
-			<!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
 			<!-- BEGIN PAGE CONTAINER-->
 			<div class="container-fluid">
 				<!-- BEGIN PAGE HEADER-->
@@ -49,9 +38,9 @@
 						<!--BEGIN TABS-->
 						<div class="tabbable tabbable-custom tabbable-full-width">
 							<ul class="nav nav-tabs">
-								<!-- <li class="active"><a href="#tab_1_1" data-toggle="tab">Overview</a></li> -->
-								<li><a href="#tab_1_1" data-toggle="tab">个人信息</a></li>
-								<li><a href="#tab_1_3" data-toggle="tab">信息设置</a></li>
+								<!-- <li class="active"><a href="#tab_1_1" data-toggle="tab">Overview</a></li> -->																<!-- 
+								<li><a href="#tab_1_1" data-toggle="tab">个人信息</a></li> 								-->
+								<li class="active"><a href="#tab_1_3" data-toggle="tab">信息设置</a></li>
 								<!-- <li><a href="#tab_1_4" data-toggle="tab">Projects</a></li>
 								<li><a href="#tab_1_6" data-toggle="tab">Help</a></li> -->
 							</ul>
@@ -595,7 +584,7 @@
 									<!--end span9-->
 								</div>
 								<!--end tab-pane-->
-								<div class="tab-pane   profile-classic row-fluid  active" id="tab_1_1">
+								<div class="tab-pane   profile-classic row-fluid" id="tab_1_1">
 									<div class="span2"><img src="{$Think.const.APP_PATH}Public/media/image/profile-img.png" alt="" /> <a href="#" class="profile-edit">edit</a></div>
 									<ul class="unstyled span10">										<li><span>编号:</span> {$html.personage.serial}</li>
 										<li><span>用户名:</span> {$html.personage.account}</li>
@@ -611,7 +600,7 @@
 									</ul>
 								</div>
 								<!--tab_1_2-->
-								<div class="tab-pane row-fluid profile-account" id="tab_1_3">
+								<div class="tab-pane row-fluid profile-account active" id="tab_1_3">
 									<div class="row-fluid">
 										<div class="span12">
 											<div class="span3">

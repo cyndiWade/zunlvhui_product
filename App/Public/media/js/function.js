@@ -173,7 +173,6 @@ var  wade_bootstrap_date = function (object) {
 };
 
 
-
 /**
  * 同步模式AJAX提交
  */
@@ -189,5 +188,11 @@ var ajax_post_setup = function ($url,$data) {
 	
 	return result;
 }
+
+
+/**
+ * 百度地图API
+ * 需要引入：<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=D0e39c6e68bd900c80a2a50882556bae"></script>
+ */
 
 

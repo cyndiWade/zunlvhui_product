@@ -28,7 +28,13 @@ class UsersModel extends AdminBaseModel {
 		return $this->where($condition)->find();
 	}
 	
-	//获取账号数据
+	public function get_account ($condition) {
+		$con = array('is_del'=>0);
+		array_add_to($con,$condition);
+		return $this->where($con)->field('account')->find();
+	}
+	
+	//修改密码
 	public function modifi_user_password ($id,$password) {
 		return $this->where(array('id'=>$id))->save(array('password'=>$password));
 	}
@@ -54,9 +60,9 @@ class UsersModel extends AdminBaseModel {
 	
 	
 	public function seek_all_data () {
-		$data = $this->field('u.id,u.base_id,u.account,u.last_login_time,u.last_login_ip,u.type,u.status,s.serial,s.name')
+		$data = $this->field('u.id,u.account,u.last_login_time,u.last_login_ip,u.type,u.status')
 		->table($this->prefix.'users AS u')
-		->join($this->prefix.'staff_base AS s ON u.base_id = s.id')
+		->where(array('u.is_del'=>0,'u.type'=>array('neq',0)))
 		->select();
 		parent::set_all_time($data, array('last_login_time'));
 		return $data;
