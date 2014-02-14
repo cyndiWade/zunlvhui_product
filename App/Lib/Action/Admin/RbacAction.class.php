@@ -345,19 +345,16 @@ class RbacAction extends AdminBaseAction {
 		if (empty($group_name)) $this->error('当前组不存在');
 
 		//所有用户列表
-		$userList = $Users->field('u.id,u.account,u.nickname,sb.name')
+		$userList = $Users->field('u.id,u.account,u.nickname')
 		->table(C('DB_PREFIX').'users AS u')
-		->join(C('DB_PREFIX')."staff_base AS sb ON u.base_id = sb.id")
-		->where(array('u.status'=>0))
+		->where(array('u.is_del'=>0))
 		->select();
 		
-		
 		//已有用户
-		$userYesList = $Db->field('u.id,u.account,g.user_id,sb.name')
+		$userYesList = $Db->field('u.id,u.account,g.user_id,u.nickname')
 		->table(C('DB_PREFIX').'group_user AS g')
 		->join(C('DB_PREFIX')."users AS u ON g.user_id=u.id")
-		->join(C('DB_PREFIX')."staff_base AS sb ON u.base_id = sb.id")
-		->where(array('g.group_id'=>$id,'u.status'=>0))
+		->where(array('g.group_id'=>$id,'u.is_del'=>0))
 		->select();
 
 		//计算当前组下已有的用户id
