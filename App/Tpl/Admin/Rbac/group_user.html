@@ -16,17 +16,6 @@
 	<div class="page-container row-fluid">			<!-- 左侧导航 -->		<include file="Public:sidebar" />
 			<!-- BEGIN PAGE -->
 		<div class="page-content">
-			<!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
-			<div id="portlet-config" class="modal hide">
-				<div class="modal-header">
-					<button data-dismiss="modal" class="close" type="button"></button>
-					<h3>portlet Settings</h3>
-				</div>
-				<div class="modal-body">
-					<p>Here will be a configuration form</p>
-				</div>
-			</div>
-			<!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
 			<!-- BEGIN PAGE CONTAINER-->
 			<div class="container-fluid">
 				<!-- BEGIN PAGE HEADER-->
@@ -59,7 +48,7 @@
 								<div class="dd" id="nestable_list_1">									
 									<ol class="dd-list">																				<if condition="$userYesList">											<volist name="userYesList" id="vo">
 											<li class="dd-item" data-id="{$vo.id}">
-												<div class="dd-handle">{$vo.account}---{$vo.name}</div>
+												<div class="dd-handle">{$vo.account}---{$vo.nickname}</div>
 											</li>													</volist>										<else />											<li class="dd-item" data-id="">												<div class="dd-handle">已有用户</div>											</li>												</if>										
 									</ol>
 								</div>
@@ -77,7 +66,7 @@
 							</div>
 							<div class="portlet-body">
 								<div class="dd" id="nestable_list_2">
-									<ol class="dd-list">										<if condition="$htmlUser">											<volist name="htmlUser" id="vo">											<li class="dd-item" data-id="{$vo.id}">												<div class="dd-handle">{$vo.account}---{$vo.name}</div>											</li>											</volist>										<else />											<li class="dd-item" data-id="">												<div class="dd-handle">待分配用户</div>											</li>												</if>
+									<ol class="dd-list">										<if condition="$htmlUser">											<volist name="htmlUser" id="vo">											<li class="dd-item" data-id="{$vo.id}">												<div class="dd-handle">{$vo.account}---{$vo.nickname}</div>											</li>											</volist>										<else />											<li class="dd-item" data-id="">												<div class="dd-handle">待分配用户</div>											</li>												</if>
 									</ol>
 								</div>
 							</div>
