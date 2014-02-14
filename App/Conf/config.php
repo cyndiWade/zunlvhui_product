@@ -105,7 +105,7 @@ $custom= array (
 			
 		//上传文件目录
 		'UPLOAD_DIR' => array(
-				'web_dir' => $_SERVER['DOCUMENT_ROOT'],
+				'web_dir' => $_SERVER['DOCUMENT_ROOT'].'/',
 				'image' => 'files/zun/images/',		//图片地址
 		),
 

@@ -27,6 +27,7 @@ class HotelRoomAction extends AdminBaseAction {
 	
 	//酒店房型列表
 	public function index () {
+
 		//获取参数
 		$hotel_id = $this->_get('hotel_id');
 		if (empty($hotel_id)) $this->error('酒店不存在！');

@@ -77,9 +77,12 @@ class HotelAction extends AdminBaseAction {
 	
 	//酒店列表
 	public function index () {
+		$user_id = $this->_get('user_id');
+		
+		//连接数据库
 		$Hotel = $this->db['Hotel'];	
 		$UsersHotel = $this->db['UsersHotel'];
-		$user_id = $this->_get('user_id');
+		
 		if (empty($user_id)) {
 			$html['list'] = $Hotel->field('id,hotel_name,hotel_sf,hotel_cs,hotel_q,hotel_xj,hotel_pf,hotel_syq,hotel_dz,hotel_tel')->where(array('is_del'=>0))->select();
 		} else {
