@@ -83,6 +83,20 @@ class HotelAction extends AdminBaseAction {
 		$Hotel = $this->db['Hotel'];	
 		$UsersHotel = $this->db['UsersHotel'];
 		
+		
+// 		$hotel_schedule= M('HotelRoom');
+// 		$hotel_tmp2 = M('HotelTmp2');
+// 		$data_list  = $hotel_tmp2->select();
+
+// 		foreach ($data_list AS $key=>$val) {
+// 			$hotel_id = $val['id'] + 228;
+// 			$hotel_schedule->hotel_id = $hotel_id;
+// 			$hotel_schedule->title = $val['hotel_fx'];
+// 			$hotel_schedule->info = $val['hotel_fxxx'];
+// 			$hotel_schedule->add();
+// 		}
+// 		EXIT;
+		
 		if (empty($user_id)) {
 			$html['list'] = $Hotel->field('id,hotel_name,hotel_sf,hotel_cs,hotel_q,hotel_xj,hotel_pf,hotel_syq,hotel_dz,hotel_tel')->where(array('is_del'=>0))->select();
 		} else {
