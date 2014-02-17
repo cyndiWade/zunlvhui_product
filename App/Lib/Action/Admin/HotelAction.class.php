@@ -43,19 +43,19 @@ class HotelAction extends AdminBaseAction {
 	private $img_type = array(
 		1 => array(
 			'num'=>1,
-			'explain'=>'房型长图',
+			'explain'=>'房型360x220',
 		),
 		2 => array(
 			'num'=>2,
-			'explain'=>'房型宽图',
+			'explain'=>'房型220x220',
 		),
 		3 => array(
 			'num'=>3,
-			'explain'=>'酒店宽图',
+			'explain'=>'外景360x220',
 		),		
 		4 => array(
 			'num'=>4,
-			'explain'=>'酒店长图',		
+			'explain'=>'外景220x220',		
 		),
 		5 => array(
 			'num'=>5,
@@ -82,7 +82,7 @@ class HotelAction extends AdminBaseAction {
 		//连接数据库
 		$Hotel = $this->db['Hotel'];	
 		$UsersHotel = $this->db['UsersHotel'];
-		
+
 		if (empty($user_id)) {
 			$html['list'] = $Hotel->field('id,hotel_name,hotel_sf,hotel_cs,hotel_q,hotel_xj,hotel_pf,hotel_syq,hotel_dz,hotel_tel')->where(array('is_del'=>0))->select();
 		} else {
