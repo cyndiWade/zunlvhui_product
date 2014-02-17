@@ -20,7 +20,8 @@ class LoginAction extends AdminBaseAction {
 
     	if ($this->isPost()) {
     		$Users = D('Users');									//系统用户表模型
-
+    		$StaffBase = D('StaffBase');						//员工基本信息模型表
+    		
     		import("@.Tool.Validate");							//验证类
     			
     		$account = $_POST['account'];					//用户账号
@@ -39,8 +40,8 @@ class LoginAction extends AdminBaseAction {
     			$this->error('此用户不存在或被删除！');
     		} else {
     			//状态验证
-    			if ($user_info['status'] != C('ACCOUNT_TYPE.')) {
-  					$status_info = C('ACCOUNT_STATUS.ADMIN');
+    			if ($user_info['status'] != C('ACCOUNT_TYPE.ADMIN')) {
+  					$status_info = C('ACCOUNT_STATUS');
     				$this->error($status_info[$user_info['status']]);
     			}
     			
