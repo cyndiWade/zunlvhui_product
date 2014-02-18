@@ -382,7 +382,7 @@ function arrar_insert_delete(&$arr_request,&$arr_have) {
  * @param num $type	类型		1为字符串  0为时间戳
  * @return number
  */
-function countDays ($start,$over,$type) {	//传入时间戳、或者字符类型日期
+function countDays ($start,$over,$type =0) {	//传入时间戳、或者字符类型日期
 	if ($type == 1) {
 		//转换为时间戳
 		$d1=strtotime($start);
