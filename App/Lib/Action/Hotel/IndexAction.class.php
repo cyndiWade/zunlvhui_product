@@ -1,10 +1,13 @@
 <?php
 class IndexAction extends HotelBaseAction{
 
-   
+     public function __construct(){
+      	parent::__construct();    
+     }
 	  public function index(){
-	  
-	    echo 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];;
+	  	$url = $_SERVER["REQUEST_URI"];
+	  	$html['hover'] = parent::getAction($url);
+	    $this->assign('html',$html);
 	    $this->display();
 	  }
             
