@@ -11,7 +11,7 @@ class HotelBaseAction extends AppBaseAction {
 	public function __construct() {
 		parent:: __construct();			//重写父类构造方法
 		
-		//$this->Admin_loading();		//RBAC权限控制类库
+		$this->Admin_loading();		//RBAC权限控制类库
 		
 		//初始化用户数据
 		$this->admin_base_init();
@@ -155,7 +155,21 @@ class HotelBaseAction extends AppBaseAction {
 			return array('status'=>true,'info'=>$execute);
 		}
 	}
-
+    
+	
+	public function getAction($url){
+	     
+	   $action = array(
+				'/Hotel/Index/',
+				'/Hotel/Business/',
+				'/Hotel/Order/',
+				'/Hotel/Property/',
+				);
+	    foreach ($action as $key=>$val){
+	        if(strpos($url,$val))return $val;
+	    }
+			
+	}
 	
 	
 	
