@@ -3,16 +3,12 @@
 //房型价格模型表
 class RoomScheduleModel extends AdminBaseModel {
 	
-	public function add_one_schedule () {
-		return $this->add();
-	}
-	
-
 	//查找一条数据
 	public function seek_one_schedule ($hotel_room_id,$day) {
 		$data = $this->where(array('hotel_room_id'=>$hotel_room_id,'day'=>$day))->find();
 		return $data;
 	}
+	
 	
 	//编辑价格日历。有则修改，无则添加
 	public function seek_update_data ($condition) {

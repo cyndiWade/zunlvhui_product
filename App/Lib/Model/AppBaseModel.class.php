@@ -24,6 +24,11 @@ class AppBaseModel extends Model {
 		return $this->where($condition)->data(array('status'=>-2))->save();
 	}
 	
+	//逻辑删除
+	public function delete_data ($condition) {
+		return $this->where($condition)->data(array('is_del'=>-2))->save();
+	}
+	
 	//获取所有数据 
 	public function get_all_data ($field = '*') {
 		return $this->field($field)->select();
