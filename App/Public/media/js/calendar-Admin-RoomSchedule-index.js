@@ -184,7 +184,7 @@ var Calendar = function () {
 						for (var obj in result.data) {			
 							event_data.push({
 								id : result.data[obj].id,
-			                	title :'现付:' + result.data[obj].spot_payment,
+			                	title :'预付:' + result.data[obj].spot_payment,
 			                	start: result.data[obj].day,
 								end : result.data[obj].day,		
 								className:'hand',
@@ -193,7 +193,7 @@ var Calendar = function () {
 			                });
 							event_data.push({
 								id : result.data[obj].id,
-			                	title :'到付:' + result.data[obj].prepay,
+			                	title :'现付:' + result.data[obj].prepay,
 			                	start: result.data[obj].day,
 								end : result.data[obj].day,
 								className:'hand',
