@@ -16,7 +16,7 @@
 <script type="text/javascript" src="{$Think.const.APP_PATH}Public/Hotel/bootstrap/js/locales/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
 <script src="{$Think.const.APP_PATH}Public/Hotel/bootstrap/js/locales/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" ></script>
 
-<script>
+<script><!--
 
 	$(document).ready(function() {
 		/*初始化外部事件
@@ -60,7 +60,7 @@
    				day: '日'
 			},
 			
-			height: 850,						//日历高度,包括表头
+			height: 850,			//日历高度,包括表头
 			contentHeight: 600,		//内容高度，不包括表头
 			
 			defaultView:'month',		//默认显示的视图，这里的师徒分别为month,basicWeek,basicDay,agendaWeek,agendaDay
@@ -89,89 +89,64 @@
 			disableDragging : false,		//默认false, 所有的event可以拖动, 必须editable = true
 			diableResizing : false,		//默认false, 所有的event可以改变大小, 必须editable = true	
 			
-			/**日程对象
-				id:String/Integer (optional)
-				title:String
-				allDay:true or false (optional)  指定是否是全天事件
-				start:Date 事件开始时间，格式如下
-					IETF format (ex: "Wed, 18 Oct 2009 13:00:00 EST")
-					ISO8601 format (ex: "2009-11-05T13:15:30Z")
-				end: Date (optional) 事件结束时间
-					如果事件是一个全天事件，则结束时间包括在内
-					如果事件不是全天事件，结束时间是0:00，则结束时间的第二天不包括在内
-				url:String (optional)  当用户点击时，将会访问的网址
-				className: String/Array (optional) 这个事件使用的css 类名
-				editable:true or false (optional) 事件是否可编辑
-				source: Array/String/Function (automatically populated) 事件源，自动指定
-				backgroundColor: 背景颜色
-				除了以上属性外，你可以自己指定属性和值
-			*/
+
 				
-			/**
-			 * （第一种，预先定义好） 
-			events: [
-			        {
-			            title  : 'event1',
-			            start  : '2014-02-20'
-			        },
-			        {
-			            title  : 'event2',
-			            start  : '2014-02-20',
-			            end    : '2014-02-21'
-			        },
-			        {
-			            title  : 'event3',
-			            start  : '2014-02-20',
-			            allDay : false // 添加的日期是否为一整天
-			        }
-			    ],
-			*/
+
 				/**
 				 * 第二种，AJAX加载
 				 * @param {Object} start
 				 * @param {Object} end
-				 * @param {Object} callback
-			  */
+				 * @param {Object} callback*/
 				events: function(start, end, callback) {
-				alert('a');
-			        $.ajax({
-			            url: 'myxmlfeed.php',
-			            dataType: 'xml',
-			            data: {
-			                // our hypothetical feed requires UNIX timestamps
-			                start: Math.round(start.getTime() / 1000),
-			                end: Math.round(end.getTime() / 1000)
-			            },
-			            success: function(doc) {
-			
-			                var events = [];
-			
-			                $(doc).find('event').each(function() {
-			                    event.push({
-			                        title: $(this).attr('title'),
-			                        start: $(this).attr('start') // will be parsed
-			                        allDay: false,
-			                    });
-			                });
-			
-			                callback(events);
-			            }
-			        });
+				var hotel_room_id = $('#hotel_room_id').val();
+				var result = ajax_post_setup('?s=/Hotel/RoomSchedule/AJAX_Get_Schedule',{'hotel_room_id':hotel_room_id});
+				var event_data = [];			
+
+				//return false;
+				if (result.status == 0) {
+					//现付价格
+					for (var obj in result.data) {			
+						event_data.push({
+							id : result.data[obj].id,
+		                	title :'现付:' + result.data[obj].spot_payment,
+		                	start: result.data[obj].day,
+							end : result.data[obj].day,		
+							className:'hand',
+							allDay: true
+		                });
+						event_data.push({
+							id : result.data[obj].id,
+		                	title :'预付:' + result.data[obj].prepay,
+		                	start: result.data[obj].day,
+							end : result.data[obj].day,
+							className:'red',
+							allDay: true
+		                });
+					}					
+					//日程写入到日历中
+                	callback(event_data);	
+				}	 
+		        
 			   },
 			
 		
 			//	4个关于鼠标的回调方法
 			//点击触发
 			eventClick:function( event, jsEvent, view ) { 		
-				//删除一个日程，需要日程的ID，日程的ID由添加的时候手动分配，idOrFilter
-				calendar.fullCalendar('removeEvents', [event.idOrFilter]);	//calendar.fullCalendar('removeEvents', [日程的ID]);
-				
-					alert('Event: ' + event.title);	//或者是ID
-			        alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-			        alert('View: ' + view.name);
-			
-			        // change the border color just for fun
-			        $(this).css('border-color', 'red');
+				   if (confirm('确定要删除吗？') == true) {
+						var id = event.id;
+						var result = ajax_post_setup('?s=/Hotel/RoomSchedule/AJAX_DEL_Schedule',{'id':id});
+						if (result == false) {
+							alert('服务器连接超时');
+							return false;
+						} else if (result.status == 0) {
+							alert(result.msg);
+							calendar.fullCalendar('removeEvents', [id]);
+						} else {
+							alert(result.msg);
+							return false;
+						}
+					};
 			},
 			//当鼠标悬停在一个事件上触发此操作
 			eventMouseover:function( event, jsEvent, view ) { },
@@ -182,8 +157,7 @@
 			/* 外部手动添加日历（在日历中的drop回调中进行构造event并描绘） */
 			droppable: true, // 这允许将东西滴落在日历上! ! !
 			drop: function(date, allDay) { //添加后删除日程
-			
-				// 检索了元素的存储事件对象
+			    // 检索了元素的存储事件对象
 				var originalEventObject = $(this).data('eventObject');
 				
 				// 我们需要把它复制,所以多个事件没有引用同一个对象
@@ -211,7 +185,7 @@
 		
 	});
 
-</script>
+--></script>
 <style>
 
 	body {
@@ -265,17 +239,46 @@
 		float: right;
 		width: 900px;
 		}
+	.red{background-color:red;}
 
 </style>
 <script>
+function checkRate(input)
+{
+     var re = /^[0-9]+.?[0-9]*$/;   //判断字符串是否为数字     //判断正整数 /^[1-9]+[0-9]*]*$/  
 
+     if (!re.test(input))
+     {
+        return false;
+     }
+}
+function checkPrice(obj){
+    if(!obj.value){
+        alert('价格不能为空');
+        return false;
+    }else{
+	    if(checkRate(obj.value)){
+
+			 alert('价格是数字'); 
+			 return false;  
+		}
+    }
+}
 function Ajaxsubmit(){
 
 	 var startDate =   $("#startDate").val();
 	 var endDate   =   $("#endDate").val();
-	 var prepay   =   $("#prepay").val();
+	 var prepay    =   $("#prepay").val();
 	 var spot_payment   =   $("#spot_payment").val();
 	 var hotel_room_id     =   $("#hotel_room_id").val();
+	 if(!startDate){
+		 alert('开始时间不能为空');
+		 return false;
+	 }
+	 if(!endDate){
+		 alert('结束时间不能为空');
+		 return false;
+	 }
      $data = {
     		 startDate    :  startDate,
     		 endDate      :  endDate,
@@ -284,6 +287,11 @@ function Ajaxsubmit(){
     		 hotel_room_id     :  hotel_room_id
    	};
 	 var result = ajax_post_setup('?s=/Hotel/RoomSchedule/Ajax_room_schedule_edit',$data);	
+	 if(result.status==0){
+		 alert(result.msg);
+	 }else{
+		 alert(result.msg);
+	 }
 }
 
 </script>
@@ -291,12 +299,13 @@ function Ajaxsubmit(){
 <body>
 <div id='wrap'>
 <div id='external-events'>
+<h4>酒店房型 ：{$global_tpl_view.title_name}</h4>
 <h4>日历</h4>
 <p>开始日期<input type="text" name="startDate" id="startDate" class="tjr_datetimepicker"/></p>
 <p>结束日期<input type="text" name="endDate" id="endDate" class="tjr_datetimepicker" /></p>
-<p>预付价格<input type="text" name="prepay" id="prepay"/></p>
-<p>现付价格<input type="text" name="spot_payment" id="spot_payment" /></p>
-<input type="hidden" value="{$html.room_id}" name="hotel_room_id" id="hotel_room_id" />
+<p>预付价格<input type="text" name="prepay" id="prepay" onblur="checkPrice(this)"/></p>
+<p>现付价格<input type="text" name="spot_payment" id="spot_payment" onblur="checkPrice(this)" /></p>
+<input type="hidden" value="{$html.hotel_room_id}" name="hotel_room_id" id="hotel_room_id" />
 <p><input type="button" name="button" id="button" value="提交" onclick="Ajaxsubmit()"/>
 </p>
 </div>

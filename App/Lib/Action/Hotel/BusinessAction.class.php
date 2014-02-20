@@ -11,7 +11,8 @@ class BusinessAction extends HotelBaseAction{
 	protected  $db = array(
 		'Hotel'=>'Hotel',
 		'Users' =>'Users',
-		'UsersHotel' => 'UsersHotel',	
+		'UsersHotel' => 'UsersHotel',
+	    'RoomSchedule' =>'RoomSchedule'	
 	);
 	
 	
@@ -133,26 +134,5 @@ class BusinessAction extends HotelBaseAction{
 		}
 		die($info);
 
-	}
-	public function edit_price(){
-	
-		if($this->_get('id')){
-		$html['room_id'] = $this->_get('id');
-		
-		 
-		}
-	     
-	    $html['date'] = "{
-					title: 'Click for Google',
-					start: new Date(2014, 1, 10),
-					end: new Date(2014, 1, 29),
-				},{
-					title: '预付价200',
-					start: new Date(2014, 1, 1),
-					end: new Date(2014, 1, 21),
-				}";
-	    $this->assign('html',$html);
-	    $this->display();
-	
 	}
 }
