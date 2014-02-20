@@ -73,18 +73,21 @@ class UserAction extends AdminBaseAction {
 		if (Validate::checkNull($re_new_password)) $this->error('重复密码不得为空');
 		if (!Validate::checkEquals($new_password,$re_new_password)) $this->error('新密码不一致');
 		//读取用户数据
-		$user_info = $Users->get_user_info(array('account'=>$_SESSION['user_info']['account'],'status'=>0));
+		$user_info = $Users->get_user_info(array('id'=>$this->oUser->id,'is_del'=>0));
+
 		//验证密码
 		if (md5($password) != $user_info['password']) {
-			$this->error('密码错误！');
-			
-			
+			$this->error('原密码错误！');
+
 		} else {//密码修改
 			
-			$mes=$Users->modifi_user_password($user_info['id'],md5($new_password));
-			if($mes){ $this->success('密码修改成功！新密码为 '.$new_password);
-			}else {$this->success('密码修改失败！');
+			$mes=$Users->modifi_user_password($this->oUser->id,md5($new_password));
+			if ($mes == true)	{ 
+					$this->success('密码修改成功！新密码为 '.$new_password);
+			} else {
+				$this->success('密码修改失败！');
 			}
+			
 		} 
 	}
 	

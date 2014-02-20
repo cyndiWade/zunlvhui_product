@@ -43,6 +43,7 @@ class RoomPutawayAction extends AdminBaseAction {
 
 		//获取参数
 		$hotel_room_id = $this->_get('hotel_room_id');	//房型ID
+		$hotel_id = $this->_get('hotel_id');		//酒店ID
 		if (empty($hotel_room_id)) $this->error('此房型不存在！');
 		
 		//连接数据库
@@ -63,6 +64,8 @@ class RoomPutawayAction extends AdminBaseAction {
 			'title_name'=> $hotel_room_info['title'],
 			'add_name'=>'添加下架时间'
 		));
+		
+		$html['hotel_id'] = $hotel_id;
 		$html['hotel_room_id'] = $hotel_room_id;
 		$html['list'] = $rutaway_list;
 		$this->assign('html',$html);

@@ -93,6 +93,7 @@
 			
 		//点击返回
 		$('.btn_bak').click(function () {
+		//	return false;
 			var _this = $(this);
 			var go_num = _this.data('go');		//返回次数的条数
 			var url = _this.data('url');				//需要跳转的URL
@@ -103,13 +104,13 @@
 
 			//记录上一页地址
 			if (record_prev != undefined) cookie.setCookie('prev',window.location);
-			
+
 			//返回上一页地址
 			if (return_prev != undefined) {
 				window.location.href = cookie.getCookie('prev');
-			} else if (url != undefined) {	//跳转到指定的页面
+			} else if (url != undefined) {	//跳转到指定的页面	
 				if (target != undefined) {	//重新打开窗口
-					 window.open(url, target, '');				
+					 window.open(url, '_blank', '');				
 				} else {		//跳转到指定页面
 					window.location.href = url;
 				}

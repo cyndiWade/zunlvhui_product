@@ -53,6 +53,7 @@ class LoginAction extends AdminBaseAction {
     				$tmp_arr = array(
     						'id' =>$user_info['id'],
     						'account' => $user_info['account'],
+    						'nickname' => $user_info['nickname'],
     						'type'=>$user_info['type'],
     				);
     			}
