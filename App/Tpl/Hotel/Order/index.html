@@ -14,8 +14,8 @@ $(function (){
 		Top : -16,//弹出时间停靠的顶部边位置
 		fuhao : "-",//日期连接符默认为-
 		isTime : false,//是否开启时间值默认为false
-		beginY : 2010,//年份的开始默认为1949
-		endY :2015//年份的结束默认为2049
+		beginY : 2014,//年份的开始默认为1949
+		endY :2025//年份的结束默认为2049
 	});
 	
 });
@@ -30,8 +30,6 @@ $(function (){
 <!--header-->
 <!--main-->
 <div class="cent">
-  <div class="blank3"></div><div class="blank3"></div>
-  <div class="blue f30"> 上海华亭宾馆 </div>
   <div class="blank3"></div>
   <div class="hotle_list">
   	<div class="search">
@@ -47,6 +45,7 @@ $(function (){
       <tr>
         <th>订单编号</th>
         <th>预定日期</th>
+        <th>酒店名称</th>
         <th>房型名称</th>
         <th>入住人姓名</th>
         <th>电话</th>
@@ -54,27 +53,19 @@ $(function (){
         <th>付款方式</th>
         <th>会员来源</th>
       </tr>
+      <volist name="html['list']" id="vo" key="k" >
       <tr>
-        <td>00123</td>
-        <td>2014-2-8</td>
-        <td>普通房</td>
-        <td>尊旅会</td>
-        <td>1316729058</td>
-        <td>2014-3-6</td>
-        <td><span class="red">到付</span></td>
-        <td>百度</td>
+        <td>{$vo.order_sn}</td>
+        <td>{$vo.order_time}</td>
+        <td>{$vo.hotel_id}</td>
+        <td>{$vo.hotel_room_id}</td>
+        <td>{$vo.in_person}</td>
+        <td>{$vo.phone}</td>
+        <td>{$vo.in_date}</td>
+        <td><span class="red">{$vo.order_type}</span></td>
+        <td>{$vo.is_from}</td>
       </tr>
-      <tr>
-        <td>00123</td>
-        <td>2014-2-8</td>
-        <td>普通房</td>
-        <td>尊旅会</td>
-        <td>1316729058</td>
-        <td>2014-3-6</td>
-        <td>预付</td>
-        <td>百度</td>
-      </tr>
-      
+      </volist>
     </table>
     <div class="blank3"></div>
     <div align="center"><input type="submit" class="login_btn" value="导出" /></div>

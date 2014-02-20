@@ -54,9 +54,9 @@ body { font-size:12px;}
 .hotel_info p{ font-size:18px; color:#4f4f4f; line-height:38px;}
 .phone{ color:#3c3c3c}
 
-.hotle_list{ text-align:left;}
-.hotle_list th{ height:50px; text-align:left; line-height:50px; padding:0 15px; background:#000; color:#e1b24a; font-size:20px;}
-.hotle_list td{ height:50px; line-height:50px; padding:0 18px; font-size:18px; color:#3c3c3c}
+.hotle_list{ text-align:center;}
+.hotle_list th{ height:50px; text-align:center; line-height:50px;background:#000; color:#e1b24a; font-size:16px;}
+.hotle_list td{ border-right:1px solid #E1B24A; height:50px; line-height:50px;  font-size:18px; color:#3c3c3c}
 .hotle_list tr{ border-bottom:#e1b24a 2px solid;}
 .hotle_list tr.hover{ background:#eccd92;}
 /* merchant_repast_detail */
