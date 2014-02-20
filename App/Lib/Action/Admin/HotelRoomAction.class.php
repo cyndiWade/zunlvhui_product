@@ -1,6 +1,6 @@
 <?php
 /**
- * 酒店管理
+ * 酒店房型管理
  */
 class HotelRoomAction extends AdminBaseAction {
   	
@@ -9,7 +9,17 @@ class HotelRoomAction extends AdminBaseAction {
 	//初始化数据库连接
 	protected  $db = array(
 		'Hotel'=>'Hotel',
-		'HotelRoom' => 'HotelRoom'
+		'HotelRoom' => 'HotelRoom',
+		'RoomImg'	=> 'RoomImg'
+	);
+	
+	
+	//房型图片类型
+	private $img_type = array(
+			1 => array(
+					'num'=>1,
+					'explain'=>'房型',
+			)
 	);
 	
 	
@@ -110,6 +120,106 @@ class HotelRoomAction extends AdminBaseAction {
 		$this->display();
 	}
 	
+	
+	
+	//酒店图片编辑
+	public function room_img () {
+		$hotel_room_id = $this->_get('hotel_room_id');
+		$HotelRoom = $this->db['HotelRoom'];	//房型表
+		$RoomImg = $this->db['RoomImg'];		//房型图片表		
+			
+		//检测房型
+		if (empty($hotel_room_id)) $this->error('此房型不存在！');
+		$hotel_room_info = $HotelRoom->get_one_data(array('id'=>$hotel_room_id),'id,title');
+		if (empty($hotel_room_info)) $this->error('此房型不存在！');
+		
+	
+		//获取酒店图片数据
+		$photo_list = $RoomImg->get_hotel_images(array('hotel_room_id'=>$hotel_room_id),'id,type,url');
+		if (!empty($photo_list)) {
+			parent::public_file_dir($photo_list, array('url'), 'images/');		//组合访问地址
+			$photo_type_list = regroupKey($photo_list,'type');						//按照图片类似分类
+		}
+	
+	
+		//注入模板
+		$html['hotel_room_id'] = $hotel_room_info['id'];
+		$html['img_type'] = $this->img_type;
+		$html['photo_type_list'] = $photo_type_list;
+		parent::global_tpl_view( array(
+				'action_name'=>'房型图片',
+				'title_name' => $hotel_room_info['title'].'--上传图片'
+		));
+		$this->assign('html',$html);
+		$this->display();
+	}
+	
+	
+	
+	/**
+	 * AJAX处理上传车辆图片
+	 */
+	public function ajax_photo_upload() {
+		header('Content-Type:text/html;charset=utf-8');
+	
+		if ($this->isPost()) {
+			/* 上传文件目录 */
+			$upload_dir = C('UPLOAD_DIR');
+			$dir = $upload_dir['web_dir'].$upload_dir['image'];		//图片文件保存地址
+			$RoomImg = $this->db['RoomImg'];		//酒店图片表
+	
+			/* 执行上传 */
+			$file = $_FILES['photo_files'];					//上传的文件
+			$hotel_room_id = $this->_post('hotel_room_id');				//车辆ID
+			$type = $this->_post('type');						//图片类型
+	
+			/* 参数验证 */
+			if (empty($hotel_room_id) || empty($type)) parent::callback(C('STATUS_DATA_LOST'),'参数错误！');
+	
+			/* 执行上传 */
+			$result = parent::upload_file($file, $dir,5120000);
+	
+			/* 上传结果处理 */
+			if ($result['status'] == true) {
+				$RoomImg->hotel_room_id = $hotel_room_id;
+				$RoomImg->type = $type;
+				$RoomImg->url = $result['info'][0]['savename'];
+				$hotel_img_id = $RoomImg->add();		//写入数据库
+	
+				if ($hotel_img_id) {
+					$return['success'] = true;
+					$return['info'] = '保存成功';
+					echo json_encode($return);
+				} else {
+					$return['success'] = false;
+					$return['info'] = '保存失败';
+					echo json_encode($return);
+				}
+			} else {
+				$return['success'] = false;
+				$return['info'] = '上传失败';
+				echo json_encode($return);
+			}
+	
+		} else {
+			parent::callback(C('STATUS_ACCESS'),'非法访问！');
+		}
+	
+	}
+	
+	
+	/**
+	 * AJAX车辆删除图片
+	 */
+	public function ajax_photo_remove () {
+		if ($this->isPost()) {
+			$id = $this->_post('id');
+			$RoomImg = $this->db['RoomImg'];		//酒店图片表
+			$RoomImg->del_one_image($id) ? parent::callback(C('STATUS_SUCCESS'),'删除成功') : parent::callback(C('STATUS_UPDATE_DATA'),'删除失败') ;
+		} else {
+			parent::callback(C('STATUS_ACCESS'),'非法访问！');
+		}
+	}
 
     
 }

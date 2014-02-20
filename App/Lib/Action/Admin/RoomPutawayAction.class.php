@@ -1,6 +1,6 @@
 <?php
 /**
- * 房间下架
+ * 房间下架管理
  */
 class RoomPutawayAction extends AdminBaseAction {
   	
