@@ -136,10 +136,11 @@ $custom= array (
 		'STATUS_UPDATE_DATA'	=> '2001',		//没有成功修改数据
 		'STATUS_HAVE_DATA' => '2002',			//数据已存在
 		'STATUS_NOT_DATA'	=> '2004',			//没有数据
-		'STATUS_RBAC' => '3001',					//RBAC权限不通过
+		'STATUS_RBAC' => '3001',						//RBAC权限不通过
 		'STATUS_ACCESS' => '4001',				//非法访问
 		'STATUS_DATA_LOST' => '5001',			//上传数据丢失
 		'STATUS_OTHER' => '9999',					//其他错误
+		'STATUS_NOT_CHECK'=>'6001',			//验证不通过
 	
 );
 

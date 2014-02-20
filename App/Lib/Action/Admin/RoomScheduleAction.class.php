@@ -1,6 +1,6 @@
 <?php
 /**
- * 酒店房型价格管理
+ * 酒店房型每日价格管理
  */
 class RoomScheduleAction extends AdminBaseAction {
   	
@@ -22,7 +22,6 @@ class RoomScheduleAction extends AdminBaseAction {
 	
 		parent::global_tpl_view(array('module_name'=>$this->module_name));
 	}
-	
 	
 	
 	//酒店房型列表
@@ -51,10 +50,16 @@ class RoomScheduleAction extends AdminBaseAction {
 	//编辑日程
 	public function Ajax_room_schedule_edit() {
 		if ($this->isPost()) {
+			
 			$arr = array('hotel_room_id','spot_payment','prepay');
 			$post_data = $this->_post();
 			$int_start_time= strtotime($post_data['start_time']);		//开始日期
 			$int_over_time = strtotime($post_data['over_time']);		//结束如期
+			$now_data = strtotime(date('Y-m-d',time()));					//当天日期
+
+			//时间验证
+			if($int_start_time < $now_data) parent::callback(C('STATUS_NOT_CHECK'),'开始日期不得小于当天日期！');
+			if($int_start_time > $int_over_time) parent::callback(C('STATUS_NOT_CHECK'),'开始日期不得大于结束日期！');
 			
 			//连接数据库
 			$RoomSchedule = $this->db['RoomSchedule'];	
@@ -93,9 +98,7 @@ class RoomScheduleAction extends AdminBaseAction {
 					$day = $day + 3600 * 24;		//每次写入数据库后，累加一天
 				}
 				parent::callback(C('STATUS_SUCCESS'),'添加成功！');
-			} else {	//错误的处理
-				parent::callback(C('STATUS_OTHER'),'非法操作！');
-			}
+			} 
 			
 		} else {
 			parent::callback(C('STATUS_ACCESS'),'非法访问！');
