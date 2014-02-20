@@ -52,7 +52,7 @@ class LoginAction extends HotelBaseAction{
     			$_SESSION['zun']['user_info'] = $tmp_arr;		//写入session
     			//更新用户信息
     			$Users->up_login_info($user_info['id']);
-    			$this->redirect('/Hotel/Index/index');
+    			$this->redirect('/Hotel/Business/index');
     			
     		}
     	} else {
