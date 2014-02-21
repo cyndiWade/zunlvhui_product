@@ -6,6 +6,7 @@
 <script src="{$Think.const.APP_PATH}Public/Hotel/js/jquery-1.7.1.min.js"></script>
 <script src="{$Think.const.APP_PATH}Public/Hotel/js/hotel.date.js"></script>
 <script src="{$Think.const.APP_PATH}Public/Hotel/js/hotel.common.js"></script>
+<script src='{$Think.const.APP_PATH}Public/Hotel/js/function.js'></script>
 <script>
 $(function (){
 	$(".reserve_date").manhuaDate({					       
@@ -19,6 +20,24 @@ $(function (){
 	});
 	
 });
+$(function (){
+	
+   $(".agree1").click(function(){
+	   var _this = $(this);
+	   _this.data('id');
+	   $data ={
+			   id : _this.data('id')
+	   }
+	   //alert(_this.data('id'));
+	   var result = ajax_post_setup('?s=/Hotel/Order/Ajax_order_status_edit',$data);
+        if(result.status==0){
+        	alert(result.msg);
+        }else{
+
+        	alert(result.msg);
+        }
+	   })
+})
 </script>
 <title></title>
 </head>
@@ -52,18 +71,31 @@ $(function (){
         <th>入住日期</th>
         <th>付款方式</th>
         <th>会员来源</th>
+        <th>订单状态</th>
+        <th>意见</th>
+        <th>处理</th>
       </tr>
       <volist name="html['list']" id="vo" key="k" >
       <tr>
         <td>{$vo.order_sn}</td>
         <td>{$vo.order_time}</td>
-        <td>{$vo.hotel_id}</td>
-        <td>{$vo.hotel_room_id}</td>
+        <td>{$vo.hotel_name}</td>
+        <td>{$vo.title}</td>
         <td>{$vo.in_person}</td>
         <td>{$vo.phone}</td>
         <td>{$vo.in_date}</td>
         <td><span class="red">{$vo.order_type}</span></td>
         <td>{$vo.is_from}</td>
+        <td>{$vo.order_status}</td>
+        <td>{$vo.dispose}</td>
+        <td>
+        <if condition="($vo.dispose_status eq 0)" >
+        <input type="button" name="agree" id="agree" class="agree1" data-id={$vo.id} value="同意"/>
+        <input type="button" name="agree" id="agree" class="agree2" value="拒绝"/>
+        <else/>
+         已处理
+        </if>
+        </td>
       </tr>
       </volist>
     </table>

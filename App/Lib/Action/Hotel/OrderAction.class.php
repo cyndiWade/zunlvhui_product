@@ -30,26 +30,23 @@ class OrderAction extends HotelBaseAction{
 		$HotelRoom  = $this->db['HotelRoom'];
 		$Hotel      = $this->db['Hotel'];
 		$userId =  $this->oUser->id;
-		$list = $HotelOrder->get_all_order(array('user_id'=>$userId));
+		$list = $HotelOrder->get_all_order($userId);
+		$order_status = C('ORDER_STATUS');
+		$dispose_status = C('DISPOSE_STATUS');
 		if($list == true){
-			$hotel_ids   = getArrayByField($list,'hotel_id');
-			$hotel_room_id = getArrayByField($list,'hotel_room_id');
-			$Hotels     = $Hotel->get_hotels(array('id'=>array('in',$hotel_ids) ),'hotel_name,id') ;   
-			$HotelRooms = $HotelRoom->get_room_type( array('hotel_id'=>array('in',$hotel_room_id) ),'id,title');	
-			$Hotels_sort = regroupKey($Hotels,'id');
-			$HotelRooms_sort  = regroupKey($HotelRooms,'id');
 			$pay_type =  C('PAY_TYPE');
 			$is_from  =  C('IS_FROM');
 			foreach ($list as $key=>$val){
 			    $list[$key]['order_time']            = date('Y-m-d',$val['order_time']);
 				$list[$key]['in_date']               = date('Y-m-d',$val['in_date']);
 				$list[$key]['order_type']            = $pay_type[$val['order_type']];
-			    $list[$key]['is_from']               = $is_from[$val['is_from']];
-				$list[$key]['hotel_id']  = $Hotels_sort[$val['hotel_id']][0]['hotel_name'];
-				$list[$key]['hotel_room_id']  = $HotelRooms_sort[$val['hotel_id']][0]['title'];
-			 
+                $list[$key]['order_status']          = $order_status[$val['order_status']];
+                $list[$key]['dispose']          = $dispose_status[$val['dispose_status']];
+				$list[$key]['is_from']               = $is_from[$val['is_from']];
+			
 			}
 		}
+		//echo '<pre>';print_r($list);echo '</pre>';exit;
 		$hover = parent::getAction($_SERVER["REQUEST_URI"]);
 		$html  = array(
 		         'list'=>$list,
@@ -57,6 +54,33 @@ class OrderAction extends HotelBaseAction{
 		) ;
 	    $this->assign('html',$html);
 	    $this->display();
+	}
+	
+	public function Ajax_order_status_edit(){
+	    
+		if ($this->isPost()){
+			$id = $this->_post('id');			
+			$HotelOrder = $this->db['HotelOrder'];		
+			$order_status = C('ORDER_STATUS');
+			$dispose_status= C('DISPOSE_STATUS');
+			$arr = array(
+				'order_status'  =>$order_status['YCL'],
+				'dispose_status'=>$dispose_status['QR']
+			);
+
+		    $result = $HotelOrder->update_order($id,$arr);
+		    if($result!==false){
+		     
+		       parent::callback(C('STATUS_SUCCESS'),'处理成功！');
+		    }else{
+			   parent::callback(C('STATUS_NOT_DATA'),'处理失败！');
+		    }
+		}else{
+			parent::callback(C('STATUS_ACCESS'),'非法访问！');
+		}
+	
+	
+	
 	}
 
 }
