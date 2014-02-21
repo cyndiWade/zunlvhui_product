@@ -130,6 +130,8 @@ class AdminBaseAction extends AppBaseAction {
 		} else {
 			//上一页地址
 			$this->global_tpl_view['button']['prve'] = C('PREV_URL');
+			//别名
+			$this->global_tpl_view['user_info']['nickname'] = $this->oUser->nickname;
 		}
 			
 		//写入模板

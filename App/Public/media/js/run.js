@@ -93,6 +93,7 @@
 			
 		//点击返回
 		$('.btn_bak').click(function () {
+		//	return false;
 			var _this = $(this);
 			var go_num = _this.data('go');		//返回次数的条数
 			var url = _this.data('url');				//需要跳转的URL
@@ -103,54 +104,44 @@
 
 			//记录上一页地址
 			if (record_prev != undefined) cookie.setCookie('prev',window.location);
-			
+
 			//返回上一页地址
 			if (return_prev != undefined) {
 				window.location.href = cookie.getCookie('prev');
-			} else if (url != undefined) {	//跳转到指定的页面
+			} else if (url != undefined) {	//跳转到指定的页面	
 				if (target != undefined) {	//重新打开窗口
-					 window.open(url, target, '');				
+					 window.open(url, '_blank', '');				
 				} else {		//跳转到指定页面
 					window.location.href = url;
 				}
 			} else if (go_num !=undefined) {		//返回到指定的页面
 				history.go(go_num);			//返回指定层级页面
 			}
-			
-			
-		/*	
-			//记录上一页地址
-			if (record_prev != undefined) {
-				cookie.setCookie('prev',window.location);
-			}
-			//返回上一页地址
-			if (return_prev != undefined) {
-				window.location.href = cookie.getCookie('prev');
-				return false;
-			}
-			
-			if (url == undefined) {
-				//history.back();			//返回	
-				if (go_num == undefined) {
-					history.go(-1);			//返回上一页刷新
-				} else {
-					history.go(go_num);			//返回指定层级页面
-				}
-				
-			} else {
-				//打开新页面
-				if (target != undefined) {
-					 window.open(url, target, '');				
-				} else {		//跳转到指定页面
-					window.location.href = url;
-				}
-				
-			}
-			*/
-			
-			
+	
 		});
 		
+	})(jQuery);
+	
+	
+	(function ($) {
+		//日历控件
+			var wade_datetimepicker = function () {
+				var options = {
+				    format: 'yyyy-mm-dd',
+					language:  'zh-CN',
+			        weekStart: 1,
+			        todayBtn:  1,
+					autoclose: 1,
+					todayHighlight: 1,
+					startView: 2,
+					forceParse: 0,
+			        showMeridian:1,
+					 todayBtn:1,
+					forceParse: 0,
+					minView: 2,
+				};
+				$('.wade_datetimepicker').datetimepicker(options);
+			}();
 	})(jQuery);
 	
 	

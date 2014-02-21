@@ -43,24 +43,24 @@
 							<div class="portlet-body">
 								<div class="clearfix">
 									<div class="btn-group">								
-										<button  class="btn green btn_bak" data-url="{:U('Admin/HotelRoom/room_edit',array('act'=>'add','hotel_id'=>$html['hotel_id']))}" data-record_prev="1">
+										<button  class="btn green btn_bak" data-url="{:U('Admin/RoomPutaway/putaway_edit',array('act'=>'add','hotel_room_id'=>$html['hotel_room_id']))}" data-record_prev="1">
 										{$global_tpl_view.add_name} <i class="icon-plus"></i>
 										</button>					
-									</div>								</div>
+									</div>									<!--										<div class="btn-group">										<a data-toggle="dropdown" href="#" class="btn">											<i class="m-icon-swapleft"></i>										</a>										<ul class="dropdown-menu">											<li><a href="javascript:;" class="btn_bak" data-url="{:U('Admin/HotelRoom/index',array('hotel_id'=>$html['hotel_id']))}" ><i class="icon-arrow-left"></i> 返回上一层</a></li>										</ul>									</div>									 -->								</div>		
 								<table class="table table-striped table-bordered table-hover sample_1">
 									<thead>
 										<tr>
 											<th>序号</th>
-											<th>房型名称</th>
-											<th>房型介绍</th>		
+											<th>开始日期</th>
+											<th>结束日期</th>											<th>添加日期</th>	
 											<th>操作</th>
 										</tr>
 									</thead>
 									<tbody>																		<volist name="html['list']" id="vo" key="i">
 										<tr class="odd gradeX">
 											<td >{$i}</td>
-											<td>{$vo.title}</a></td>											<td>{$vo.info}</td>
-											<td class="center">												<a href="javascript:;" class="btn_bak"  data-url="{:U('Admin/HotelRoom/room_edit',array('act'=>'update','hotel_room_id'=>$vo['id']))}" data-record_prev="1">编辑</a>											| <a  href="{:U('Admin/HotelRoom/room_edit',array('act'=>'delete','hotel_room_id'=>$vo['id']))}" class="check" >删除</a>											| <a href="javascript:;" class="btn_bak" data-target="1" data-url="{:U('Admin/RoomSchedule/index',array('hotel_room_id'=>$vo['id']))}">房型价格</a>											| <a href="javascript:;" class="btn_bak" data-target="1" data-url="{:U('Admin/RoomPutaway/index',array('hotel_room_id'=>$vo['id'],'hotel_id'=>$html['hotel_id']))}">下架设置</a>											| <a href="javascript:;" class="btn_bak" data-target="1" data-url="{:U('Admin/HotelRoom/room_img',array('hotel_room_id'=>$vo['id']))}">房型图片</a>											</td>
+											<td>{$vo.start_time}</a></td>											<td >{$vo.over_time}</td>											<td >{$vo.create_time}</td>
+											<td class="center">												<a href="javascript:;" class="btn_bak"  data-url="{:U('Admin/RoomPutaway/putaway_edit',array('act'=>'update','room_putaway_id'=>$vo['id']))}" data-record_prev="1">编辑</a>												| <a  href="{:U('Admin/RoomPutaway/putaway_edit',array('act'=>'delete','room_putaway_id'=>$vo['id']))}" class="check" >删除</a>											</td>
 										</tr>										</volist>
 									</tbody>
 								</table>
@@ -82,7 +82,7 @@
 	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/DT_bootstrap.js"></script>
 	<!-- END PAGE LEVEL PLUGINS -->
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
-	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/app.js"></script>	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/table-managed-Admin-HotelRoom-index.js"></script>   	
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/app.js"></script>	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/table-managed-Admin-RoomPutaway-index.js"></script>   	
 	<script type="text/javascript">
 		jQuery(document).ready(function() {       
 		   App.init();
