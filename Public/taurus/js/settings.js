@@ -9,7 +9,20 @@ $(document).ready(function(){
         themeToBackground['theme-dark'] = ['bg-img-num9','bg-img-num10','bg-img-num11','bg-img-num12','bg-img-num13','bg-img-num14','bg-img-num15','bg-img-num16'];        
         themeToBackground['theme-green'] = ['bg-img-num17','bg-img-num18','bg-img-num19','bg-img-num20'];    
     
-    $.get("assets/settings.html",function(data){        
+   // $.get("assets/settings.html",function(data){       
+   
+   (function ($) {
+  	 	$(".ss_theme[data-value="+theme+"]").addClass('active');
+
+        if(theme != 'default') 
+            $(".container").addClass(theme);
+        
+        $("#ss_backgrounds").html(buildBackgroundsList(theme,themeToBackground));
+
+        $(".ss_background[data-value="+$("body").attr("class")+"]").addClass('active'); 
+   })(jQuery);
+   /*
+	$.get("settings",function(data){        
         $("body").append(data);
         
         $(".ss_theme[data-value="+theme+"]").addClass('active');
@@ -21,6 +34,7 @@ $(document).ready(function(){
 
         $(".ss_background[data-value="+$("body").attr("class")+"]").addClass('active');        
     });
+    */
     
     $(".site-settings-button").live("click",function(){
         if($(this).parent('.site-settings').hasClass('active'))

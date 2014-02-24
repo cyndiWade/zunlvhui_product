@@ -129,6 +129,8 @@ class MainBaseAction extends AppBaseAction {
 		//外部引入文件地址。
 		$path = preg_replace("/[\\\+]/", "/",dirname($_SERVER['SCRIPT_NAME']));
 		$this->global_tpl_view['path'] = 'http://'.$_SERVER['SERVER_NAME'].$path.''.'/Public/taurus/';
+		
+		$this->global_tpl_view['group_name'] = GROUP_NAME;
 		//写入模板
 		$this->assign('global_tpl_view',$this->global_tpl_view);
 	}

@@ -29,14 +29,8 @@
 
 					<ul class="sub-menu">
 						<li >
-							<a href="{:U('Admin/User/personal')}">
-
-							</i>
-
-							个人信息</a>
-
+							<a href="{:U('Admin/User/personal')}">个人信息</a>
 						</li>
-
 					</ul>
 				</li>
 	
@@ -54,9 +48,28 @@
 
 					<ul class="sub-menu">
 						<li >
-							<a href="{:U('Admin/Hotel/index')}">
-							</i>
-							酒店列表</a>
+							<a href="{:U('Admin/Hotel/index')}">酒店列表</a>
+						</li>
+					</ul>
+				</li>
+				
+				<li class="">
+					<a href="javascript:;">
+
+					<i class="icon-file-text"></i> 
+
+					<span class="title">订单管理</span>
+
+					<span class="arrow "></span>
+
+					</a>
+
+					<ul class="sub-menu">
+						<li>
+							<a href="{:U('Admin/HotelOrder/index')}">所有订单</a>
+						</li>
+						<li>
+							<a href="{$global_tpl_view['order']['url'][0]}">酒店拒绝订单</a>
 						</li>
 					</ul>
 				</li>
@@ -68,17 +81,14 @@
 					<span class="arrow "></span>
 					</a>
 					<ul class="sub-menu">
-						<li >
-							<a href="{:U('Admin/User/index')}">
-							 账号管理</a>
+						<li>
+							<a href="{:U('Admin/User/index')}">账号管理</a>
+						</li>
+						<li>
+							<a href="{:U('Admin/Rbac/rbac_node',array('pid'=>0))}">节点管理</a>
 						</li>
 						<li >
-							<a href="{:U('Admin/Rbac/rbac_node',array('pid'=>0))}">
-							节点管理</a>
-						</li>
-						<li >
-							<a href="{:U('Admin/Rbac/group')}">
-							分组授权</a>
+							<a href="{:U('Admin/Rbac/group')}">分组授权</a>
 						</li>
 						<!--
 						<li >
