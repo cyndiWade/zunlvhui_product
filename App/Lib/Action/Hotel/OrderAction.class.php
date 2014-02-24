@@ -10,7 +10,8 @@ class OrderAction extends HotelBaseAction{
 		'UsersHotel'   => 'UsersHotel',
 	    'RoomSchedule' => 'RoomSchedule',	
 	    'HotelOrder'   => 'HotelOrder',
-	    'HotelRoom'    => 'HotelRoom'
+	    'HotelRoom'    => 'HotelRoom',
+	    'OrderLog'     => 'OrderLog'
 	);
 	
 	
@@ -30,6 +31,7 @@ class OrderAction extends HotelBaseAction{
 		$HotelRoom  = $this->db['HotelRoom'];
 		$Hotel      = $this->db['Hotel'];
 		$userId =  $this->oUser->id;
+	
 		$list = $HotelOrder->get_all_order($userId);
 		$order_status = C('ORDER_STATUS');
 		$dispose_status = C('DISPOSE_STATUS');
@@ -60,17 +62,22 @@ class OrderAction extends HotelBaseAction{
 	    
 		if ($this->isPost()){
 			$id = $this->_post('id');			
-			$HotelOrder = $this->db['HotelOrder'];		
+			$HotelOrder = $this->db['HotelOrder'];	
+			$log        = $this->db['OrderLog'];	
 			$order_status = C('ORDER_STATUS');
 			$dispose_status= C('DISPOSE_STATUS');
 			$arr = array(
 				'order_status'  =>$order_status['YCL'],
 				'dispose_status'=>$dispose_status['QR']
 			);
-
 		    $result = $HotelOrder->update_order($id,$arr);
 		    if($result!==false){
-		     
+		       $arr = array(
+		       'user_id'=>$this->oUser->id,
+		       'order_id'=>$id,
+		       'msg'=>'同意订单'
+		       );
+		       $log->orderlog($arr);
 		       parent::callback(C('STATUS_SUCCESS'),'处理成功！');
 		    }else{
 			   parent::callback(C('STATUS_NOT_DATA'),'处理失败！');
@@ -78,6 +85,61 @@ class OrderAction extends HotelBaseAction{
 		}else{
 			parent::callback(C('STATUS_ACCESS'),'非法访问！');
 		}
+	
+	
+	
+	}
+	
+	//处理拒绝的订单
+	public function noagree(){
+	    $id = $this->_get('id');
+	    $hover = parent::getAction($_SERVER["REQUEST_URI"]);
+		$html  = array(
+		         'id'=>$id,
+		         'list'=>$list,
+		         'hover'=>$hover
+		) ;
+	  $this->assign('html',$html);
+	  $this->display();
+	}
+	public function Ajax_order_jujue_status(){
+	
+	
+	      if ($this->isPost()){
+			$id = $this->_post('id');
+			$con = $this->_post('con');			
+			$HotelOrder = $this->db['HotelOrder'];
+			$OrderLog   = $this->db['OrderLog'];		
+			$order_status = C('ORDER_STATUS');
+			$dispose_status= C('DISPOSE_STATUS');
+			$order = array(
+				'order_status'   =>$order_status['CLZ'],
+				'dispose_status' =>$dispose_status['JJ'],
+			    'dispose_content'=>$con
+			);
+		    $arr =array(
+		       'user_id'=>$this->oUser->id,
+		       'order_id'=>$id,
+		       'msg'=>'拒绝订单');
+			
+		    $result = $HotelOrder->update_order($id,$order);
+		    
+		    if($result!==false){
+		       $OrderLog->orderlog($arr);
+		       parent::callback(C('STATUS_SUCCESS'),'处理成功！');
+		    }else{
+			   parent::callback(C('STATUS_NOT_DATA'),'处理失败！');
+		    }
+		}else{
+			parent::callback(C('STATUS_ACCESS'),'非法访问！');
+		}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
