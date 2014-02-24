@@ -46,7 +46,7 @@ return array(
 				1 => array(
 					'num' => 1,
 					'explain' => '确认',
-					'admin_explain'	=> '等待确认'			
+					'admin_explain'	=> '确认'			
 				),
 				2 => array(
 					'num' => 2,

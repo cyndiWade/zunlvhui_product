@@ -6,10 +6,11 @@ var TableAdvanced = function () {
         function fnFormatDetails ( oTable, nTr )
         {
             var aData = oTable.fnGetData( nTr );
+  
             var sOut = '<table>';
             sOut += '<tr><td>酒店名称:</td><td>'+aData[2]+'</td></tr>';
-            sOut += '<tr><td>星级:</td><td>'+aData[3]+'</td></tr>';
-            sOut += '<tr><td>省份:</td><td>'+aData[4]+'</td></tr>';
+            sOut += '<tr><td>预定房型:</td><td>'+aData[3]+'</td></tr>';
+            sOut += '<tr><td>入住人:</td><td>'+aData[4]+'</td></tr>';
             sOut += '</table>';
              
             return sOut;
