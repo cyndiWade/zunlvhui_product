@@ -114,7 +114,7 @@ class OrderAction extends HotelBaseAction{
 			$dispose_status= C('DISPOSE_STATUS');
 			$order = array(
 				'order_status'   =>$order_status['CLZ'],
-				'dispose_status' =>$dispose_status['JJ'],
+				'dispose_status' =>$dispose_status['NQR'],
 			    'dispose_content'=>$con
 			);
 		    $arr =array(
