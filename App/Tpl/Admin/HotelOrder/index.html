@@ -43,19 +43,19 @@
 							<div class="portlet-body">
 								<table class="table table-striped table-bordered table-hover table-full-width" id="sample_1">
 									<thead>
-										<tr>											<th>标识</th>											<th>酒店名称</th>											<th>星级</th>
-											<th class="hidden-480">省份</th>
-											<th class="hidden-480">城市</th>																					<th class="hidden-480">区域</th>																				<th class="hidden-480">地址</th>										
-											<th class="hidden-480">评分</th>																					<th class="hidden-480">电话</th>											<th >操作</th>											
+										<tr>											<th>订单号</th>											<th>酒店名称</th>											<th>预订房型</th>
+											<th>入住人</th>
+											<th>联系电话</th>																					<th>房间数</th>																				<th>价格</th>										
+											<th>入住时间</th>																					<th>离开时间</th>											<th>下单日期</th>											<th>订单状态</th>											<th>处理状态</th>											<th>操作</th>											
 										</tr>
 									</thead>
 									<tbody>										<volist name="html['list']" id="vo">
-										<tr>											<td>{$vo.id}</td>
+										<tr>											<td>{$vo.order_sn}</td>
 											<td>{$vo.hotel_name}</td>
-											<td>{$vo.hotel_xj}</td>
-											<td class="hidden-480">{$vo.hotel_sf}</td>
-											<td class="hidden-480">{$vo.hotel_cs}</td>
-											<td class="hidden-480">{$vo.hotel_q}</td>																							<td class="hidden-480">{$vo.hotel_dz}</td>												<td class="hidden-480">{$vo.hotel_pf}</td>											<td class="hidden-480">{$vo.hotel_tel}</td>											<td class="center">												<a href="javascript:;" class="btn_bak" data-target="1" data-url="{:U('Admin/Hotel/hotel_edit',array('act'=>'update','hotel_id'=>$vo['id']))}">详情</a>												| <a href="javascript:;" class="btn_bak" data-target="1" data-url="{:U('Admin/Hotel/hotel_img',array('hotel_id'=>$vo['id']))}">酒店图片</a>												| <a href="javascript:;" class="btn_bak" data-target="1" data-url="{:U('Admin/HotelRoom/index',array('hotel_id'=>$vo['id']))}">房型</a>												| <a  href="{:U('Admin/Hotel/hotel_edit',array('act'=>'delete','hotel_id'=>$vo['id']))}" class="check" >删除</a>											</td>
+											<td>{$vo.title}</td>
+											<td>{$vo.in_person}</td>
+											<td>{$vo.phone}</td>
+											<td>{$vo.room_num}</td>													<td>{$vo.total_price}</td>																					<td>{$vo.in_date}</td>												<td>{$vo.out_date}</td>											<td>{$vo.order_time}</td>											<td>{$vo.dispose_admin_explain}</td>											<td>{$vo.dispose_admin_explain}</td>											<td class="center">												<if condition="($name eq 1) OR ($name gt 100) "> value1												<elseif condition="$name eq 2"/>value2																								<else /> value3																								</if>												<a href="javascript:;" class="btn_bak" data-target="1" data-url="{:U('Admin/Hotel/hotel_edit',array('act'=>'update','hotel_id'=>$vo['id']))}">详情</a>												| <a href="javascript:;" class="btn_bak" data-target="1" data-url="{:U('Admin/Hotel/hotel_img',array('hotel_id'=>$vo['id']))}">酒店图片</a>										</td>
 										</tr>										</volist>
 								</table>
 							</div>
@@ -78,7 +78,7 @@
 	<!-- END PAGE LEVEL PLUGINS -->
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
 	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/app.js"></script>
-	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/table-advanced-Admin-Hotel-index.js"></script>     
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/table-advanced-Admin-HotelOrder-index.js"></script>     
 	<script type="text/javascript">
 		jQuery(document).ready(function() {       
 		   App.init();

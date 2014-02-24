@@ -141,7 +141,7 @@ $custom= array (
 		'STATUS_DATA_LOST' => '5001',			//上传数据丢失
 		'STATUS_OTHER' => '9999',					//其他错误
 		'STATUS_NOT_CHECK'=>'6001',			//验证不通过
-	
+		
 );
 
 return array_merge($db_config,$system,$custom);

@@ -14,14 +14,25 @@ class GlobalParameterAction extends Action {
 	
 	protected $oUser;						//全局身份标示
 	
+	protected $order_status;				//订单状态
+
+	protected $dispose_status;			//处理状态
+	
+
+	
 	/**
 	 * 构造方法
 	 */
 	public function __construct() {
 		parent:: __construct();			//重写父类构造方法
+		$this->GlobalParameterInit();
 	}
 
-	
+	//初始化方法
+	private function GlobalParameterInit () {
+		$this->order_status = C('ORDER_STATUS');
+		$this->dispose_status = C('DISPOSE_STATUS');
+	}
 
 	
 }
