@@ -132,6 +132,11 @@ class AdminBaseAction extends AppBaseAction {
 			$this->global_tpl_view['button']['prve'] = C('PREV_URL');
 			//别名
 			$this->global_tpl_view['user_info']['nickname'] = $this->oUser->nickname;
+			
+			//订单URL
+			$this->global_tpl_view['order']['url'] = array(
+				0 => U('Admin/HotelOrder/index',array('dispose_status'=>$this->dispose_status[2]['num'])),
+			);
 		}
 			
 		//写入模板

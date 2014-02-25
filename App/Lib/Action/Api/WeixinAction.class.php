@@ -13,6 +13,7 @@ class WeixinAction extends Action{
 		/* 加载微信SDK */
 		//import('COM.ThinkWechat');
 		import("@.ORG.Util.ThinkWechat"); 
+		//echo 'aaaaa';exit;
 		$weixin = new ThinkWechat('这里填写你申请的TOKEN');
 
 		/* 获取请求信息 */
