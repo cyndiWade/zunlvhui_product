@@ -20,6 +20,17 @@ return array(
 		'NOT_AUTH_MODULE' => 'HotelList', 	// 默认无需认证模块，多个用,号分割
 		'NOT_AUTH_ACTION' => '', 						// 默认无需认证方法，多个用,号分割
 	
-		
+		'NOT_PRICE' =>'暂未价格',
+
+        'PAY_TYPE' => array(
+                    1=>array(
+                       'num'=>1,
+                       'explain' =>'预付'
+                    ),
+                    2=>array(
+                       'num'=>2,
+                       'explain' =>'现付'
+                    )
+                ),
 );
 ?>
