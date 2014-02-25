@@ -50,13 +50,13 @@ var coverage = [];		//弹出层
 
 //添加所有酒店坐标红点
 
-<volist name="html['list']" id="val" key="k" >
-	point[{$k}] = new BMap.Point({$val.hotel_location_x},{$val.hotel_location_y});	//坐标
-	marker[{$k}] = new BMap.Marker(point[{$k}]);	//标签
+<volist name="html['list']" id="val" key="key" >
+	point[{$key}] = new BMap.Point({$val.hotel_location_x},{$val.hotel_location_y});	//坐标
+	marker[{$key}] = new BMap.Marker(point[{$key}]);	//标签
 	map.addOverlay(marker[{$key}]);				//写入红点定位
 	
 	//为每张红点定位的添加填出图层
-	var tmp_html  = "<a href='http://yunqiserver.xicp.net/ftp/tjr/wxadmin/hotel_info.php?id={$val.link_id}&user_code={$user_code}' ><div id='{$k}'  class='map_info'>"
+	var tmp_html  = "<a href='http://yunqiserver.xicp.net/ftp/tjr/wxadmin/hotel_info.php?id={$val.link_id}&user_code={$user_code}' ><div id='{$key}'  class='map_info'>"
 		 +"<span class='left sm_img'><img src='images/small.jpg' /></span>"
 		 +"<div class='autohei'>"
 			 +"<div class='autohei info_txt1'>{$val.link_name}</div>"
@@ -66,10 +66,10 @@ var coverage = [];		//弹出层
 		 +"<div class='clear'></div>"
 		 
 		 + "</div></a>";
-	coverage[{$k}] = new BMap.InfoWindow(tmp_html,{enableMessage:false,width:320,height:120});
+	coverage[{$key}] = new BMap.InfoWindow(tmp_html,{enableMessage:false,width:320,height:120});
 
-	marker[{$k}].addEventListener("click", function(){
-		this.openInfoWindow(coverage[{$k}]);
+	marker[{$key}].addEventListener("click", function(){
+		this.openInfoWindow(coverage[{$key}]);
 	});
 </volist>
 
@@ -77,7 +77,7 @@ var coverage = [];		//弹出层
 map.centerAndZoom(point[{$html.hotel_id}], 12);	//定位
 
 
-//marker[{$html.hotel_id}].openInfoWindow(coverage[{$html.hotel_id}]);
+marker[{$html.hotel_id}].openInfoWindow(coverage[{$html.hotel_id}]);
 
 
 </script>
