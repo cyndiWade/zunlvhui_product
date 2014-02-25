@@ -28,30 +28,7 @@ a{text-decoration:none}
 
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=9a9dIm29kxLcKLANg1FAM6tE"></script>
 <title>酒店地图</title>
-<script type="text/javascript">
-		var phoneWidth =  parseInt(window.screen.width);
-		var phoneScale = phoneWidth/640;
-		var isAndroid = RegExp("Android").test(navigator.userAgent);
-		if (isAndroid) {
-			document.write('<meta name="viewport" content="width=640, minimum-scale = '+phoneScale+', maximum-scale = '+phoneScale+', target-densitydpi=device-dpi">');
-		} else {
-			document.write('<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">');
-		}
-function quxiao(id){
-  $.post("hotel_order.php?act=qx",
-  {
-    id:id,
-  },
-  function(data){
-    var obj = JSON.parse(data);
-    if(obj.err_msg==0){
-       alert(obj.msg);
-     }else{
-       alert(obj.msg);
-     }
-  });
-}
-</script>
+
 </head>
 <body>
 <div id="allmap"></div>
@@ -100,7 +77,7 @@ var coverage = [];		//弹出层
 map.centerAndZoom(point[{$html.hotel_id}], 12);	//定位
 
 
-marker[{$html.hotel_id}].openInfoWindow(coverage[{$html.hotel_id}]);
+//marker[{$html.hotel_id}].openInfoWindow(coverage[{$html.hotel_id}]);
 
 
 </script>
