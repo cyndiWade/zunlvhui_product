@@ -19,6 +19,7 @@ function submit_order(id,type){
       var checkinday  = document.getElementById('checkinday').value;
       var checkoutday = document.getElementById('checkoutday').value;
       var user_code = document.getElementById('user_code').value;
+      var hotel_id  = document.getElementById('hotel_id').value;
       if(checkinday==''){
         alert('选择入住时间');
 	$(".stclick1").focus();
@@ -32,7 +33,7 @@ function submit_order(id,type){
 	
       }
 
-      window.location.href="index.php?s=/Home/HotelList/order/room_id/"+id+'/pay_type/'+type+'/checkinday/'+checkinday+'/checkoutday/'+checkoutday+'/user_code/'+user_code;
+      window.location.href="index.php?s=/Home/HotelList/order/room_id/"+id+'/pay_type/'+type+'/checkinday/'+checkinday+'/checkoutday/'+checkoutday+'/user_code/'+user_code+'/hotel_id/'+hotel_id;
 }	
 	$(function(){
 		$(".liwu").click(function(){
@@ -56,7 +57,8 @@ function submit_order(id,type){
 <body>
 <!--fly_css-->
 <div class="color_f" >
-  <input type="hidden" value={$user_code} name="user_code" id="user_code" />
+  <input type="hidden" value="{$html.user_code}" name="user_code" id="user_code" />
+  <input type="hidden" value="{$html.list.id}" name="hotel_id" id="hotel_id" />
   <div class="m_nav f34"><span class="left f18"><a href="hotel_list.php"> 更多酒店>></a></span>
     <h6 align="center">酒店详情</h6>
   </div>
@@ -70,15 +72,24 @@ function submit_order(id,type){
     </div>
     <div class="autohei">
       <div class="m_txt1 left"> <span class=" f30 zx6">{$html.list.hotel_name}{$hotel.link_name}</span> <br>
-        <span class="zx2 f22"> <img src="{$Think.const.APP_PATH}Public/Home/images/5.png" style="width:136px;height:26px;" title="{$html.list.hotel_xj}星级酒店" alt="{$html.list.hotel_xj}星级" /> </span> </div>
-      <div class="m_txt1 right pad_pf"> <span class="zx7  padding_15">{$html.list.hotel_pf}分</span> </div>
+        <span class="zx2 f22"> 
+        <img src="{$Think.const.APP_PATH}Public/Home/images/5.png" style="width:136px;height:26px;" title="{$html.list.hotel_xj}星级酒店" alt="{$html.list.hotel_xj}星级" /> </span> </div>
+      <div class="m_txt1 right pad_pf"> 
+      <span class="zx7  padding_15">{$html.list.hotel_pf}分</span> 
+      </div>
     </div>
   </div>
   <div class="blank1"></div>
   <div class="m_boxbg1 padding0 jd_info">
     <ul>
-      <li><span class="left m_dot1 zx2 f24">{$html.list.hotel_syq}</span> <span class="right m_dot4 zx7 f20"> <a href="hotel_map.php?id={$hotel.link_id}&user_code={$user_code}">地图</a></span></li>
-      <li style="border-bottom:none;"> <span class="left m_dot2 zx2 f24">{$html.list.hotel_kynf}年开业</span> <span class="right m_dot4 zx7 f20 detail"> <a href="javascript:;">详情</a></span> </li>
+      <li><span class="left m_dot1 zx2 f24">{$html.list.hotel_syq}</span> 
+      <span class="right m_dot4 zx7 f20"> 
+      <a href="index.php?s=/Home/HotelList/map/hotel_id/{$html.list.id}/user_code/{$html.user_code}">地图</a>
+      </span></li>
+      <li style="border-bottom:none;"> 
+      <span class="left m_dot2 zx2 f24">{$html.list.hotel_kynf}年开业</span> 
+      <span class="right m_dot4 zx7 f20 detail"> 
+      <a href="javascript:;">详情</a></span> </li>
     </ul>
   </div>
   <div class="blank1"></div>
@@ -114,7 +125,7 @@ function submit_order(id,type){
         <div class="right p210"> 
         <span class="zx7 f30  pr_15">￥{$vo.prepay}</span> 
         <span>
-        <a href="javascript:void(0)" class="btn_yd" onclick="submit_order({$vo.id},2)" > 
+        <a href="javascript:void(0)" class="btn_yd" onclick="submit_order({$vo.hotel_room_id},2)" > 
         <img style="width:82px" src="{$Think.const.APP_PATH}Public/Home/images/yuding.png"> </a> 
         </span> 
         </div>
@@ -140,7 +151,7 @@ function submit_order(id,type){
         <div class="right p210"> 
         <span class="zx7 f30  pr_15">￥{$vo.spot_payment}</span> 
         <span>
-        <a href="javascript:void(0)" class="btn_yd" onclick="submit_order({$vo.id},1)" > 
+        <a href="javascript:void(0)" class="btn_yd" onclick="submit_order({$vo.hotel_room_id},1)" > 
         <img style="width:82px" src="{$Think.const.APP_PATH}Public/Home/images/yuding.png"> </a> 
         </span> 
         </div>

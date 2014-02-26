@@ -7,7 +7,8 @@ class HotelListAction extends HomeBaseAction{
 		'Hotel'=>'Hotel',
 	    'HotelRoom' =>'HotelRoom',
 	    'RoomSchedule'=>'RoomSchedule',
-        'Hotelorder'  =>'Hotelorder'
+        'HotelOrder'  =>'HotelOrder',
+	    'UsersHotel'   => 'UsersHotel'
 	 );
 	 	/**
 	 * 构造方法
@@ -25,7 +26,7 @@ class HotelListAction extends HomeBaseAction{
 	  	  $Hotel      = $this->db['Hotel']; // 酒店
 	  	  $HotelRoom  = $this->db['HotelRoom'];
 	  	  $RoomSchedule = $this->db['RoomSchedule'];
-	      $list = $Hotel->get_hotels(array('hotel_cs'=>'黄山'));
+	      $list = $Hotel->get_hotels(array('hotel_cs'=>'青岛'));
 	      
 	      if($list == true){
 	      	 $hotel_ids = getArrayByField($list,'id'); // 获得酒店的id
@@ -57,7 +58,10 @@ class HotelListAction extends HomeBaseAction{
 
 	      }
 	     //echo '<pre>';print_R($list);echo '</pre>';exit;
-	  	 $html = array('list'=>$list);
+	  	 $html = array(
+		  	 'list'=>$list,
+		  	 'user_code'=>'html.list'
+	  	 );
 	     $this->assign('html',$html);
 	  	 $this->display();
 	  
@@ -69,6 +73,8 @@ class HotelListAction extends HomeBaseAction{
 	      $pay_type    = $this->_get('pay_type');
 	      $checkinday  = $this->_get('checkinday');
 	      $checkoutday = $this->_get('checkoutday');
+	      $user_code   = $this->_get('user_code');
+	      $hotel_id    = $this->_get('hotel_id');
 	      $countday = countDays($checkinday,$checkoutday,1);
 	      $user_code   = $this->_get('user_code');
 	      $HotelRoom = $this->db['HotelRoom'];
@@ -82,7 +88,9 @@ class HotelListAction extends HomeBaseAction{
 		      'user_code'  =>$user_code,
 	          'price'      => $price,
 	          'total_price'=> $price *$countday, 
-	          'list'       =>$list[0]
+	          'list'       =>$list[0],
+	          'user_code'=>$user_code,
+	          'hotel_id'=>$hotel_id,
 	      );
 	      //echo '<pre>';print_R($html);echo '</pre>';exit;
 	      $this->assign('html',$html);
@@ -92,8 +100,14 @@ class HotelListAction extends HomeBaseAction{
 	  //地图
 	  
 	  public function map(){
-	  	  $Hotel  = $this->db['Hotel'];
-	      $list = $Hotel->get_hotels(array('hotel_cs'=>'黄山'));
+	  	  $id = $this->_get('hotel_id');
+	  	  if(!empty($id)){
+	  	  	 $con = array('id'=>$id);
+	  	  }else{
+	  	  	 $con = array('hotel_cs'=>'黄山');
+	  	  }
+	  	  $Hotel  = $this->db['Hotel'];  
+	      $list = $Hotel->get_hotels($con);
 		  $list = regroupKey($list,'id',true);
 			if($id){		//ID存在时
 				$list[$id] = $list[$id];	
@@ -101,7 +115,11 @@ class HotelListAction extends HomeBaseAction{
 			    $key = array_keys($list);
 				$id = $key[1];
 			}
-	  	  $html = array('list'=>$list,'hotel_id'=>$id);
+	  	  $html = array(
+	  	
+		  	  'list'=>$list,
+		  	  'hotel_id'=>$id
+	  	  );
 	  	  //echo '<pre>';print_R($html);echo '</pre>';exit;
 	  	  $this->assign('html',$html);
 	  	  $this->display();
@@ -155,39 +173,59 @@ class HotelListAction extends HomeBaseAction{
 	      $order_total = $this->_post('order_total');
 	      $tel         = $this->_post('tel');
 	      $yq          = $this->_post('yq');
+	      $hotel_id    = $this->_post('hotel_id');
 	      $countday = countDays($checkinday,$checkoutday,1);
 	      $user_code   = $this->_post('user_code');
-	      $data =array(
-		      'order_sn'=>time(),
-		      'order_tiime'=>time(),
-		      'user_id'=>'',
-		      'hotel_id'=>'',
-		      'hotel_room_id'=>'',
-		      'in_person'=>$in_person,
-		      'contact_person'=>$telperson,
+          $UsersHotel = $this->db['UsersHotel'];
+          $user_id = $UsersHotel->get_user_id(array('hotel_id'=>$hotel_id));
 	      
+          $data =array(
+		      'order_sn'           => time(),
+		      'order_time'         => time(),
+		      'user_id'			   => $user_id,
+		      'hotel_id' 		   => $hotel_id,
+		      'hotel_room_id'      => $room_id,
+		      'in_person'		   => $Inperson,
+		      'contact_person'	   => $telperson,
+	          'ask_for'   		   => $yq,
+	          'user_code'          => $user_code,
+	          'is_from'            => 1,
+	          'phone'			   => $tel,
+	          'total_price'        => $order_total,
+	          'room_num'           => $house,
+	          'in_date'            => strtotime($checkinday),
+	          'out_date'           => strtotime($checkoutday),
+	          'order_status'       => 0,
+	          'dispose_status'     => 0,
+	          'order_type'         =>$pay_type,
+	          'is_pay'=>0,
+	          'is_del'=>0      
+	      );
 	      
-	      )
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      $HotelOrder = $this->db['Hotelorder'];
+	      $HotelOrder = $this->db['HotelOrder'];
 	      $lastid = $HotelOrder->done_add($data);
+	  	  if(!empty($lastid)){
+
+	  	  	  header("location:index.php?s=/Home/HotelList/order_info/order_id/$lastid");
+	  	  }
+	  }
+	  
+	  
+	  //订单详情
+	  public function order_info(){
+	  	$PAY_TYPE    = C('PAY_TYPE');
+	  	$IS_PAY      = C('IS_PAY');
+	  	$order_id = $this->_get('order_id');
+	  	$HotelOrder = $this->db['HotelOrder'];
+	  	$list = $HotelOrder->order_info(array('o.id'=>$order_id));
 	  	
-	  	dump($this->_Post());
+	  	$list['in_date'] = date('Y-m-d',$list['in_date']);
+	  	$list['order_time'] = date('Y-m-d',$list['order_time']);
+	  	$list['out_date'] = date('Y-m-d',$list['out_date']);
+	  	$list['explain'] = $PAY_TYPE[$list['order_type']]['explain'];
+	  	$list['is_pay']     = $IS_PAY[$list['is_pay']]['explain'];
+	  	$this->assign('html',$list);
+	  	$this->display();
 	  }
 
 

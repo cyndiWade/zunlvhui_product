@@ -32,7 +32,7 @@ class HotelRoomModel extends HomeBaseModel {
 		->join($this->prefix.'room_schedule AS rs on rs.hotel_room_id = hr.id')
 		->where($con)
 		->select();
-        //echo $this->getLastSql();
+       // echo $this->getLastSql();
 		return $data;
 	}
 	
