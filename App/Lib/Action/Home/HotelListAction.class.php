@@ -49,6 +49,7 @@ class HotelListAction extends HomeBaseAction{
 	     $Hotel  = $this->db['Hotel'];
 	     $HotelRoom  = $this->db['HotelRoom'];
 	  	 $hotel_id = $this->_get('hotel_id');
+	  	 $user_code = $this->_get('user_code');
 	     $list = $Hotel->get_one_hotel(array('id'=>$hotel_id));
 	    
 	     if($list == true){
@@ -60,7 +61,7 @@ class HotelListAction extends HomeBaseAction{
 	     //echo '<pre>';print_R($list);echo '</pre>';exit;
 	  	 $html = array(
 		  	 'list'=>$list,
-		  	 'user_code'=>'html.list'
+		  	 'user_code'=>$user_code
 	  	 );
 	     $this->assign('html',$html);
 	  	 $this->display();
@@ -101,6 +102,7 @@ class HotelListAction extends HomeBaseAction{
 	  
 	  public function map(){
 	  	  $id = $this->_get('hotel_id');
+	  	  $user_code = $this->_get('user_code');
 	  	  if(!empty($id)){
 	  	  	 $con = array('id'=>$id);
 	  	  }else{
@@ -118,7 +120,8 @@ class HotelListAction extends HomeBaseAction{
 	  	  $html = array(
 	  	
 		  	  'list'=>$list,
-		  	  'hotel_id'=>$id
+		  	  'hotel_id'=>$id,
+	  	      'user_code'=>$user_code
 	  	  );
 	  	  //echo '<pre>';print_R($html);echo '</pre>';exit;
 	  	  $this->assign('html',$html);

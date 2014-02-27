@@ -1,21 +1,23 @@
-<?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006-2012 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Author: 麦当苗儿 <zuojiazi@vip.qq.com> <http://www.zjzit.cn>
-// +----------------------------------------------------------------------
+<?php 
 ini_set('display_errors',1);
-class WeixinAction extends Action{
+echo __FILE__;
+class WeixinAction extends AppBaseAction{
+	
+  //初始化数据库连接
+	 protected  $db = array(
+		'Hotel'=>'Hotel',
+	    'HotelRoom' =>'HotelRoom',
+	    'RoomSchedule'=>'RoomSchedule',
+        'HotelOrder'  =>'HotelOrder',
+	    'UsersHotel'   => 'UsersHotel',
+	    'OrderState'   => 'OrderState'
+	 );
 
-	public function index(){
-		/* 加载微信SDK */
-		
-        $this->responseMsg();
-		
-	}
-
+	   public function index(){
+	   
+	   
+		  $this->responseMsg();
+	   }
 /*
 *==========================================================
 * 响应类型
@@ -30,44 +32,26 @@ class WeixinAction extends Action{
 
 			switch ($RX_TYPE)
 			{
-				case "text" :
+				case "text":
 				case "voice":
-					//$resultStr = $this->receiveText($postObj);
-				//$item['Title'], $item['Description'], $item['Picurl'], $item['Url']
-					$arr_item = array(array(
-						'Title'=>'22222',
-						'Description'=>'1222',
-						'Picurl' =>'',
-						'Url'    =>'http://baidu.com',
-						)
-						);
-						
-					$resultStr = $this->transmitNews($postObj, $arr_item, $flag = 0);
-					$contentStr = 'dddd';
-					//$resultStr = $this->transmitText($postObj,$contentStr, $flag = 0);
+				    $OrderState = $this->db['OrderState'];
+					$step = $OrderState->get_step('o_vzytyfkGq8jriMsxpj5rJyvqXs');
+				    $resultStr = $this->step($postObj,$step);
 					break;
-
-			    case "event":
-					$resultStr = $this->receiveEvent($postObj);
-					break;
-
-
-				case "video":
-					$contentStr = 'dddd';
-					$resultStr = $this->transmitText($postObj,$contentStr, $flag = 0);
-					break;
-				case "link":
-					$contentStr = 'dddd';
-					$resultStr = $this->transmitText($postObj,$contentStr, $flag = 0);
-					break;
-				
 				case "image":
-					$contentStr = 'dddd';
-					$resultStr = $this->transmitText($postObj,$contentStr, $flag = 0);
+					$resultStr = $this->receiveText($postObj);
 					break;
 				case "location":
-					$contentStr = 'dddd';
-					$resultStr = $this->transmitText($postObj,$contentStr, $flag = 0);
+					$resultStr = $this->receiveText($postObj);
+					break;
+				case "video":
+					$resultStr = $this->receiveText($postObj);
+					break;
+				case "link":
+					$resultStr = $this->receiveText($postObj);
+					break;
+				case "event":
+					$resultStr = $this->receiveEvent($postObj);
 					break;
 				default:
 					$resultStr = "unknow msg type: ".$RX_TYPE;
@@ -137,8 +121,10 @@ class WeixinAction extends Action{
 
 /*
 *===========================================================
+* 文本的xml
 *文本消息的处理xml transmitText($object, $content, $flag = 0)
 *图文消息处理xml   transmitNews($object, $arr_item, $flag = 0)
+*音乐处理xml       transmitMusic($object, $musicArray, $flag = 0)
 *===========================================================
 */
 	//文本消息的处理xml
@@ -150,7 +136,7 @@ class WeixinAction extends Action{
 			<CreateTime>%s</CreateTime>
 			<MsgType><![CDATA[text]]></MsgType>
 			<Content><![CDATA[%s]]></Content>
-			<FuncFlag>%d</FuncFlag>
+			<FuncFlag>%s</FuncFlag>
 			</xml>";
 			$resultStr = sprintf($textTpl, $object->FromUserName, $object->ToUserName, time(), $content, $flag);
 			return $resultStr;
@@ -169,7 +155,7 @@ class WeixinAction extends Action{
 			</item>";
 			$item_str = "";
 			foreach ($arr_item as $item)
-				$item_str .= sprintf($itemTpl, $item['Title'], $item['Description'], $item['Picurl'], $item['Url']);
+				$item_str .= sprintf($itemTpl, $item['Title'], $item['Description'], $item['Picurl'], $item['Url'].'/user_code/'.$object->FromUserName);
 
 			$newsTpl = "<xml>
 			<ToUserName><![CDATA[%s]]></ToUserName>
@@ -187,6 +173,74 @@ class WeixinAction extends Action{
 			return $resultStr;
 	}
 
+/*
+*===========================================================
+* 文本的xml
+*===========================================================
+*/
 
+
+
+
+
+
+// 文本消息
+private function receiveText($object)
+{
+        $funcFlag = 0;
+        $contentStr = "你发送的是文本，内容为：".$object->Content;
+        $resultStr = $this->transmitText($object, $contentStr, $funcFlag);
+        return $resultStr;
+}
+
+   //判断流程
+
+   public function step($postObj,$step){
+        
+		 $OrderState = $this->db['OrderState'];
+         $Hotel = $this->db['Hotel'];
+		 $text = $postObj->Content;
+		 if(empty($text)){
+		   $text = $postObj->Recognition ;
+		 }
+		 
+         switch($step){
+		 
+		     case 0 :
+				    
+					$arr_item = $Hotel->get_all_hotel();					
+					$resultStr = $this->transmitNews($postObj, $arr_item, $flag = 0);
+				 break;
+			 case 1 :
+				 break;
+			 case 2 :
+				 break;
+			 case 3 :
+				 break;
+			 case 4 :
+				 break;
+			 default :
+				 break;
+		 
+		 }
+		 tolog('/web/www/ftp/tjr/zun/App/Lib/Action/Api/a.txt',$text);
+		 return $resultStr;
+   
+   
+   
+   
+   }
+
+   public function test(){
+   
+          $OrderState = $this->db['OrderState'];
+
+		  echo $OrderState->get_step('o_vzytyfkGq8jriMsxpj5rJyvqXs');
+       
+   
+   }
 
 }
+
+
+?>
