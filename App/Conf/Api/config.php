@@ -19,6 +19,17 @@ return array(
 
 		'Hotel_info_url' =>'http://yunqiserver.xicp.net/ftp/tjr/zun/index.php?s=/Home/HotelList/get_hotel_info/hotel_id/',
 		'logo_url'=>'http://yunqiserver.xicp.net/ftp/tjr/images/4.jpg',
+
+		'PAY_TYPE' => array(
+                    1=>array(
+                       'num'=>1,
+                       'explain' =>'预付(微信支付)'
+                    ),
+                    2=>array(
+                       'num'=>2,
+                       'explain' =>'现付(酒店前台支付)'
+                    )
+                ),
 		
 );
 ?>

@@ -468,4 +468,16 @@ function set_str_len(&$all,$fields,$length) {
 	}
 }
 
+
+
+function tolog($path,$content){
+	if (!file_exists($path)) {
+		file_put_contents($path,'create_file');
+	}
+	$file_content	=	file_get_contents($path);		
+	$new_content = "\r\n".date('Y-m-d H:i:s').' -> '.$content;
+	$file_content  .= $new_content;
+	file_put_contents($path,$file_content);
+	return $new_content;
+}
 ?>

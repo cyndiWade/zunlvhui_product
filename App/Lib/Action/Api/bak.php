@@ -1,6 +1,6 @@
 <?php 
 ini_set('display_errors',1);
-//echo __FILE__;
+echo __FILE__;
 class WeixinAction extends AppBaseAction{
 	
   //初始化数据库连接
@@ -10,13 +10,12 @@ class WeixinAction extends AppBaseAction{
 	    'RoomSchedule'=>'RoomSchedule',
         'HotelOrder'  =>'HotelOrder',
 	    'UsersHotel'   => 'UsersHotel',
-	    'OrderState'   => 'OrderState',
-		
+	    'OrderState'   => 'OrderState'
 	 );
 
 	   public function index(){
-	      $OrderState = $this->db['OrderState'];
-	      $OrderState->del_data();
+	   
+	   
 		  $this->responseMsg();
 	   }
 /*
@@ -37,7 +36,11 @@ class WeixinAction extends AppBaseAction{
 				case "voice":
 				    $OrderState = $this->db['OrderState'];
 					$step = $OrderState->get_step('o_vzytyfkGq8jriMsxpj5rJyvqXs');
-				    $resultStr = $this->step($postObj,$step);
+					//tolog('/web/www/ftp/tjr/zun/App/Lib/Action/Api/a.txt',$step);
+				    //$resultStr = $this->step($postObj,$step);
+					$resultStr = $this->receiveText($postObj);
+					//$resultStr = $this->receiveText($postObj);
+				    tolog('/web/www/ftp/tjr/zun/App/Lib/Action/Api/a.txt',$resultStr);
 					break;
 				case "image":
 					$resultStr = $this->receiveText($postObj);
@@ -200,78 +203,37 @@ private function receiveText($object)
         
 		 $OrderState = $this->db['OrderState'];
          $Hotel = $this->db['Hotel'];
-		 $HotelRoom = $this->db['HotelRoom'];
-		 $text = $postObj->Content;
-		 $user_code = $postObj->FromUserName;
-		 if(empty($text)){
-		   $text = $postObj->Recognition ;
-		 }
-		 $T= 60*30;
+		 $text = empty($postObj->Content) ? $postObj->Recognition  : $postObj->Content;
          switch($step){
 		 
 		     case 0 :
-				 //城市名
-				    $data = array('user_code'=>"$user_code",'hotel_add'=>"$text",'step'=>$step+1,'starttime'=>time(),'endtime'=>time()+$T);
-					$arr_item = $Hotel->get_all_hotel("$text");					
+				    
+					$arr_item = $Hotel->get_all_hotel();					
 					$resultStr = $this->transmitNews($postObj, $arr_item, $flag = 0);
 				 break;
-			 case 1 :	
-				 //该城市下的酒店
-				 $arr_item = $Hotel->get_Hotel("$text");
-				 $data = array('step'=>$step+1,'hotel_name'=>$arr_item['hotel_name'],'hotel_id'=>$arr_item['hotel_id'],'starttime'=>time(),'endtime'=>time()+$T);
-				 $resultStr = $this->transmitNews($postObj, $arr_item['list'], $flag = 0);
+			 case 1 :
 				 break;
 			 case 2 :
-				 //选择房型
-			     $PAY_TYPE = C('PAY_TYPE');
-                 $hotel_id = $OrderState->get_hotel_id($user_code);
-                 $arr_item = $HotelRoom->get_room_type("$text",$hotel_id,$pay_type=2);
-				 $data = array('step'=>$step+1,'room_id'=>$arr_item['room_id'],'room_name'=>$arr_item['title'],'room_price'=>$arr_item['price'],'pay_type'=>$arr_item['pay_type'],'starttime'=>time(),'endtime'=>time()+$T);
-				 $contentStr = '您选了：'.$arr_item['title']." 房型 \n".'价格为 ：'.$arr_item['price'] .'￥ '."\n".'付款方式为 : '.$PAY_TYPE[$arr_item['pay_type']]['explain'];
-				 $resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
 				 break;
 			 case 3 :
-				 // 入住时间
-
 				 break;
-			 case 5 :
-				 // 离店时间
-
-				 break;
-		     case 4 :
-				 // 确认订单
+			 case 4 :
 				 break;
 			 default :
 				 break;
 		 
 		 }
-		 if($step == 0){
-              $OrderState->add_step($data);
-			
-		 }else{
-		      $OrderState->where(array('user_code'=>"$user_code"))->save($data);
-			 
-		 }
-         
-
 		 return $resultStr;
    
    
    
    
    }
-   
+
    public function test(){
    
           $OrderState = $this->db['OrderState'];
-		  $Hotel = $this->db['Hotel'];
-		  $HotelRoom = $this->db['HotelRoom'];
-          //$data = $Hotel->get_Hotel();
-		  $data = $HotelRoom->get_room_type('高级',291,2);
-		  $OrderState->del_data();
-		  echo $OrderState->get_hotel_id('o_vzytyfkGq8jriMsxpj5rJyvqXs');
-		  echo $Hotel->getLastSql();
-		  echo '<pre>';print_R($data);echo '</pre>';
+
 		  echo $OrderState->get_step('o_vzytyfkGq8jriMsxpj5rJyvqXs');
        
    
