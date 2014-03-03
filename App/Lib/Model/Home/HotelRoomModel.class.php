@@ -32,9 +32,32 @@ class HotelRoomModel extends HomeBaseModel {
 		->join($this->prefix.'room_schedule AS rs on rs.hotel_room_id = hr.id')
 		->where($con)
 		->select();
+<<<<<<< HEAD
        // echo $this->getLastSql();
 		return $data;
 	}
+=======
+        foreach ($data as $key=>$val){
+            $data[$key]['img'] = $this->get_img($condition['hotel_id'],2);//array('hotel_id'=>$hotel_id )
+		}
+		return $data;
+	}
+
+	//获得图片
+	public function get_img($hotel_id,$type){
+	  
+	        
+
+			 $data = $this->table($this->prefix.'hotel AS h')
+			->join($this->prefix.'hotel_img AS hr ON h.id=hr.hotel_id')
+			->where( array('hr.hotel_id'=>$hotel_id,'hr.is_del'=>0,'hr.type'=>$type) )
+			->getField('url');
+
+			 return C('PUBLIC_VISIT.domain').C('UPLOAD_DIR.image').$data;
+	  
+	  
+	  }
+>>>>>>> db724fabc3d921028b530455fd731488edf8c9f9
 	
 
 	

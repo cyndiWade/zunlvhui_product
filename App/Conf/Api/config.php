@@ -17,8 +17,30 @@ return array(
 		//客户端加密、解密钥匙
 		'UNLOCAKING_KEY' => 'cheshencar',
 
+<<<<<<< HEAD
 		'Hotel_info_url' =>'http://yunqiserver.xicp.net/ftp/tjr/zun/index.php?s=/Home/HotelList/get_hotel_info/hotel_id/',
 		'logo_url'=>'http://yunqiserver.xicp.net/ftp/tjr/images/4.jpg',
+=======
+		'Hotel_info_url' =>'http://yunqiserver.xicp.net/ftp/tjr/wxadmin/index.php?s=/Home/HotelList/get_hotel_info/hotel_id/',
+		'logo_url'=>'http://yunqiserver.xicp.net/ftp/tjr/images/4.jpg',
+
+		'Hotel_more'=>'http://yunqiserver.xicp.net/ftp/tjr/wxadmin/index.php?s=/Home/HotelList/index/hotel_cs/',
+
+		'HOTEL_MAP_IMG'=>'http://yunqiserver.xicp.net/ftp/tjr/wxadmin/App/Public/Home/images/city/',
+		'HOTEL_MAP' => 'http://yunqiserver.xicp.net/ftp/tjr/wxadmin/index.php?s=/Home/HotelList/map/hotel_cs/',
+		'ORDER_INFO'=>'http://yunqiserver.xicp.net/ftp/tjr/wxadmin/index.php?s=/Home/HotelList/order_info/order_id/',
+
+		'PAY_TYPE' => array(
+                    1=>array(
+                       'num'=>1,
+                       'explain' =>'预付(微信支付)'
+                    ),
+                    2=>array(
+                       'num'=>2,
+                       'explain' =>'现付(酒店前台支付)'
+                    )
+                ),
+>>>>>>> db724fabc3d921028b530455fd731488edf8c9f9
 		
 );
 ?>
