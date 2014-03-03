@@ -19,6 +19,13 @@ class CouponModel extends AdminBaseModel {
 		return $this->add();
 	}
 	
+	public function save_one_coupon ($id) {
+		$this->start_time = strtotime($this->start_time);
+		$this->over_time = strtotime($this->over_time);
+		return $this->where(array('id'=>$id))->save();
+	}
+	
+	
 	//获取一条数据
 	public function seek_one_coupon($condition,$field = '*') {
 		$con = array('is_del'=>0);

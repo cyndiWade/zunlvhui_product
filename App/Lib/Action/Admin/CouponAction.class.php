@@ -99,7 +99,7 @@ class CouponAction extends AdminBaseAction {
 		} else if ($act == 'update') {			//修改
 			if ($this->isPost()) {
 				$Coupon->create();
-				$Coupon->save_one_data(array('id'=>$coupon_id)) ? $this->success('修改成功！') : $this->error('没有做出任何修改！');
+				$Coupon->save_one_coupon($coupon_id) ? $this->success('修改成功！') : $this->error('没有做出任何修改！');
 				exit;
 			}
 			//查找房型
