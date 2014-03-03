@@ -15,7 +15,11 @@ class HotelModel extends HomeBaseModel{
 		$con = array('is_del'=>0);
 		array_add_to($con,$condition);
         
-		return $this->where($con)->field($field)->select();
+		$data = $this->where($con)->field($field)->select();
+		foreach ($data as $key=>$val){
+            $data[$key]['img'] = $this->get_img($val['id'],2);//array('hotel_id'=>$hotel_id )
+		}
+		return $data;
 		
 	}
 	public function get_all_data($hotel_cs){
@@ -30,6 +34,25 @@ class HotelModel extends HomeBaseModel{
 	
 	
 	}
+
+   //获得图片
+	public function get_img($hotel_id,$type){
+	  
+	        
+
+			 $data = $this->table($this->prefix.'hotel AS h')
+			->join($this->prefix.'hotel_img AS hr ON h.id=hr.hotel_id')
+			->where( array('hr.hotel_id'=>$hotel_id,'hr.is_del'=>0,'hr.type'=>$type) )
+			->getField('url');
+
+			 return C('PUBLIC_VISIT.domain').C('UPLOAD_DIR.image').$data;
+	  
+	  
+	  }
+
+	  public function get_price(){
+	  
+	  }
 	
 	
 }

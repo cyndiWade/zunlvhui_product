@@ -480,4 +480,40 @@ function tolog($path,$content){
 	file_put_contents($path,$file_content);
 	return $new_content;
 }
+
+//获得时间戳
+function getTime($date){
+  if($date =='今天') return strtotime(date('Y-m-d',time()));
+  if($date =='明天') return strtotime(date('Y-m-d',strtotime("+1 day")));
+  if($date =='后天') return strtotime(date('Y-m-d',strtotime("+2 day")));   
+  $date = str_replace('年','-',$date);
+  $date = str_replace('月','-',$date);
+  $date = str_replace('日','',$date);
+  $date = str_replace('号','',$date);
+
+  return strtotime($date);
+}
+
+// 计算两个日期之间的天数
+function daysDiff($timestamp1, $timestamp2) {
+    $date1 = strtotime(date('Y-m-d', $timestamp1)); 
+    $date2 = strtotime(date('Y-m-d', $timestamp2));
+    return intval(($date1-$date2)/86400);
+}
+
+//判断是否是手机号
+function is_phone($phone_num){
+
+  $regex = "/13[0-9]{9}|15[0|1|2|3|5|6|7|8|9]\d{8}|18[0|5|6|7|8|9]\d{8}/";
+  preg_match($regex,$phone_num, $phone);
+
+  if(count($phone)){
+	  return $phone;
+  }else{
+	  return false;
+  }
+	  
+
+}
+
 ?>

@@ -1,6 +1,8 @@
 <?php 
 ini_set('display_errors',1);
-//echo __FILE__;
+error_reporting(E_ALL);
+//echo __FILE__;/web/www/ftp/tjr/zun/App/Lib/Action/Api/
+define("TOKEN", "rikee");
 class WeixinAction extends AppBaseAction{
 	
   //初始化数据库连接
@@ -11,10 +13,15 @@ class WeixinAction extends AppBaseAction{
         'HotelOrder'  =>'HotelOrder',
 	    'UsersHotel'   => 'UsersHotel',
 	    'OrderState'   => 'OrderState',
+		'RoomPutaway'  => 'RoomPutaway',
+		'WxUser'       =>'WxUser'
 		
 	 );
+	  
 
 	   public function index(){
+		  //$this->valid();
+		  //exit;
 	      $OrderState = $this->db['OrderState'];
 	      $OrderState->del_data();
 		  $this->responseMsg();
@@ -30,20 +37,38 @@ class WeixinAction extends AppBaseAction{
 		if (!empty($postStr)){
 			$postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
 			$RX_TYPE = trim($postObj->MsgType);
+			$user_code = $postObj->FromUserName;
+			$WxUser = $this->db['WxUser'];
+            $WxUser->The_existence_of_wxuser($user_code);  //是否关注
 
+			$phone = $WxUser->The_existence_of_phone($user_code); //是否输入了手机号
+
+			$text = empty($postObj->Content ) ? $postObj->Recognition : $postObj->Content ;
+            $is_tel = is_phone("$text");
+			if(empty($phone) and empty($is_tel) ){
+			  $contentStr = '请输入手机号。';
+			  $resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
+			  die($resultStr);
+			}elseif(!empty($is_tel)){
+              $WxUser->where(array('wxid'=>"$user_code"))->save(array('phone'=>"$text"));
+			  $contentStr = '验证成功';
+              $resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
+			  die($resultStr);
+			  
+			}
 			switch ($RX_TYPE)
 			{
 				case "text":
 				case "voice":
 				    $OrderState = $this->db['OrderState'];
-					$step = $OrderState->get_step('o_vzytyfkGq8jriMsxpj5rJyvqXs');
+					$step = $OrderState->get_step($user_code);
 				    $resultStr = $this->step($postObj,$step);
 					break;
 				case "image":
 					$resultStr = $this->receiveText($postObj);
 					break;
 				case "location":
-					$resultStr = $this->receiveText($postObj);
+					//$resultStr = $this->receiveText($postObj);
 					break;
 				case "video":
 					$resultStr = $this->receiveText($postObj);
@@ -77,6 +102,13 @@ class WeixinAction extends AppBaseAction{
 */ 
 	private function receiveEvent($object)
 	{
+	     $OrderState = $this->db['OrderState'];
+		 $HotelOrder = $this->db['HotelOrder'];
+         $Hotel      = $this->db['Hotel'];
+		 $HotelRoom  = $this->db['HotelRoom'];
+		 $WxUser     = $this->db['WxUser'];
+		 $UsersHotel = $this->db['UsersHotel'];
+		 $user_code  = $object->FromUserName;
 			$contentStr = "";
 			switch ($object->Event)
 			{
@@ -85,20 +117,50 @@ class WeixinAction extends AppBaseAction{
 					break;
 				case "unsubscribe":
 					$contentStr = "";
+				    $WxUser->unsubscribe($user_code);
+					tolog('/web/www/ftp/tjr/zun/App/Lib/Action/Api/a.txt',$WxUser->getLastSql());
 					break;
 				case "CLICK":
 					switch ($object->EventKey)
 					{
 						case 'menu_1_1':
-							//特惠商品
+							$OrderState->del_data_user($user_code);
+							$contentStr =  '请用文字或语音录入您下榻酒店的城市。';
+						    $resultStr = $this->transmitText($object, $contentStr);
 							break;
 						case 'menu_1_2':
-							//特惠商品
+							$contentStr ="客服电话:400-6096-906。\n 在线时间为8点~22点，客服人员将一对一为您服务。";
+						    $resultStr = $this->transmitText($object, $contentStr);
 							break;
 						case 'menu_1_3':
 							//特惠商品
 							break;
-						case 'menu_1_4':
+						case 'menu_2_1':
+                            $arr_item = $HotelOrder->get_order($user_code);
+						    $resultStr = $this->transmitNews($object, $arr_item, $flag = 0);
+							
+							break;
+						case 'menu_2_2':
+						case 'menu_2_3':
+						case 'menu_2_4':
+							$contentStr ="敬请期待......";
+						    $resultStr = $this->transmitText($object, $contentStr);
+							//特惠商品
+							break;
+						case 'menu_3_1':
+							//特惠商品
+						    $HotelOrder->get_order($user_code);
+							break;
+						case 'menu_3_2':
+							//特惠商品
+							break;
+						case 'menu_3_3':
+							//特惠商品
+							break;
+						case 'menu_3_4':
+							//特惠商品
+							break;
+						case 'menu_3_5':
 							//特惠商品
 							break;
 						default:
@@ -106,11 +168,13 @@ class WeixinAction extends AppBaseAction{
 							break;
 					}
 					break;
+			    case "LOCATION" :
+					break;
 				default:
 					$contentStr = "receive a new event: ".$object->Event;
 					break;
 			}
-			$resultStr = $this->transmitText($object, $contentStr);
+			
 			return $resultStr;
 	}
 /*
@@ -199,26 +263,50 @@ private function receiveText($object)
    public function step($postObj,$step){
         
 		 $OrderState = $this->db['OrderState'];
+		 $HotelOrder = $this->db['HotelOrder'];
          $Hotel = $this->db['Hotel'];
 		 $HotelRoom = $this->db['HotelRoom'];
+		 $WxUser    = $this->db['WxUser'];
+		 $UsersHotel = $this->db['UsersHotel'];
 		 $text = $postObj->Content;
 		 $user_code = $postObj->FromUserName;
 		 if(empty($text)){
 		   $text = $postObj->Recognition ;
 		 }
+		 tolog('/web/www/ftp/tjr/zun/App/Lib/Action/Api/a.txt',$text);
 		 $T= 60*30;
          switch($step){
 		 
 		     case 0 :
 				 //城市名
-				    $data = array('user_code'=>"$user_code",'hotel_add'=>"$text",'step'=>$step+1,'starttime'=>time(),'endtime'=>time()+$T);
-					$arr_item = $Hotel->get_all_hotel("$text");					
+			    if(!in_array("$text",$this->city)){
+					$contentStr = '您输入的不是城市名称。';
+					$resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
+					die($resultStr);
+				}
+				    $data = array('user_code'=>"$user_code",'hotel_add'=>"$text",'step'=>$step+1,'endtime'=>time()+$T);
+					$arr_item = $Hotel->get_all_hotel("$text");	
+					if(!$arr_item){
+                        $contentStr = $text.'该城市是没有酒店信息。';
+						$resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
+						die($resultStr);
+					  
+					}
 					$resultStr = $this->transmitNews($postObj, $arr_item, $flag = 0);
+					
 				 break;
 			 case 1 :	
 				 //该城市下的酒店
 				 $arr_item = $Hotel->get_Hotel("$text");
-				 $data = array('step'=>$step+1,'hotel_name'=>$arr_item['hotel_name'],'hotel_id'=>$arr_item['hotel_id'],'starttime'=>time(),'endtime'=>time()+$T);
+				 if(!$arr_item){
+
+                        $contentStr = '没有该 '.$text.' 酒店信息。';
+						$resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
+						die($resultStr);
+					  
+				 }
+
+				 $data = array('step'=>$step+1,'hotel_name'=>$arr_item['hotel_name'],'hotel_id'=>$arr_item['hotel_id'],'endtime'=>time()+$T);
 				 $resultStr = $this->transmitNews($postObj, $arr_item['list'], $flag = 0);
 				 break;
 			 case 2 :
@@ -226,22 +314,81 @@ private function receiveText($object)
 			     $PAY_TYPE = C('PAY_TYPE');
                  $hotel_id = $OrderState->get_hotel_id($user_code);
                  $arr_item = $HotelRoom->get_room_type("$text",$hotel_id,$pay_type=2);
-				 $data = array('step'=>$step+1,'room_id'=>$arr_item['room_id'],'room_name'=>$arr_item['title'],'room_price'=>$arr_item['price'],'pay_type'=>$arr_item['pay_type'],'starttime'=>time(),'endtime'=>time()+$T);
+				 if(!$arr_item){
+
+                        $contentStr = '输入有误或者没有该房型';
+						$resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
+						die($resultStr);
+					  
+				 }
+				 $data = array('step'=>$step+1,'room_id'=>$arr_item['room_id'],'room_name'=>$arr_item['title'],'room_price'=>$arr_item['price'],'pay_type'=>$arr_item['pay_type'],'endtime'=>time()+$T);
 				 $contentStr = '您选了：'.$arr_item['title']." 房型 \n".'价格为 ：'.$arr_item['price'] .'￥ '."\n".'付款方式为 : '.$PAY_TYPE[$arr_item['pay_type']]['explain'];
 				 $resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
 				 break;
 			 case 3 :
 				 // 入住时间
+			     $time =  getTime("$text");
+				 if(empty($time)){
 
+				        $contentStr = '你输入的时间有误 。您输入的是:'.$text;
+						$resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
+						die($resultStr);
+				 }
+				 $data = array('step'=>$step+1,'endtime'=>time()+$T,'startrz'=>$time);
+				 $contentStr = '您的入住时间 ：'.date('Y-m-d',$time);
+                 $resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
 				 break;
-			 case 5 :
+			 case 4 :
 				 // 离店时间
+			     $time =  getTime("$text");
+				 if(empty($time)){
+
+				        $contentStr = '你输入的时间有误 。您输入的是:'.$text;
+						$resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
+						die($resultStr);
+				 }
+				 $data = array('step'=>$step+1,'endtime'=>time()+$T,'endlikai'=>$time);
+				 $contentStr = '您的离开时间 ：'.date('Y-m-d',$time);
+                 $resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
 
 				 break;
-		     case 4 :
+		     case 5 :
 				 // 确认订单
+                 if($text=='确认' or $text =='付款'){
+
+				    $data =$OrderState->get_order_info($user_code);
+					$arr = $data['data'];
+					$phone = $WxUser->The_existence_of_phone($user_code);					
+					$user_id = $UsersHotel->get_uid($arr['hotel_id']);
+                    $order = array(
+						'order_sn'=>date('Ymd',time()).time(),
+						'order_time' =>time(),
+						'user_id'=>$user_id,
+						'user_code'  =>$arr['user_code'],
+						'hotel_id'   =>$arr['hotel_id'],
+						'hotel_room_id'=>$arr['room_id'],
+						'phone'        =>"$phone",
+						'total_price'  =>$arr['total'],
+						'room_num'     =>1,
+						'in_date'      =>$arr['startrz'],
+						'out_date'     =>$arr['endlikai'],						
+						
+						'order_status' =>0,
+						'dispose_status'=>0,
+						'is_from'      =>2,
+						'order_type'   =>$arr['pay_type'],
+						'is_pay'       =>0,
+						'is_del'       =>0
+						);
+					$HotelOrder->data($order)->add();
+					$contentStr = $data['str'];
+					
+			     }
+				 $resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
+				 
 				 break;
 			 default :
+				 //$resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
 				 break;
 		 
 		 }
@@ -264,18 +411,72 @@ private function receiveText($object)
    public function test(){
    
           $OrderState = $this->db['OrderState'];
+          $RoomPutaway = $this->db['RoomPutaway'];
 		  $Hotel = $this->db['Hotel'];
+		  $HotelOrder  = $this->db['HotelOrder'];
 		  $HotelRoom = $this->db['HotelRoom'];
-          //$data = $Hotel->get_Hotel();
+		  $WxUser    = $this->db['WxUser'];
+		  $UsersHotel = $this->db['UsersHotel'];
+         /* $data = $Hotel->get_Hotel();
 		  $data = $HotelRoom->get_room_type('高级',291,2);
+          $data = $RoomPutaway->get_room_id();
+		  $data =$OrderState->get_order_info('o_vzytyfkGq8jriMsxpj5rJyvqXs');
+		 $data =$WxUser->The_existence_of_phone('o_vzytyfkGq8jriMsxpj5rJyvqXs');
+		  $data =$Hotel->get_all_hotel('上海');
 		  $OrderState->del_data();
 		  echo $OrderState->get_hotel_id('o_vzytyfkGq8jriMsxpj5rJyvqXs');
 		  echo $Hotel->getLastSql();
+		  echo $RoomPutaway->getLastSql();
+		  $datas = $Hotel->get_all_hotel("上海");	
+		  $Hotel->get_img(341,1);*/
+		  $data = $HotelOrder->get_order("o_vzytyfkGq8jriMsxpj5rJyvqXs");
+		 //echo  $Hotel->get_img(341,2);
+		 //echo  $Hotel->get_img(341,3);
+		 // echo $UsersHotel->get_uid(233);
+		 // echo $UsersHotel->getLastSql();
 		  echo '<pre>';print_R($data);echo '</pre>';
-		  echo $OrderState->get_step('o_vzytyfkGq8jriMsxpj5rJyvqXs');
-       
+		// echo '<pre>';print_R(is_phone('黄家驹'));echo '</pre>';
+		 // echo $OrderState->get_step('o_vzytyfkGq8jriMsxpj5rJyvqXs');
+
+		 // echo in_array('上海的',$this->city);
+
+		 // tolog('/web/www/ftp/tjr/zun/App/Lib/Action/Api/a.txt','a');
+          
    
    }
+
+   public function valid()
+    {
+        $echoStr = $_GET["echostr"];
+
+        //valid signature , option
+        if($this->checkSignature()){
+        	echo $echoStr;
+        	exit;
+        }
+    }
+
+	private function checkSignature()
+	{
+        $signature = $_GET["signature"];
+        $timestamp = $_GET["timestamp"];
+        $nonce = $_GET["nonce"];	
+        		
+		$token = TOKEN;
+		$token = 'rikee';
+		$tmpArr = array($token, $timestamp, $nonce);
+		sort($tmpArr);
+		$tmpStr = implode( $tmpArr );
+		$tmpStr = sha1( $tmpStr );
+		
+		if( $tmpStr == $signature ){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+   public  $city = array('安庆','蚌埠','巢湖','池州','滁州','阜阳','淮北','淮南','黄山','六安','马鞍山','宿州','铜陵','芜湖','宣城','亳州','北京','福州','龙岩','南平','宁德','莆田','泉州','三明','厦门','漳州','兰州','白银','定西','甘南','嘉峪关','金昌','酒泉','临夏','陇南','平凉','庆阳','天水','武威','张掖','广州','深圳','潮州','东莞','佛山','河源','惠州','江门','揭阳','茂名','梅州','清远','汕头','汕尾','韶关','阳江','云浮','湛江','肇庆','中山','珠海','南宁','桂林','百色','北海','崇左','防城港','贵港','河池','贺州','来宾','柳州','钦州','梧州','玉林','贵阳','安顺','毕节','六盘水','黔东南','黔南','黔西南','铜仁','遵义','海口','三亚','白沙','保亭','昌江','澄迈县','定安县','东方','乐东','临高县','陵水','琼海','琼中','屯昌县','万宁','文昌','五指山','儋州','石家庄','保定','沧州','承德','邯郸','衡水','廊坊','秦皇岛','唐山','邢台','张家口','郑州','洛阳','开封','安阳','鹤壁','济源','焦作','南阳','平顶山','三门峡','商丘','新乡','信阳','许昌','周口','驻马店','漯河','濮阳','哈尔滨','大庆','大兴安岭','鹤岗','黑河','鸡西','佳木斯','牡丹江','七台河','齐齐哈尔','双鸭山','绥化','伊春','武汉','仙桃','鄂州','黄冈','黄石','荆门','荆州','潜江','神农架林区','十堰','随州','天门','咸宁','襄樊','孝感','宜昌','恩施','长沙','张家界','常德','郴州','衡阳','怀化','娄底','邵阳','湘潭','湘西','益阳','永州','岳阳','株洲','长春','吉林','白城','白山','辽源','四平','松原','通化','延边','南京','苏州','无锡','常州','淮安','连云港','南通','宿迁','泰州','徐州','盐城','扬州','镇江','南昌','抚州','赣州','吉安','景德镇','九江','萍乡','上饶','新余','宜春','鹰潭','沈阳','大连','鞍山','本溪','朝阳','丹东','抚顺','阜新','葫芦岛','锦州','辽阳','盘锦','铁岭','营口','呼和浩特','阿拉善盟','巴彦淖尔盟','包头','赤峰','鄂尔多斯','呼伦贝尔','通辽','乌海','乌兰察布市','锡林郭勒盟','兴安盟','银川','固原','石嘴山','吴忠','中卫','西宁','果洛','海北','海东','海南','海西','黄南','玉树','济南','青岛','滨州','德州','东营','菏泽','济宁','莱芜','聊城','临沂','日照','泰安','威海','潍坊','烟台','枣庄','淄博','太原','长治','大同','晋城','晋中','临汾','吕梁','朔州','忻州','阳泉','运城','西安','安康','宝鸡','汉中','商洛','铜川','渭南','咸阳','延安','榆林','上海','成都','绵阳','阿坝','巴中','达州','德阳','甘孜','广安','广元','乐山','凉山','眉山','南充','内江','攀枝花','遂宁','雅安','宜宾','资阳','自贡','泸州','天津','拉萨','阿里','昌都','林芝','那曲','日喀则','山南','乌鲁木齐','阿克苏','阿拉尔','巴音郭楞','博尔塔拉','昌吉','哈密','和田','喀什','克拉玛依','克孜勒苏','石河子','图木舒克','吐鲁番','五家渠','伊犁','昆明','怒江','普洱','丽江','保山','楚雄','大理','德宏','迪庆','红河','临沧','曲靖','文山','西双版纳','玉溪','昭通','杭州','湖州','嘉兴','金华','丽水','宁波','绍兴','台州','温州','舟山','衢州','重庆','香港','澳门','台湾','合肥');
 
 }
 

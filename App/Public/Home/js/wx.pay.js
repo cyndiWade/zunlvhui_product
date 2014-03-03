@@ -1,11 +1,10 @@
-//辅助函数
-function Trim(str,is_global)
-{
+ function Trim(str,is_global)
+            {
                 var result;
                 result = str.replace(/(^\s+)|(\s+$)/g,"");
                 if(is_global.toLowerCase()=="g") result = result.replace(/\s/g,"");
                 return result;
-}
+            }
             function clearBr(key)
             {
                 key = Trim(key,"g");
@@ -14,43 +13,46 @@ function Trim(str,is_global)
                 return key;
             }
             
-//获取随机数
-function getANumber()
-{
-     var date = new Date();
-     var times1970 = date.getTime();
-     var times = date.getDate() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
-     var encrypt = times * times1970;
-     if(arguments.length == 1){
-          return arguments[0] + encrypt;
-     }else{
-          return encrypt;
-     }
+            //获取随机数
+            function getANumber()
+            {
+                var date = new Date();
+                var times1970 = date.getTime();
+                var times = date.getDate() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
+                var encrypt = times * times1970;
+                if(arguments.length == 1){
+                    return arguments[0] + encrypt;
+                }else{
+                    return encrypt;
+                }
                 
-}         
-            //以下是package组包过程：      
+            }
+
+
+
+			//以下是package组包过程：
+            
             var oldPackageString;//记住package，方便最后进行整体签名时取用
             
-            function getPartnerId()
-            {
-				return '1218014001';  //商户id
-            }           
             function getPartnerKey()
             {
-				  return "e019916e23423ed8d099000a9678f7f4"; // partnerKey
-            } 
-function getPackage()
-{
-                var banktype = "WX";2014/2/13
-				var name = document.getElementById('name').value;
-				var body = name;
+                return "e019916e23423ed8d099000a9678f7f4";
+            }
+            
+            
+            
+            function getPackage()
+            {
+                var banktype = "WX";
+                var body = document.getElementById('name').value;//'江诗丹顿';//商品名称信息，这里由测试网页填入。
                 var fee_type = "1";//费用类型，这里1为默认的人民币
                 var input_charset = "GBK";//字符集，这里将统一使用GBK
-                var notify_url = "http://yunqiserver.xicp.net/ftp/tjr/wxadmin/wxpay.php";//支付成功后将通知该地址
-                var out_trade_no = document.getElementById('order_sn').value; //""+getANumber();//订单号，商户需要保证该字段对于本商户的唯一性
-                var partner = getPartnerId();//测试商户号
-                var spbill_create_ip = ILData[0] ;//"127.0.0.1";//用户浏览器的ip，这个需要在前端获取。这里使用127.0.0.1测试值
-				var total_fee = document.getElementById('order_total').value+'00';//总金额。
+                var notify_url = "http://www.qq.com";//支付成功后将通知该地址
+                var out_trade_no = document.getElementById('order_sn').value;//""+getANumber();//订单号，商户需要保证该字段对于本商户的唯一性
+                var partner = "1218014001";//测试商户号
+                var spbill_create_ip = ILData[0];//"127.0.0.1";//用户浏览器的ip，这个需要在前端获取。这里使用127.0.0.1测试值
+                var total_fee = document.getElementById('order_total').value;// 1;//总金额。
+				
                 var partnerKey = getPartnerKey();//这个值和以上其他值不一样是：签名需要它，而最后组成的传输字符串不能含有它。这个key是需要商户好好保存的。
                 
                 //首先第一步：对原串进行签名，注意这里不要对任何字段进行编码。这里是将参数按照key=value进行字典排序后组成下面的字符串,在这个字符串最后拼接上key=XXXX。由于这里的字段固定，因此只需要按照这个顺序进行排序即可。
@@ -78,7 +80,7 @@ function getPackage()
                 oldPackageString = completeString;//记住package，方便最后进行整体签名时取用
                 
                 return completeString;
-}
+            }
             
             
             //下面是app进行签名的操作：
@@ -88,13 +90,13 @@ function getPackage()
             
             function getAppId()
             {
-				return 'wx06529b330cb53393'; //appid
+                return "wx06529b330cb53393";
             }
             
             function getAppKey()
             {
-				return "IcsZzIeFhPomzwCf6fWzUk11kGoSKmWekFub0vCH5KkSybRnI5eTD1GfqORWW6ryZGtqVPmelrQDmYglhgZ01UDaZhoF7zsRucwbgaGmlgLt1L72LkX3YRXHSA9KVlTc";
-			}
+                return "IcsZzIeFhPomzwCf6fWzUk11kGoSKmWekFub0vCH5KkSybRnI5eTD1GfqORWW6ryZGtqVPmelrQDmYglhgZ01UDaZhoF7zsRucwbgaGmlgLt1L72LkX3YRXHSA9KVlTc";
+            }
             
             
             
@@ -136,9 +138,7 @@ function getPackage()
                 return sign;
             }
 
-
-
-function auto_remove(img){
+			function auto_remove(img){
                 div=img.parentNode.parentNode;div.parentNode.removeChild(div);
                 img.onerror="";
                 return true;
@@ -149,40 +149,30 @@ function auto_remove(img){
                 $('#content').removeClass().addClass('fontSize' + fontsize);
             }
             
-            function setdata($str) {
-			var signkey = document.getElementById('signkey');
-			signkey.innerHTML = $str;
-			
-			}
+            
             
             
             // 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
             document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
                                       //公众号支付
-                                      jQuery('a#getBrandWCPayRequest').click(function(e){
-									
-											//setdata(getSign());
-                                            WeixinJSBridge.invoke('getBrandWCPayRequest',{
-                                                  "appId" : getAppId(), //公众号名称，由商户传入
-                                                  "timeStamp" : getTimeStamp(), //时间戳
-                                                  "nonceStr" : getNonceStr(), //随机串
-                                                  "package" : getPackage(),//扩展包
-                                                  "signType" : getSignType(), //微信签名方式:1.sha1
-                                                  "paySign" : getSign() //微信签名
-                                                   },function(res){
-                                                     if(res.err_msg == "get_brand_wcpay_request:ok" ) {}
-                                                        
-														 // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
-                                                         //因此微信团队建议，当收到ok返回时，向商户后台询问是否收到交易成功的通知，若收到通知，前端展示交易成功的界面；若此时未收到通知，商户后台主动调用查询订单接口，查询订单的当前状态，并反馈给前端展示相应的界面。
-                                                    }); 
+                jQuery('a#getBrandWCPayRequest').click(function(e){
+                        WeixinJSBridge.invoke('getBrandWCPayRequest',{
+                             "appId" : getAppId(), //公众号名称，由商户传入
+                             "timeStamp" : getTimeStamp(), //时间戳
+                             "nonceStr" : getNonceStr(), //随机串
+                             "package" : getPackage(),//扩展包
+                             "signType" : getSignType(), //微信签名方式:1.sha1
+                             "paySign" : getSign() //微信签名
+                         },function(res){
+                              if(res.err_msg == "get_brand_wcpay_request:ok" ) {}
+                               // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+                               //因此微信团队建议，当收到ok返回时，向商户后台询问是否收到交易成功的通知，若收到通知，前端展示交易成功的界面；若此时未收到通知，商户后台主动调用查询订单接口，查询订单的当前状态，并反馈给前端展示相应的界面。
+                         }); 
                                                                              
-                                             });
+                 });                      
+                 WeixinJSBridge.log('yo~ ready.');
                                       
-                                      
-                                      
-                                      WeixinJSBridge.log('yo~ ready.');
-                                      
-                                      }, false)
+           }, false)
             
             if(jQuery){
                 jQuery(function(){
