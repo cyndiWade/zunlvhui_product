@@ -68,8 +68,8 @@ class CouponAction extends AdminBaseAction {
 		}
 
 		parent::global_tpl_view( array(
-			'action_name'=>'订单列表',
-			'title_name'=>'订单列表',
+			'action_name'=>'优惠券列表',
+			'title_name'=>'优惠券列表',
 		));
 		
 		$html['list'] = $list;

@@ -48,6 +48,11 @@ var FormValidation = function () {
                 		minlength: 2,
 						maxlength:225
                 	},
+					msg_content : {
+                		required: true,
+                		minlength: 2,
+						maxlength:225
+                	},
 
 
 					card_number_over : {

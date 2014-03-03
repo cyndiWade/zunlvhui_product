@@ -59,7 +59,7 @@
 								<!-- END GALLERY MANAGER PANEL-->
 								<hr class="clearfix" />
 								<!-- BEGIN GALLERY MANAGER LISTING-->								<p>{$html['img_type'][1]['explain']}:</p>
-								<div class="row-fluid">																		<volist name="html['photo_type_list']['1']" id="vo">										
+								<div class="row-fluid">																		<volist name="html['photo_type_list'][1]" id="vo">										
 									<div class="span3">
 										<div class="item">
 											<a class="fancybox-button" data-rel="fancybox-button" title="Photo" href="{$vo.url}">
@@ -73,7 +73,7 @@
 											</div>
 										</div>
 									</div>																	</volist>
-															</div>											<div class="space10"></div>														<!-- END GALLERY MANAGER LISTING-->
+															</div>											<div class="space10"></div>														<!-- END GALLERY MANAGER LISTING-->																<p>{$html['img_type'][2]['explain']}:</p>								<div class="row-fluid">																		<volist name="html['photo_type_list'][2]" id="vo">																			<div class="span3">										<div class="item">											<a class="fancybox-button" data-rel="fancybox-button" title="Photo" href="{$vo.url}">												<div class="zoom">													<img src="{$vo.url}" alt="Photo" />                    													<div class="zoom-icon"></div>												</div>											</a>											<div class="details">												<a href="javascript:;" class="icon"><i class="icon-remove" data-id="{$vo.id}"></i></a>    											</div>										</div>									</div>																	</volist>															</div>											<div class="space10"></div>														<!-- END GALLERY MANAGER LISTING-->
 							</div>
 						</div>
 						<!-- END GALLERY MANAGER PORTLET-->
