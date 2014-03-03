@@ -16,9 +16,6 @@ return array(
 		
 		//客户端加密、解密钥匙
 		'UNLOCAKING_KEY' => 'cheshencar',
-
-		'Hotel_info_url' =>'http://yunqiserver.xicp.net/ftp/tjr/zun/index.php?s=/Home/HotelList/get_hotel_info/hotel_id/',
-		'logo_url'=>'http://yunqiserver.xicp.net/ftp/tjr/images/4.jpg',
 		
 );
 ?>
