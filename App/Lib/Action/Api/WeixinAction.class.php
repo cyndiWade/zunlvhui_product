@@ -1,8 +1,12 @@
 <?php 
 ini_set('display_errors',1);
+<<<<<<< HEAD
+echo __FILE__;
+=======
 error_reporting(E_ALL);
 //echo __FILE__;/web/www/ftp/tjr/zun/App/Lib/Action/Api/
 define("TOKEN", "rikee");
+>>>>>>> db724fabc3d921028b530455fd731488edf8c9f9
 class WeixinAction extends AppBaseAction{
 	
   //初始化数据库连接
@@ -12,6 +16,14 @@ class WeixinAction extends AppBaseAction{
 	    'RoomSchedule'=>'RoomSchedule',
         'HotelOrder'  =>'HotelOrder',
 	    'UsersHotel'   => 'UsersHotel',
+<<<<<<< HEAD
+	    'OrderState'   => 'OrderState'
+	 );
+
+	   public function index(){
+	   
+	   
+=======
 	    'OrderState'   => 'OrderState',
 		'RoomPutaway'  => 'RoomPutaway',
 		'WxUser'       =>'WxUser'
@@ -24,6 +36,7 @@ class WeixinAction extends AppBaseAction{
 		  //exit;
 	      $OrderState = $this->db['OrderState'];
 	      $OrderState->del_data();
+>>>>>>> db724fabc3d921028b530455fd731488edf8c9f9
 		  $this->responseMsg();
 	   }
 /*
@@ -37,6 +50,9 @@ class WeixinAction extends AppBaseAction{
 		if (!empty($postStr)){
 			$postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
 			$RX_TYPE = trim($postObj->MsgType);
+<<<<<<< HEAD
+
+=======
 			$user_code = $postObj->FromUserName;
 			$WxUser = $this->db['WxUser'];
             $WxUser->The_existence_of_wxuser($user_code);  //是否关注
@@ -56,19 +72,28 @@ class WeixinAction extends AppBaseAction{
 			  die($resultStr);
 			  
 			}
+>>>>>>> db724fabc3d921028b530455fd731488edf8c9f9
 			switch ($RX_TYPE)
 			{
 				case "text":
 				case "voice":
 				    $OrderState = $this->db['OrderState'];
+<<<<<<< HEAD
+					$step = $OrderState->get_step('o_vzytyfkGq8jriMsxpj5rJyvqXs');
+=======
 					$step = $OrderState->get_step($user_code);
+>>>>>>> db724fabc3d921028b530455fd731488edf8c9f9
 				    $resultStr = $this->step($postObj,$step);
 					break;
 				case "image":
 					$resultStr = $this->receiveText($postObj);
 					break;
 				case "location":
+<<<<<<< HEAD
+					$resultStr = $this->receiveText($postObj);
+=======
 					//$resultStr = $this->receiveText($postObj);
+>>>>>>> db724fabc3d921028b530455fd731488edf8c9f9
 					break;
 				case "video":
 					$resultStr = $this->receiveText($postObj);
@@ -102,6 +127,8 @@ class WeixinAction extends AppBaseAction{
 */ 
 	private function receiveEvent($object)
 	{
+<<<<<<< HEAD
+=======
 	     $OrderState = $this->db['OrderState'];
 		 $HotelOrder = $this->db['HotelOrder'];
          $Hotel      = $this->db['Hotel'];
@@ -109,6 +136,7 @@ class WeixinAction extends AppBaseAction{
 		 $WxUser     = $this->db['WxUser'];
 		 $UsersHotel = $this->db['UsersHotel'];
 		 $user_code  = $object->FromUserName;
+>>>>>>> db724fabc3d921028b530455fd731488edf8c9f9
 			$contentStr = "";
 			switch ($object->Event)
 			{
@@ -117,13 +145,22 @@ class WeixinAction extends AppBaseAction{
 					break;
 				case "unsubscribe":
 					$contentStr = "";
+<<<<<<< HEAD
+=======
 				    $WxUser->unsubscribe($user_code);
 					tolog('/web/www/ftp/tjr/zun/App/Lib/Action/Api/a.txt',$WxUser->getLastSql());
+>>>>>>> db724fabc3d921028b530455fd731488edf8c9f9
 					break;
 				case "CLICK":
 					switch ($object->EventKey)
 					{
 						case 'menu_1_1':
+<<<<<<< HEAD
+							//特惠商品
+							break;
+						case 'menu_1_2':
+							//特惠商品
+=======
 							$OrderState->del_data_user($user_code);
 							$contentStr =  '请用文字或语音录入您下榻酒店的城市。';
 						    $resultStr = $this->transmitText($object, $contentStr);
@@ -131,10 +168,14 @@ class WeixinAction extends AppBaseAction{
 						case 'menu_1_2':
 							$contentStr ="客服电话:400-6096-906。\n 在线时间为8点~22点，客服人员将一对一为您服务。";
 						    $resultStr = $this->transmitText($object, $contentStr);
+>>>>>>> db724fabc3d921028b530455fd731488edf8c9f9
 							break;
 						case 'menu_1_3':
 							//特惠商品
 							break;
+<<<<<<< HEAD
+						case 'menu_1_4':
+=======
 						case 'menu_2_1':
                             $arr_item = $HotelOrder->get_order($user_code);
 						    $resultStr = $this->transmitNews($object, $arr_item, $flag = 0);
@@ -161,6 +202,7 @@ class WeixinAction extends AppBaseAction{
 							//特惠商品
 							break;
 						case 'menu_3_5':
+>>>>>>> db724fabc3d921028b530455fd731488edf8c9f9
 							//特惠商品
 							break;
 						default:
@@ -168,13 +210,20 @@ class WeixinAction extends AppBaseAction{
 							break;
 					}
 					break;
+<<<<<<< HEAD
+=======
 			    case "LOCATION" :
 					break;
+>>>>>>> db724fabc3d921028b530455fd731488edf8c9f9
 				default:
 					$contentStr = "receive a new event: ".$object->Event;
 					break;
 			}
+<<<<<<< HEAD
+			$resultStr = $this->transmitText($object, $contentStr);
+=======
 			
+>>>>>>> db724fabc3d921028b530455fd731488edf8c9f9
 			return $resultStr;
 	}
 /*
@@ -263,6 +312,34 @@ private function receiveText($object)
    public function step($postObj,$step){
         
 		 $OrderState = $this->db['OrderState'];
+<<<<<<< HEAD
+         $Hotel = $this->db['Hotel'];
+		 $text = $postObj->Content;
+		 if(empty($text)){
+		   $text = $postObj->Recognition ;
+		 }
+		 
+         switch($step){
+		 
+		     case 0 :
+				    
+					$arr_item = $Hotel->get_all_hotel();					
+					$resultStr = $this->transmitNews($postObj, $arr_item, $flag = 0);
+				 break;
+			 case 1 :
+				 break;
+			 case 2 :
+				 break;
+			 case 3 :
+				 break;
+			 case 4 :
+				 break;
+			 default :
+				 break;
+		 
+		 }
+		 tolog('/web/www/ftp/tjr/zun/App/Lib/Action/Api/a.txt',$text);
+=======
 		 $HotelOrder = $this->db['HotelOrder'];
          $Hotel = $this->db['Hotel'];
 		 $HotelRoom = $this->db['HotelRoom'];
@@ -401,12 +478,24 @@ private function receiveText($object)
 		 }
          
 
+>>>>>>> db724fabc3d921028b530455fd731488edf8c9f9
 		 return $resultStr;
    
    
    
    
    }
+<<<<<<< HEAD
+
+   public function test(){
+   
+          $OrderState = $this->db['OrderState'];
+
+		  echo $OrderState->get_step('o_vzytyfkGq8jriMsxpj5rJyvqXs');
+       
+   
+   }
+=======
    
    public function test(){
    
@@ -477,6 +566,7 @@ private function receiveText($object)
 	}
 
    public  $city = array('安庆','蚌埠','巢湖','池州','滁州','阜阳','淮北','淮南','黄山','六安','马鞍山','宿州','铜陵','芜湖','宣城','亳州','北京','福州','龙岩','南平','宁德','莆田','泉州','三明','厦门','漳州','兰州','白银','定西','甘南','嘉峪关','金昌','酒泉','临夏','陇南','平凉','庆阳','天水','武威','张掖','广州','深圳','潮州','东莞','佛山','河源','惠州','江门','揭阳','茂名','梅州','清远','汕头','汕尾','韶关','阳江','云浮','湛江','肇庆','中山','珠海','南宁','桂林','百色','北海','崇左','防城港','贵港','河池','贺州','来宾','柳州','钦州','梧州','玉林','贵阳','安顺','毕节','六盘水','黔东南','黔南','黔西南','铜仁','遵义','海口','三亚','白沙','保亭','昌江','澄迈县','定安县','东方','乐东','临高县','陵水','琼海','琼中','屯昌县','万宁','文昌','五指山','儋州','石家庄','保定','沧州','承德','邯郸','衡水','廊坊','秦皇岛','唐山','邢台','张家口','郑州','洛阳','开封','安阳','鹤壁','济源','焦作','南阳','平顶山','三门峡','商丘','新乡','信阳','许昌','周口','驻马店','漯河','濮阳','哈尔滨','大庆','大兴安岭','鹤岗','黑河','鸡西','佳木斯','牡丹江','七台河','齐齐哈尔','双鸭山','绥化','伊春','武汉','仙桃','鄂州','黄冈','黄石','荆门','荆州','潜江','神农架林区','十堰','随州','天门','咸宁','襄樊','孝感','宜昌','恩施','长沙','张家界','常德','郴州','衡阳','怀化','娄底','邵阳','湘潭','湘西','益阳','永州','岳阳','株洲','长春','吉林','白城','白山','辽源','四平','松原','通化','延边','南京','苏州','无锡','常州','淮安','连云港','南通','宿迁','泰州','徐州','盐城','扬州','镇江','南昌','抚州','赣州','吉安','景德镇','九江','萍乡','上饶','新余','宜春','鹰潭','沈阳','大连','鞍山','本溪','朝阳','丹东','抚顺','阜新','葫芦岛','锦州','辽阳','盘锦','铁岭','营口','呼和浩特','阿拉善盟','巴彦淖尔盟','包头','赤峰','鄂尔多斯','呼伦贝尔','通辽','乌海','乌兰察布市','锡林郭勒盟','兴安盟','银川','固原','石嘴山','吴忠','中卫','西宁','果洛','海北','海东','海南','海西','黄南','玉树','济南','青岛','滨州','德州','东营','菏泽','济宁','莱芜','聊城','临沂','日照','泰安','威海','潍坊','烟台','枣庄','淄博','太原','长治','大同','晋城','晋中','临汾','吕梁','朔州','忻州','阳泉','运城','西安','安康','宝鸡','汉中','商洛','铜川','渭南','咸阳','延安','榆林','上海','成都','绵阳','阿坝','巴中','达州','德阳','甘孜','广安','广元','乐山','凉山','眉山','南充','内江','攀枝花','遂宁','雅安','宜宾','资阳','自贡','泸州','天津','拉萨','阿里','昌都','林芝','那曲','日喀则','山南','乌鲁木齐','阿克苏','阿拉尔','巴音郭楞','博尔塔拉','昌吉','哈密','和田','喀什','克拉玛依','克孜勒苏','石河子','图木舒克','吐鲁番','五家渠','伊犁','昆明','怒江','普洱','丽江','保山','楚雄','大理','德宏','迪庆','红河','临沧','曲靖','文山','西双版纳','玉溪','昭通','杭州','湖州','嘉兴','金华','丽水','宁波','绍兴','台州','温州','舟山','衢州','重庆','香港','澳门','台湾','合肥');
+>>>>>>> db724fabc3d921028b530455fd731488edf8c9f9
 
 }
 

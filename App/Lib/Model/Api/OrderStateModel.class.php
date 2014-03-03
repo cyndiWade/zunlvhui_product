@@ -1,16 +1,25 @@
 <?php
 class OrderStateModel extends ApiBaseModel{
 
+<<<<<<< HEAD
+  
+      public function get_step($wxuid){
+	  
+	       $step = $this->where(array('user_code'=>$wxuid))->getField('step');
+=======
       // 获得步骤
       public function get_step($wxuid){
 	  
 	       $step = $this->where(array('user_code'=>"$wxuid"))->getField('step');
+>>>>>>> db724fabc3d921028b530455fd731488edf8c9f9
 	  
 	       $step = empty($step) ? 0 : $step; 
 		   
 		   return $step;
 	  }
 
+<<<<<<< HEAD
+=======
       // 添加数据
 	  public function add_step($data){
 	  
@@ -56,5 +65,6 @@ class OrderStateModel extends ApiBaseModel{
 		$result['data'] = $data;
 		return $result;
 	  }
+>>>>>>> db724fabc3d921028b530455fd731488edf8c9f9
 
 }
