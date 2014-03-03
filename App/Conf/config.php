@@ -177,11 +177,11 @@ $custom= array (
 		'Coupon_Img_Type' => array(
 				1 => array(
 						'num' => 1,
-						'explain' => '小图',
+						'explain' => '小图200x200',
 				),
 				2 => array(
 						'num' => 2,
-						'explain' => '大图',
+						'explain' => '大图360x200',
 				),
 				3 => array(
 						'num' => 3,

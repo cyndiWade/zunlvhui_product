@@ -41,21 +41,21 @@ class HotelAction extends AdminBaseAction {
 	
 	//酒店图片类型
 	private $img_type = array(
-		1 => array(
-			'num'=>1,
-			'explain'=>'房型360x220',
-		),
-		2 => array(
-			'num'=>2,
-			'explain'=>'房型220x220',
-		),
+// 		1 => array(
+// 			'num'=>1,
+// 			'explain'=>'房型360x200',
+// 		),
+// 		2 => array(
+// 			'num'=>2,
+// 			'explain'=>'房型200x200',
+// 		),
 		3 => array(
 			'num'=>3,
-			'explain'=>'外景360x220',
+			'explain'=>'外景360x200',
 		),		
 		4 => array(
 			'num'=>4,
-			'explain'=>'外景220x220',		
+			'explain'=>'外景200x200',		
 		),
 		5 => array(
 			'num'=>5,

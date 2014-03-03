@@ -54,7 +54,7 @@ class CouponAction extends AdminBaseAction {
 	}
 	
 	
-	//酒店列表
+	//优惠券列表
 	public function index () {
 		$get = $this->_get();
 		$Coupon = $this->db['Coupon'];
@@ -78,7 +78,7 @@ class CouponAction extends AdminBaseAction {
 	}
 	
 	
-	
+	//优惠券编辑
 	public function coupon_edit () {
 		$act = $this->_get('act');						//操作类型
 		$Coupon = $this->db['Coupon'];
@@ -161,7 +161,7 @@ class CouponAction extends AdminBaseAction {
 	
 	
 	/**
-	 * AJAX处理上传车辆图片
+	 * AJAX处理上传图片
 	 */
 	public function ajax_photo_upload() {
 		header('Content-Type:text/html;charset=utf-8');
@@ -213,7 +213,7 @@ class CouponAction extends AdminBaseAction {
 	
 	
 	/**
-	 * AJAX车辆删除图片
+	 * AJAX删除图片
 	 */
 	public function ajax_photo_remove () {
 		if ($this->isPost()) {
