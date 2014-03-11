@@ -18,6 +18,10 @@ class HotelModel extends HomeBaseModel{
 		$data = $this->where($con)->field($field)->select();
 		foreach ($data as $key=>$val){
             $data[$key]['img'] = $this->get_img($val['id'],2);//array('hotel_id'=>$hotel_id )
+			$price = $this->get_price($val['id']);
+			$data[$key]['spot_payment'] = $price['spot_payment'];
+			$data[$key]['prepay'] = $price['prepay'];
+
 		}
 		return $data;
 		
@@ -50,7 +54,16 @@ class HotelModel extends HomeBaseModel{
 	  
 	  }
 
-	  public function get_price(){
+	  public function get_price($hotel_id){
+
+		  $data = $this->field('h.id,h.hotel_name , h.hotel_syq, h.hotel_pf ,rs.spot_payment,rs.prepay')
+			->table($this->prefix.'hotel AS h')
+			->join($this->prefix.'hotel_room AS hr ON h.id=hr.hotel_id')
+			->join($this->prefix.'room_schedule AS rs on rs.hotel_room_id = hr.id')
+			->where(array('hr.hotel_id'=>$hotel_id,'h.is_del'=>0,'rs.day'=>strtotime( date('Y-m-d',time())) )  )
+			->find();
+
+		  return $data;
 	  
 	  }
 	

@@ -23,18 +23,21 @@
 
 <script type="text/javascript">
 function quxiao(id){
-  $.post("hotel_order.php?act=qx",
-  {
-    id:id,
-  },
-  function(data){
-    var obj = JSON.parse(data);
-    if(obj.err_msg==0){
-       alert(obj.msg);
-     }else{
-       alert(obj.msg);
-     }
-  });
+
+	$data = {
+
+		order_id : id
+	
+	}
+
+    var result = ajax_post_setup('?s=/Home/HotelList/quxiao_dingdan',$data);
+
+	if(result.status==0){
+	       alert(result.msg);
+	}else{
+	    alert(result.msg);
+	
+	}
 }
 </script>
 
@@ -91,7 +94,7 @@ function quxiao(id){
       <span class="right m_dot4 zx7 f20">
       <a href="index.php?s=/Home/HotelList/map/hotel_id/{$html.hotel_id}/user_code/{$html.user_code}">地图</a></span> 
       </li>
-      <li> <span class="left m_dot5 zx2 f24">00852-23111234</span> 
+      <li> <span class="left m_dot5 zx2 f24">{$html.hotel_tel}</span> 
       <span class="right m_dot4 zx4 f20"><a href="#">服务热线</a>
       </span> 
       </li>
@@ -105,10 +108,13 @@ function quxiao(id){
     <ul>
       <li style="border-bottom:none;"> 
       <span class="left zx2 f24 wit120">入住人</span>
-      <span class="zx5 f22 left padding_15">{$html.in_person}</span> </li>
+
+      <span class="zx5 f22 left padding_15">{$html.in_person}</span> 
+	  </li>
       <li style="border-bottom:none;"> 
       <span class="left zx2 f24 wit120">联系人</span>
-      <span class="zx5 f22 left padding_15">{$html.contact_person}</span> </li>
+      <span class="zx5 f22 left padding_15">{$html.contact_person}</span> 
+	  </li>
       <li  style="border-bottom:none;">
       <span class="left zx2 f24 wit120">电话</span> 
       <span class="zx5 f22 left padding_15">{$html.phone}</span></li>
@@ -127,19 +133,19 @@ function quxiao(id){
   <div class="foot_dd">
      <span class="left" style="padding-left:0">
 
-    <if condition="($html['order_type'] eq 1)">
+    <if condition="($html['order_type'] eq 1) and ($html['order_status'] neq 3)">
     <a id="getBrandWCPayRequest" href="javascript:void(0);">
     <input type="image" src="{$Think.const.APP_PATH}Public/Home/images/submit2.jpg" />
     </a>&nbsp;&nbsp;&nbsp;&nbsp;
     </if> 
     <if condition="($html['order_status'] neq 3)">
-    <input style="vertical-align: top;" type="image" src="{$Think.const.APP_PATH}Public/Home/images/submit3.jpg" onclick="javascript:quxiao({$order_info.id})" />
+    <input style="vertical-align: top;" type="image" src="{$Think.const.APP_PATH}Public/Home/images/submit3.jpg" onclick="javascript:quxiao({$html.order_id})" />
     <else/>
-    <img src="{$Think.const.APP_PATH}Public/Home/images/quxiaodingdan.jpg" />
+    <img style='width:209px;' src="{$Think.const.APP_PATH}Public/Home/images/quxiaodingdan.jpg" />
     </if>
     </span>
     <span class="right f30" style="padding-right:30px" >订单总额：{$html.total_price}元
-    <input type="hidden" name="order_total" id="order_total" value="{$html.total_price}" />
+    <input type="hidden" name="order_total" id="order_total" value="{$html.total_prices}" />
     <input type="hidden" name="order_sn" id="order_sn" value="{$html.order_sn}" />
     </span>
    

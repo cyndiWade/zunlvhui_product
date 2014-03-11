@@ -7,12 +7,12 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
 <meta HTTP-EQUIV="Expires" CONTENT="-1">
-<title>é…’åº—è¯¦æƒ…é¡µ</title>
+<title>¾ÆµêÏêÇéÒ³</title>
 <include file="Public:top" />
 <script type="text/javascript" src="{$Think.const.APP_PATH}Public/Home/js/zebra_datepicker.js" /></script>
 <script type="text/javascript" src="{$Think.const.APP_PATH}Public/Home/js/common1.js" /></script>
 <script type="text/javascript" src="{$Think.const.APP_PATH}Public/Home/js/swipe.js" /></script>
-<!--ç§»åŠ¨ç«¯ç‰ˆæœ¬å…¼å®¹ -->
+<!--ÒÆ¶¯¶Ë°æ±¾¼æÈİ -->
 <script type="text/javascript">
 
 function submit_order(id,type){
@@ -21,13 +21,13 @@ function submit_order(id,type){
       var user_code = document.getElementById('user_code').value;
       var hotel_id  = document.getElementById('hotel_id').value;
       if(checkinday==''){
-        alert('é€‰æ‹©å…¥ä½æ—¶é—´');
+        alert('Ñ¡ÔñÈë×¡Ê±¼ä');
 	$(".stclick1").focus();
         return flase;
 	
       }
       if(checkoutday==''){
-        alert('é€‰æ‹©é€€æˆ¿æ—¶é—´');
+        alert('Ñ¡ÔñÍË·¿Ê±¼ä');
 	$(".stclick2").focus();
         return flase;
 	
@@ -51,7 +51,7 @@ function submit_order(id,type){
 
 	})
 </script>
-<!--ç§»åŠ¨ç«¯ç‰ˆæœ¬å…¼å®¹ end -->
+<!--ÒÆ¶¯¶Ë°æ±¾¼æÈİ end -->
 </head>
 
 <body>
@@ -60,15 +60,15 @@ function submit_order(id,type){
   <input type="hidden" value="{$html.user_code}" name="user_code" id="user_code" />
   <input type="hidden" value="{$html.list.id}" name="hotel_id" id="hotel_id" />
   <div class="m_nav f34"><span class="left f18">
-  <a href="index.php?s=/Home/HotelList/index/hotel_cs/{$html.hotel_cs}"> æ›´å¤šé…’åº—>></a></span>
-    <h6 align="center">é…’åº—è¯¦æƒ…</h6>
+  <a href="index.php?s=/Home/HotelList/index/hotel_cs/{$html.hotel_cs}"> ¸ü¶à¾Æµê>></a></span>
+    <h6 align="center">¾ÆµêÏêÇé</h6>
   </div>
   <div class="blank8"></div>
   <div class="autohei m_boxbg1">
     <div class="right m_img2">
       <div class="photo1"><Img src="{$html.list.img}" >
         <div class="touying"> </div>
-        <!--<P align="center">19å¼ </P>-->
+        <!--<P align="center">19ÕÅ</P>-->
       </div>
     </div>
     <div class="autohei">
@@ -76,12 +76,12 @@ function submit_order(id,type){
         <span class="zx2 f22"> 
         <for start="1" end="$html['list']['hotel_xj']" >
     
-        <img src="{$Think.const.APP_PATH}Public/Home/images/1.png" style="width:26px;height:26px;" title="{$html.list.hotel_xj}æ˜Ÿçº§é…’åº—" alt="{$html.list.hotel_xj}æ˜Ÿçº§" /> 
+        <img src="{$Think.const.APP_PATH}Public/Home/images/1.png" style="width:26px;height:26px;" title="{$html.list.hotel_xj}ĞÇ¼¶¾Æµê" alt="{$html.list.hotel_xj}ĞÇ¼¶" /> 
 		</for>
 		</span>
 		</div>
       <div class="m_txt1 right pad_pf"> 
-      <span class="zx7  padding_15">{$html.list.hotel_pf}åˆ†</span> 
+      <span class="zx7  padding_15">{$html.list.hotel_pf}·Ö</span> 
       </div>
     </div>
   </div>
@@ -90,25 +90,25 @@ function submit_order(id,type){
     <ul>
       <li><span class="left m_dot1 zx2 f24">{$html.list.hotel_syq}</span> 
       <span class="right m_dot4 zx7 f20"> 
-      <a href="index.php?s=/Home/HotelList/map/hotel_id/{$html.list.id}/user_code/{$html.user_code}">åœ°å›¾</a>
+      <a href="index.php?s=/Home/HotelList/map/hotel_id/{$html.list.id}/user_code/{$html.user_code}">µØÍ¼</a>
       </span></li>
       <li style="border-bottom:none;"> 
-      <span class="left m_dot2 zx2 f24">{$html.list.hotel_kynf}å¹´å¼€ä¸š</span> 
+      <span class="left m_dot2 zx2 f24">{$html.list.hotel_kynf}Äê¿ªÒµ</span> 
       <span class="right m_dot4 zx7 f20 detail"> 
-      <a href="javascript:;">è¯¦æƒ…</a></span> </li>
+      <a href="javascript:;">ÏêÇé</a></span> </li>
     </ul>
   </div>
   <div class="blank1"></div>
   <div class="m_boxbg1 zx6 autohei ">
     <div class="blank"></div>
-    <span class="left m_dot3 f24">å…¥ä½ï¼š </span>
+    <span class="left m_dot3 f24">Èë×¡£º </span>
     <input type="text"  clicktag="2_2" class="stclick inp3 left stclick1" value="" name="" id="checkinday" readonly>
   </div>
-  <div class="m_boxbg1 zx6 autohei "> <span class="left f24 m_dot3">é€€æˆ¿ï¼š </span>
+  <div class="m_boxbg1 zx6 autohei "> <span class="left f24 m_dot3">ÍË·¿£º </span>
     <input type="text" clicktag="2_3" class="stclick inp3 left stclick2" value="" name="" id="checkoutday" readonly>
     <div class="blank"></div>
   </div>
-  <!-- æˆ¿å‹ -->
+  <!-- ·¿ĞÍ -->
   <div class="jdlist2">
     <ul>
      <volist name="html['list']['roomtype']" id="vo" key='k' >
@@ -123,13 +123,13 @@ function submit_order(id,type){
               <div class="fuwubox">
                 <div class="ddt">
                 <img src="{$Think.const.APP_PATH}Public/Home/images/ddt.png"></div>
-                <p> <span>å…è´¹å®½å¸¦</span> <span>ç©ºè°ƒ</span> <span>çƒ­æ°´</span></p>
+                <p> <span>Ãâ·Ñ¿í´ø</span> <span>¿Õµ÷</span> <span>ÈÈË®</span></p>
               </div>
             </div>
           </div>
         </div>
         <div class="right p210"> 
-        <span class="zx7 f30  pr_15">ï¿¥{$vo.prepay}</span> 
+        <span class="zx7 f30  pr_15">£¤{$vo.prepay}</span> 
         <span>
         <a href="javascript:void(0)" class="btn_yd" onclick="submit_order({$vo.hotel_room_id},2)" > 
         <img style="width:82px" src="{$Think.const.APP_PATH}Public/Home/images/yuding.png"> </a> 
@@ -149,13 +149,13 @@ function submit_order(id,type){
               <div class="fuwubox">
                 <div class="ddt">
                 <img src="{$Think.const.APP_PATH}Public/Home/images/ddt.png"></div>
-                <p><span>å…è´¹å®½å¸¦</span> <span>ç©ºè°ƒ</span> <span>çƒ­æ°´</span></p>
+                <p><span>Ãâ·Ñ¿í´ø</span> <span>¿Õµ÷</span> <span>ÈÈË®</span></p>
               </div>
             </div>
           </div>
         </div>
         <div class="right p210"> 
-        <span class="zx7 f30  pr_15"><span style="font-size:18px;">é¢„ä»˜</span>ï¿¥{$vo.spot_payment}</span> 
+        <span class="zx7 f30  pr_15"><span style="font-size:18px;">Ô¤¸¶</span>£¤{$vo.spot_payment}</span> 
         <span>
         <a href="javascript:void(0)" class="btn_yd" onclick="submit_order({$vo.hotel_room_id},1)" > 
         <img style="width:82px" src="{$Think.const.APP_PATH}Public/Home/images/yuding.png"> </a> 
@@ -166,10 +166,10 @@ function submit_order(id,type){
 
     </ul>
   </div>
-  <!-- æˆ¿å‹ -->
+  <!-- ·¿ĞÍ -->
 </div>
 
-<!--ç¬¬ä¸€ä¸ªå›¾ç‰‡-->
+<!--µÚÒ»¸öÍ¼Æ¬-->
 <div class="show hide showbox1">
   <div  class="swipe" id="s1">
     <div class="swipe-wrap">
@@ -179,8 +179,8 @@ function submit_order(id,type){
   </div>
   <div align="right"  class="price1"> <span class="right close"><a href="javascript:;"> <img src="{$Think.const.APP_PATH}Public/Home/images/detail_txt3.png"></a></span></div>
 </div>
-<!--ç¬¬ä¸€ä¸ªå›¾ç‰‡-->
-<!--å¼€ä¸šçš„å›¾ç‰‡-->
+<!--µÚÒ»¸öÍ¼Æ¬-->
+<!--¿ªÒµµÄÍ¼Æ¬-->
 <div class="show hide showbox2">
   <div align="center">
   <img src="{$html.list.img}"></div>
@@ -189,8 +189,8 @@ function submit_order(id,type){
   </div>
   <div align="right" class="price1"> <span class="right close"><a href="javascript:;"> <img src="{$Think.const.APP_PATH}Public/Home/images/detail_txt3.png"></a></span></div>
 </div>
-<!--å¼€ä¸šçš„å›¾ç‰‡-->
-<!--æˆ¿å‹çš„å›¾ç‰‡-->
+<!--¿ªÒµµÄÍ¼Æ¬-->
+<!--·¿ĞÍµÄÍ¼Æ¬-->
 <div class="show hide showbox3">
   <div  class="swipe" id="s2">
     <div class="swipe-wrap">
@@ -202,19 +202,19 @@ function submit_order(id,type){
   <div class="jdxq f24">
     <!--<ul>
       <li>
-        <div class="left"> <span class="icon1 zx3">é¢ç§¯:</span><span class="zx8">80å¹³æ–¹</span> </div>
-        <div class="left"> <span class="icon2 zx8">å¯ä½2äºº</span> </div>
+        <div class="left"> <span class="icon1 zx3">Ãæ»ı:</span><span class="zx8">80Æ½·½</span> </div>
+        <div class="left"> <span class="icon2 zx8">¿É×¡2ÈË</span> </div>
       </li>
       <li>
-        <div class="left"> <span class="icon3 zx3">æ¥¼å±‚:</span><span class="zx8">18æ¥¼</span> </div>
-        <div class="left"> <span class="icon4 zx8">è¯¥æˆ¿å‹ä¸å¯åŠ åºŠ</span> </div>
+        <div class="left"> <span class="icon3 zx3">Â¥²ã:</span><span class="zx8">18Â¥</span> </div>
+        <div class="left"> <span class="icon4 zx8">¸Ã·¿ĞÍ²»¿É¼Ó´²</span> </div>
       </li>
-      <li> <span class="icon5 zx3">åºŠå‹:</span><span class="zx8">å¤§åºŠ2ç±³</span> </li>
-      <li> <span class="icon6 zx3">æ— çƒŸ:</span><span class="zx8">æœ‰æ— çƒŸæˆ¿</span> </li>
-      <li> <span class="icon6 zx3">å®½å¸¦:</span><span class="zx8">å…è´¹å®½å¸¦</span> </li>
+      <li> <span class="icon5 zx3">´²ĞÍ:</span><span class="zx8">´ó´²2Ã×</span> </li>
+      <li> <span class="icon6 zx3">ÎŞÑÌ:</span><span class="zx8">ÓĞÎŞÑÌ·¿</span> </li>
+      <li> <span class="icon6 zx3">¿í´ø:</span><span class="zx8">Ãâ·Ñ¿í´ø</span> </li>
     </ul>-->
     <div class="autohei price1"> 
-	<!--<span class="left zx7"><small>ï¿¥</small>400</span> --><span class="right close"><a href="javascript:;"> <img src="{$Think.const.APP_PATH}Public/Home/images/detail_txt3.png"></a></span> </div>
+	<!--<span class="left zx7"><small>£¤</small>400</span> --><span class="right close"><a href="javascript:;"> <img src="{$Think.const.APP_PATH}Public/Home/images/detail_txt3.png"></a></span> </div>
   </div>
 </div>
 <!--
@@ -229,21 +229,21 @@ function submit_order(id,type){
   <div class="jdxq f24">
     <ul>
       <li>
-        <div class="left"> <span class="icon1 zx3">é¢ç§¯:</span><span class="zx8">80å¹³æ–¹</span> </div>
-        <div class="left"> <span class="icon2 zx8">å¯ä½2äºº</span> </div>
+        <div class="left"> <span class="icon1 zx3">Ãæ»ı:</span><span class="zx8">80Æ½·½</span> </div>
+        <div class="left"> <span class="icon2 zx8">¿É×¡2ÈË</span> </div>
       </li>
       <li>
-        <div class="left"> <span class="icon3 zx3">æ¥¼å±‚:</span><span class="zx8">18æ¥¼</span> </div>
-        <div class="left"> <span class="icon4 zx8">è¯¥æˆ¿å‹ä¸å¯åŠ åºŠ</span> </div>
+        <div class="left"> <span class="icon3 zx3">Â¥²ã:</span><span class="zx8">18Â¥</span> </div>
+        <div class="left"> <span class="icon4 zx8">¸Ã·¿ĞÍ²»¿É¼Ó´²</span> </div>
       </li>
-      <li> <span class="icon5 zx3">åºŠå‹:</span><span class="zx8">å¤§åºŠ2ç±³</span> </li>
-      <li> <span class="icon6 zx3">æ— çƒŸ:</span><span class="zx8">æœ‰æ— çƒŸæˆ¿</span> </li>
-      <li> <span class="icon6 zx3">å®½å¸¦:</span><span class="zx8">å…è´¹å®½å¸¦</span> </li>
+      <li> <span class="icon5 zx3">´²ĞÍ:</span><span class="zx8">´ó´²2Ã×</span> </li>
+      <li> <span class="icon6 zx3">ÎŞÑÌ:</span><span class="zx8">ÓĞÎŞÑÌ·¿</span> </li>
+      <li> <span class="icon6 zx3">¿í´ø:</span><span class="zx8">Ãâ·Ñ¿í´ø</span> </li>
     </ul>
-    <div class="autohei price1"> <span class="left zx7"><small>ï¿¥</small>400</span> <span class="right close"><a href="javascript:;"> <img src="{$Think.const.APP_PATH}Public/Home/images/detail_txt3.png"></a></span> </div>
+    <div class="autohei price1"> <span class="left zx7"><small>£¤</small>400</span> <span class="right close"><a href="javascript:;"> <img src="{$Think.const.APP_PATH}Public/Home/images/detail_txt3.png"></a></span> </div>
   </div>
 </div>-->
-<!--æˆ¿å‹çš„å›¾ç‰‡-->
+<!--·¿ĞÍµÄÍ¼Æ¬-->
 <div class="backdiv hide"></div>
 </body>
 </html>

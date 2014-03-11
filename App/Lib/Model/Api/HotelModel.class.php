@@ -105,6 +105,52 @@ class HotelModel extends ApiBaseModel{
 	  
 	  }
 
+
+	  //获得每日特惠的酒店的id
+	  public function get_id(){
+	  
+	  
+	      $data = $this->field('hotel_id')->table($this->prefix.'hotel_preference ')->where(  array('is_del'=>0,'time'=>strtotime( date('Y-m-d',time())) )   )->select();
+
+		  foreach($data as $key=>$val){
+
+			   $arr[] = $val['hotel_id'];
+
+		  }
+		  return $arr;
+	   
+	  
+	  }
+
+    //获得每日优惠的酒店
+	  public function get_hotel_p(){
+
+	        $hotel_ids = $this->get_id();
+		
+			$data = $this->field('h.id,h.hotel_name , h.hotel_syq, h.hotel_pf ,rs.spot_payment,rs.prepay')
+			->table($this->prefix.'hotel AS h')
+			->join($this->prefix.'hotel_room AS hr ON h.id=hr.hotel_id')
+			->join($this->prefix.'room_schedule AS rs on rs.hotel_room_id = hr.id')
+			->where(array('h.id'=>array('in',$hotel_ids),'h.is_del'=>0,'rs.day'=>strtotime( date('Y-m-d',time())) )  )
+			->select();
+			$arr = array();
+			$i = 1 ;
+			foreach($data as $key=>$val){
+			    if($i>8)break;
+			    $arr[$i] = array(
+						'Title'=>$val['hotel_name']."\n". $val['hotel_syq']."\n".$val['hotel_pf'].'分 预付 ￥'.$val['spot_payment'].' 现付 ￥'.$val['prepay'],
+						'Description'=>'',
+						'Picurl' =>$this->get_img($val['id'],4),//C('logo_url'),
+						'Url'    =>C('Hotel_info_url').$val['id'],
+						);
+			    
+			  $i++;
+			}
+			      
+			return $arr;
+	  
+	  }
+
       
 
 

@@ -4,11 +4,15 @@ class HotelListAction extends HomeBaseAction{
      
     //初始化数据库连接
 	 protected  $db = array(
-		'Hotel'=>'Hotel',
-	    'HotelRoom' =>'HotelRoom',
-	    'RoomSchedule'=>'RoomSchedule',
-        'HotelOrder'  =>'HotelOrder',
-	    'UsersHotel'   => 'UsersHotel'
+		'Hotel'        => 'Hotel',
+	    'HotelRoom'    => 'HotelRoom',
+	    'RoomSchedule' => 'RoomSchedule',
+        'HotelOrder'   => 'HotelOrder',
+	    'UsersHotel'   => 'UsersHotel',
+		'Coupon'       => 'Coupon',
+		'WxUser'       => 'WxUser',
+
+		'UserCoupon'   => 'UserCoupon'
 	 );
 	 	/**
 	 * 构造方法
@@ -44,7 +48,10 @@ class HotelListAction extends HomeBaseAction{
 			 }
 	      }
 	      //echo '<pre>';print_R($list);echo '</pre>';exit;
-	      $html = array('list'=>$list);
+	      $html = array(
+			  'list'=>$list,
+			  'hotel_cs'=> passport_encrypt($hotel_cs,'hotel')
+			  );
 	      $this->assign('html',$html);
 	      $this->display();
 	  }
@@ -63,11 +70,13 @@ class HotelListAction extends HomeBaseAction{
 			$list['roomtype']     = $room_sort[$list['id']];
 
 	      }
-	     //echo '<pre>';print_R($list);echo '</pre>';exit;
+	     
 	  	 $html = array(
 		  	 'list'=>$list,
-		  	 'user_code'=>$user_code
+		  	 'user_code'=>$user_code,
+			 'hotel_cs'=> passport_encrypt($list['hotel_cs'],'hotel')
 	  	 );
+		// echo '<pre>';print_R($html);echo '</pre>';exit;
 	     $this->assign('html',$html);
 	  	 $this->display();
 	  
@@ -129,6 +138,8 @@ class HotelListAction extends HomeBaseAction{
 		  	  'hotel_id'=>$id,
 	  	      'user_code'=>$user_code
 	  	  );
+
+		  $lists = $Hotel->get_price(279);
 	  	  //echo '<pre>';print_R($html);echo '</pre>';exit;
 	  	  $this->assign('html',$html);
 	  	  $this->display();
@@ -190,7 +201,7 @@ class HotelListAction extends HomeBaseAction{
           $user_id = $UsersHotel->get_user_id(array('hotel_id'=>$hotel_id));
 	      $user_id = $user_id == true ? $user_id : 0;
           $data =array(
-		      'order_sn'           => time(),
+		      'order_sn'           => date('Ymd',time()).time(),
 		      'order_time'         => time(),
 		      'user_id'			   => $user_id,
 		      'hotel_id' 		   => $hotel_id,
@@ -229,16 +240,117 @@ class HotelListAction extends HomeBaseAction{
 	  	$order_id = $this->_get('order_id');
 	  	$HotelOrder = $this->db['HotelOrder'];
 	  	$list = $HotelOrder->order_info(array('o.id'=>$order_id));
-	  	
+	  	$list['order_id'] = $order_id;
 	  	$list['in_date'] = date('Y-m-d',$list['in_date']);
 	  	$list['order_time'] = date('Y-m-d',$list['order_time']);
 	  	$list['out_date'] = date('Y-m-d',$list['out_date']);
 	  	$list['explain'] = $PAY_TYPE[$list['order_type']]['explain'];
 	  	$list['is_pay']     = $IS_PAY[$list['is_pay']]['explain'];
-		$list['total_price'] = str_replace('.','',$list['total_price']);
+		$list['in_person']  = empty($list['in_person']) ? '本人' : $list['in_person'];
+        $list['contact_person']  = empty($list['contact_person']) ? '本人' : $list['contact_person'];
+		//$list['total_price'] = str_replace('.','',$list['total_price']);
+		$list['total_prices'] = str_replace('.','',$list['total_price']);
+		//echo '<pre>';print_R($list);echo '</pre>';exit;
 	  	$this->assign('html',$list);
 	  	$this->display();
 	  }
+
+	  // 优惠券
+	  public function get_coupon(){
+	     
+		   $coupon_id = $this->_get('coupon_id');
+		   $user_code = $this->_get('user_code'); //
+		   $type      = $this->_get('type');
+		   $Coupon = $this->db['Coupon'];
+		   $WxUser = $this->db['WxUser'];
+	       $html = $Coupon->get_coupon($coupon_id);
+		   $html['img']    =  $Coupon->get_img($coupon_id,3);
+		   $html['phone']  =  $WxUser->The_existence_of_phone($user_code);
+           
+		   $html['create_time'] = date('Y-m-d',$html['create_time']);
+		   $html['start_time']  = date('Y-m-d',$html['start_time']);
+		   $html['over_time']   = date('Y-m-d',$html['over_time']);
+		   $html['user_code']   = $user_code;
+		   
+		   $html['type'] = empty($type) ? '' : $type;
+		   //echo '<pre>';print_r($html);echo '</pre>';exit;
+		   $this->assign('html',$html);
+		   $this->display(); 
+	  }
+	  // 取消优惠券
+	  public function qx_coupon(){
+	       $UserCoupon = $this->db['UserCoupon'];
+	       $coupon_id = $this->_post('coupon_id');
+		   $user_code = $this->_post('user_code'); //
+	       $result  = $UserCoupon->qx_coupon(array('coupon_id'=>$coupon_id,'wxid'=>"$user_code"));
+	       if($result === false){
+				   parent::callback(C('STATUS_UPDATE_DATA'),'取消失败');
+			     
+			}else{
+			      parent::callback(C('STATUS_SUCCESS'),'取消成功！');
+		    } 
+	  
+	  }
+
+	  //发送短信
+
+	  function ajax_send(){
+	     import('@.ORG.Util.Sms');
+		 $smsclient = new SMSClient('961958','admin','DULKN1');
+		 $phone = $this->_post('phone');
+		 $youhui  = $this->_post('youhui');
+		 $sent_ret = $smsclient->sendSMS("$phone",$youhui.'【尊旅会】');
+		 if($sent_ret['errorno']==0){
+		  
+		  parent::callback(C('STATUS_SUCCESS'),'处理成功！');
+		 
+		 }else{
+			 print_R($sent_ret);
+		 }
+
+	  }
+
+	  public function ajax_get(){
+	  
+	     $coupon_id = $this->_post('coupon_id');
+		 $user_code = $this->_post('user_code');
+         $UserCoupon = $this->db['UserCoupon'];
+		 //$data = $UserCoupon->get_coupon(4);
+        // $data = $UserCoupon->get_coupon_id("o_kNsuDTFNH42UvcZIN7BH4mszPY");
+		 $state = $UserCoupon->add_user_coupon($user_code,$coupon_id);
+		 if ($state == 0) {
+			 parent::callback(C('STATUS_UPDATE_DATA'),'您已获取过了！');
+		 }elseif ($state >0){
+			 parent::callback(C('STATUS_SUCCESS'),'获取成功！请到 私人定制-> 我的优惠券中查看');
+		 }else {
+			parent::callback(C('STATUS_UPDATE_DATA'),'获取失败，请稍后尝试！');
+		 }
+		 
+	  
+	  }
+
+	  public function quxiao_dingdan(){
+	  
+	        $order_id =  $this->_post('order_id');
+	        $HotelOrder = $this->db['HotelOrder'];
+	        if($order_id){
+			  $mes = $HotelOrder->quxiao_dingdan($order_id);
+			  print_R($mes);
+			  if($mes === false){
+				   parent::callback(C('STATUS_UPDATE_DATA'),'取消失败');
+			     
+			  }else{
+			      parent::callback(C('STATUS_SUCCESS'),'取消成功！');
+			  } 
+			
+			}else{
+			
+			   parent::callback(C('STATUS_UPDATE_DATA'),'没有此订单号！');
+			}
+	  
+	  
+	  }
+	  
 
 
 }

@@ -23,4 +23,14 @@ class HotelOrderModel extends HomeBaseModel{
 		return $data;
 		
 	}
+
+
+	//È¡Ïû¶©µ¥
+	public function quxiao_dingdan($order_id){
+	
+	        $arr = array('order_status'=>3);
+	        $this->where(array('id'=>$order_id))->save($arr);
+	
+	
+	}
 }
