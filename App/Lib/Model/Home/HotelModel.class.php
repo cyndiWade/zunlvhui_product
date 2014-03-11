@@ -15,6 +15,9 @@ class HotelModel extends HomeBaseModel{
 		$con = array('is_del'=>0);
 		array_add_to($con,$condition);
         
+
+		return $this->where($con)->field($field)->select();
+
 		$data = $this->where($con)->field($field)->select();
 		foreach ($data as $key=>$val){
             $data[$key]['img'] = $this->get_img($val['id'],2);//array('hotel_id'=>$hotel_id )
@@ -24,6 +27,7 @@ class HotelModel extends HomeBaseModel{
 
 		}
 		return $data;
+
 		
 	}
 	public function get_all_data($hotel_cs){
@@ -38,6 +42,7 @@ class HotelModel extends HomeBaseModel{
 	
 	
 	}
+
 
    //获得图片
 	public function get_img($hotel_id,$type){
@@ -66,6 +71,7 @@ class HotelModel extends HomeBaseModel{
 		  return $data;
 	  
 	  }
+
 	
 	
 }

@@ -142,6 +142,53 @@ $custom= array (
 		'STATUS_OTHER' => '9999',					//其他错误
 		'STATUS_NOT_CHECK'=>'6001',			//验证不通过
 		
+		
+		//优惠类型
+		'Coupon_Type' => array(
+			1 => array(
+				'num' => 1,
+				'explain' => '美食',
+			),
+			2 => array(
+				'num' => 2,
+				'explain' => '旅游',
+			),
+			3 => array(
+				'num' => 3,
+				'explain' => '购物',
+			),	
+			4 => array(
+				'num' => 4,
+				'explain' => '娱乐',
+			)
+		),
+		//上下架状态
+		'Coupon_Status' => array(
+				0 => array(
+						'num' => 0,
+						'explain' => '上架',
+				),
+				1 => array(
+						'num' => 1,
+						'explain' => '下架',
+				)		
+		),
+		//优惠券图片类型
+		'Coupon_Img_Type' => array(
+				1 => array(
+						'num' => 1,
+						'explain' => '小图200x200',
+				),
+				2 => array(
+						'num' => 2,
+						'explain' => '大图360x200',
+				),
+				3 => array(
+						'num' => 3,
+						'explain' => '详细图片',
+				),
+		),
+		
 );
 
 return array_merge($db_config,$system,$custom);

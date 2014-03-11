@@ -17,9 +17,13 @@ class HotelRoomAction extends AdminBaseAction {
 	//房型图片类型
 	private $img_type = array(
 			1 => array(
-					'num'=>1,
-					'explain'=>'房型',
-			)
+				'num'=>1,
+				'explain'=>'房型360x200',
+			),
+			2 => array(
+				'num'=>2,
+				'explain'=>'房型200x200',
+			),
 	);
 	
 	
