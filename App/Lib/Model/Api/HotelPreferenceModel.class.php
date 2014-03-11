@@ -1,10 +1,10 @@
 <?php
-class HotelPreferenceModel extends {
+class HotelPreferenceModel extends AppBaseModel{
 
 
 
 
-      //获得每日特惠的酒店的id;
+      //鑾峰緱姣忔棩鐗规儬鐨勯厭搴楃殑id;
 
 	  public function get_id(){
 	  
