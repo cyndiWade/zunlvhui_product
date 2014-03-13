@@ -4,18 +4,8 @@ class WxUserModel extends ApiBaseModel{
 
 	public function The_existence_of_wxuser($wxuid){
 
-	    $res =  $this->where(array('wxid'=>"$wxuid"))->find();
-        
-		if(empty($res)){
-			  $data = array(
-				  'wxid' =>"$wxuid",
-				  'subscribe'=>1,
-				  'subscribe_time'=>time()
-			  );
-			  $this->data($data)->add();		
-		}
-	
-	
+	    return  $this->where(array('wxid'=>"$wxuid"))->find();
+
 	}
 
 	//判断是否有手机号 
@@ -24,6 +14,7 @@ class WxUserModel extends ApiBaseModel{
 	
 	   return $this->where(array('wxid'=>"$wxuid"))->getField('phone');
 	}
+
 
 	//取消关注 
 	public function unsubscribe($wxuid){
@@ -37,6 +28,13 @@ class WxUserModel extends ApiBaseModel{
 			  );
 			  $this->where(array('wxid'=>"$wxuid"))->save($data);		
 		}
+	
+	}
+
+	public function get_wx_user($wxuid){
+	
+	   return $this->where(array('wxid'=>"$wxuid"))->find();
+	
 	
 	}
 
