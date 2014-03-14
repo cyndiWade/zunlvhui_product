@@ -192,12 +192,12 @@ $custom= array (
 		'SiriType' => array (
 			1 => array (
 					'num' => 1,
-					'explain' => '关键字',
-			),	
-			2 => array (
-					'num' => 2,
 					'explain' => '城市名',
 			),
+			2 => array (
+					'num' => 2,
+					'explain' => '关键字',
+			),	
 		),
 		
 );

@@ -4,8 +4,10 @@
 class SiriModel extends AdminBaseModel {
 	
 	//获取所有数据
-	public function seek_all_data () {
-		$data = $this->where(array('is_del'=>0))->select();
+	public function seek_all_data ($condition) {
+		$con = array('is_del'=>0);
+		array_add_to($con,$condition);
+		$data = $this->where($con)->select();
 		return $data;
 	}
 	

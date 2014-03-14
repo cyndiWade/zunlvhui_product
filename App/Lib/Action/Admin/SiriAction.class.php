@@ -31,7 +31,8 @@ class SiriAction extends AdminBaseAction {
 		$Siri = $this->db['Siri'];
 		
 		//所有数据列表
-		$siri_list = $Siri->seek_all_data();
+		$type['type'] = array('neq',1);
+		$siri_list = $Siri->seek_all_data($type);
 
 		if ($siri_list == true) {
 			foreach ($siri_list as $key=>$val) {

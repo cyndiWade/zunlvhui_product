@@ -88,7 +88,6 @@ class HotelAction extends AdminBaseAction {
 		} else {
 			$html['list'] = $UsersHotel->get_user_hotels($user_id);
 		}
-		
 
 		parent::global_tpl_view( array(
 			'action_name'=>'酒店管理',
@@ -151,7 +150,14 @@ class HotelAction extends AdminBaseAction {
 			$html = $hotel_info;
 			
 		} else if ($act == 'delete') {			//删除
-			$Hotel->del_one_hotel($hotel_id) ? $this->success('删除成功！') : $this->error('删除失败，请稍后重试！');
+			$is_del = $Hotel->del_one_hotel($hotel_id);
+			if ($is_del == true) {
+				//del_user_hotel
+				$this->success('删除成功！');
+			} else {
+				$this->error('删除失败，请稍后重试！');
+			}
+			
 			exit;
 		}
 		

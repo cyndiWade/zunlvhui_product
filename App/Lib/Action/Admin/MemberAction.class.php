@@ -8,7 +8,7 @@ class MemberAction extends AdminBaseAction {
 	
 	//初始化数据库连接
 	protected  $db = array(
-		'WxUser'=>'WxUser',		//语义表
+		'WxUser'=>'WxUser',		//微信会员表
 
 	);
 	
@@ -29,10 +29,10 @@ class MemberAction extends AdminBaseAction {
 	//语义列表
 	public function wx_index () {
 		//连接数据库
-		$Siri = $this->db['Siri'];
+		$WxUser = $this->db['WxUser'];
 		
 		//所有数据列表
-		$siri_list = $Siri->seek_all_data();
+		$siri_list = $WxUser->seek_all_data();
 
 		parent::global_tpl_view( array(
 			'action_name'=>'会员信息',
@@ -46,14 +46,14 @@ class MemberAction extends AdminBaseAction {
 	
 	public function edit () {
 		$act = $this->_get('act');						//操作类型
-		$Siri = $this->db['Siri'];
+		$WxUser = $this->db['WxUser'];
 		$siri_id = $this->_get('siri_id');
 		
 		if ($act == 'add') {								//添加
 			if ($this->isPost()) {
-				$Siri->create();
-				$id = $Siri->add();
-				$id ? $this->success('添加成功！',U('Admin/Siri/index')) : $this->error('添加失败请重新尝试！');
+				$WxUser->create();
+				$id = $WxUser->add();
+				$id ? $this->success('添加成功！',U('Admin/WxUser/index')) : $this->error('添加失败请重新尝试！');
 				exit;
 			}
 		
@@ -62,19 +62,19 @@ class MemberAction extends AdminBaseAction {
 		
 		} else if ($act == 'update') {			//修改
 			if ($this->isPost()) {
-				$Siri->create();
-				$Siri->save_one_siri($siri_id) ? $this->success('修改成功！') : $this->error('没有做出任何修改！');
+				$WxUser->create();
+				$WxUser->save_one_siri($siri_id) ? $this->success('修改成功！') : $this->error('没有做出任何修改！');
 				exit;
 			}
 			//查找
-			$info = $Siri->seek_one_data(array('id'=>$siri_id));
+			$info = $WxUser->seek_one_data(array('id'=>$siri_id));
 
 			if (empty($info)) $this->error('您编辑的语义不存在！');
 			$title_name = $info['keyword'].'---编辑';
 			$html = $info;
 		
 		} else if ($act == 'delete') {			//删除
-			$Siri->del_one_data($siri_id) ? $this->success('删除成功！') : $this->error('删除失败，请稍后重试！');
+			$WxUser->del_one_data($siri_id) ? $this->success('删除成功！') : $this->error('删除失败，请稍后重试！');
 			exit;
 		}
 		

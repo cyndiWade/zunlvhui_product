@@ -8,9 +8,15 @@ class UsersHotelModel extends AdminBaseModel {
 		$data = $this->field('h.*')
 		->table($this->prefix.'users_hotel AS uh')
 		->join($this->prefix.'hotel AS h ON h.id=uh.hotel_id')
-		->where(array('uh.user_id'=>$user_id,'uh.is_del'=>0))
+		->where(array('uh.user_id'=>$user_id,'uh.is_del'=>0,'h.is_del'=>0))
 		->select();
 		return $data;
+	}
+	
+	
+	//删除酒店关系
+	public function del_user_hotel ($user_id,$hotel_id) {
+		return $this->delete_data(array('user_id'=>$user_id,'hotel_id'=>$hotel_id));
 	}
 	
 }
