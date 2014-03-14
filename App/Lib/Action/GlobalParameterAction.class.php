@@ -32,6 +32,7 @@ class GlobalParameterAction extends Action {
 	private function GlobalParameterInit () {
 		$this->order_status = C('ORDER_STATUS');
 		$this->dispose_status = C('DISPOSE_STATUS');
+		$this->global_system->siri_type = C('SiriType');		//语言类型
 	}
 
 	

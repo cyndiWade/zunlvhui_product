@@ -1,14 +1,15 @@
 <?php
 /**
- * 语义分析系统
+ * 会员管理
  */
-class SiriAction extends AdminBaseAction {
+class MemberAction extends AdminBaseAction {
 	//控制器说明
-	private $module_name = '语义分析';
+	private $module_name = '会员管理';
 	
 	//初始化数据库连接
 	protected  $db = array(
-		'Siri'=>'Siri',		//语义表
+		'WxUser'=>'WxUser',		//语义表
+
 	);
 	
 
@@ -26,23 +27,16 @@ class SiriAction extends AdminBaseAction {
 	
 	
 	//语义列表
-	public function index () {		
+	public function wx_index () {
 		//连接数据库
 		$Siri = $this->db['Siri'];
 		
 		//所有数据列表
 		$siri_list = $Siri->seek_all_data();
 
-		if ($siri_list == true) {
-			foreach ($siri_list as $key=>$val) {
-				$siri_list[$key]['type'] =  $this->global_system->siri_type[$val['type']]['explain'];
-			}
-		}
-
-
 		parent::global_tpl_view( array(
-			'action_name'=>'所有语义',
-			'title_name'=>'所有语义',
+			'action_name'=>'会员信息',
+			'title_name'=>'所有会员',
 		));
 		
 		$html['list'] = $siri_list;
@@ -62,6 +56,7 @@ class SiriAction extends AdminBaseAction {
 				$id ? $this->success('添加成功！',U('Admin/Siri/index')) : $this->error('添加失败请重新尝试！');
 				exit;
 			}
+		
 			//表单标题
 			$title_name = '添加关键字';
 		
@@ -83,8 +78,7 @@ class SiriAction extends AdminBaseAction {
 			exit;
 		}
 		
-		//语音类型
-		$html['siri_type'] = $this->global_system->siri_type;
+	
 		parent::global_tpl_view( array(
 				'action_name'=>'编辑',
 				'title_name'=>$title_name,

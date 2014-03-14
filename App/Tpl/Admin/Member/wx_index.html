@@ -15,14 +15,26 @@
 		<!-- 左侧导航 -->		<include file="Public:sidebar" />
 		<!-- BEGIN PAGE -->
 		<div class="page-content">
+			<!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+			<div id="portlet-config" class="modal hide">
+				<div class="modal-header">
+					<button data-dismiss="modal" class="close" type="button"></button>
+					<h3>portlet Settings</h3>
+				</div>
+				<div class="modal-body">
+					<p>Here will be a configuration form</p>
+				</div>
+			</div>
+			<!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
 			<!-- BEGIN PAGE CONTAINER-->        
 			<div class="container-fluid">
 				<!-- BEGIN PAGE HEADER-->
 				<div class="row-fluid">
 					<div class="span12">
+					
 						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
 						<h3 class="page-title">
-							{$global_tpl_view.module_name}<small> {$global_tpl_view.action_name}</small>
+							{$MODULE_NAME}<small> {$ACTION_NAME}</small>
 						</h3>
 						<!-- END PAGE TITLE & BREADCRUMB-->
 					</div>
@@ -34,28 +46,36 @@
 						<!-- BEGIN EXAMPLE TABLE PORTLET-->
 						<div class="portlet box blue">
 							<div class="portlet-title">
-								<div class="caption"><i class="icon-globe"></i>{$global_tpl_view.title_name}</div>
+								<div class="caption"><i class="icon-globe"></i>{$Department_info.name}-负责人：{$Department_info.principal}</div>
 								<div class="tools">
 									<a href="javascript:;" class="collapse"></a>									
 									<a href="javascript:;" class="reload"></a>			
 								</div>
 							</div>
 							<div class="portlet-body">
-								
+								<div class="clearfix">
+									<div class="btn-group">									
+											<button  class="btn green btn_bak" data-url="?s=/Admin/Personnel/occupation_edit/act/add/id/{$Department_info.id}">
+											添加职位<i class="icon-plus"></i>
+											</button>						
+									</div>																		<div class="btn-group">										<a data-toggle="dropdown" href="#" class="btn">											<i class="m-icon-swapleft"></i>										</a>										<ul class="dropdown-menu">											<li><a href="javascript:;" class="btn_bak" data-url="?s=/Admin/Personnel/department"><i class="icon-arrow-left"></i> 返回部门列表</a></li>											<li><a href="javascript:;" class="btn_bak" data-go="-1"><i class="icon-arrow-left"></i> 返回上一层操作</a></li>										</ul>									</div>										</div>
 								<table class="table table-striped table-bordered table-hover sample_1">
 									<thead>
 										<tr>
-											<th>序号</th>											<th>类型</th>
-											<th>关键字</th>
-											<th>语义内容</th>		
-											<th>操作</th>
+											<th>职位名称</th>
+											<th class="hidden-480">编制人数</th>
+											<th class="hidden-480">添加时间</th>
+											<th class="hidden-480">备注信息</th>
+											<th >操作</th>
 										</tr>
 									</thead>
-									<tbody>																		<volist name="html['list']" id="vo" key="i">
+									<tbody>																		<volist name="occupation_list" id="vo">
 										<tr class="odd gradeX">
-											<td >{$i}</td>											<th>{$vo.type}</th>
-											<td>{$vo.keyword}</a></td>											<td>{$vo.explain}</td>
-											<td class="center">												<a href="javascript:;" class="btn_bak"  data-record_prev="1" data-url="{:U('Admin/Siri/edit',array('act'=>'update','siri_id'=>$vo['id']))}">编辑</a>												| <a href="{:U('Admin/Siri/edit',array('act'=>'delete','siri_id'=>$vo['id']))}" class="check" >删除</a>													</td>
+											<td>{$vo.name}</td>
+											<td class="hidden-480">{$vo.num}</a></td>
+											<td class="hidden-480">{$vo.create_time}</td>
+											<td class="center hidden-480">{$vo.remarks}</td>
+											<td >												<a href="?s=/Admin/Staff/index/occupation_id/{$vo.id}" class="btn_bak" data-record_prev="1">查看员工</a>												| <a href="?s=/Admin/Personnel/occupation_edit/act/update/id/{$vo.id}">编辑</a>												| <a href="?s=/Admin/Personnel/occupation_edit/act/delete/id/{$vo.id}" class="check">删除</a>																							</td>
 										</tr>										</volist>
 									</tbody>
 								</table>
@@ -77,11 +97,12 @@
 	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/DT_bootstrap.js"></script>
 	<!-- END PAGE LEVEL PLUGINS -->
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
-	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/app.js"></script>		<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/table-managed-Admin-Public.js"></script>   	
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/app.js"></script>
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/table-managed.js"></script>     
 	<script type="text/javascript">
 		jQuery(document).ready(function() {       
 		   App.init();
-		  TableManaged.init();
+		   TableManaged.init();
 		});
 	</script>	</body>
 

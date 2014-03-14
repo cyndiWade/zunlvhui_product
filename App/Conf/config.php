@@ -188,6 +188,17 @@ $custom= array (
 						'explain' => '详细图片',
 				),
 		),
+		//语言类型
+		'SiriType' => array (
+			1 => array (
+					'num' => 1,
+					'explain' => '关键字',
+			),	
+			2 => array (
+					'num' => 2,
+					'explain' => '城市名',
+			),
+		),
 		
 );
 
