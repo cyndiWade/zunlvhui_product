@@ -28,6 +28,10 @@ class RoomScheduleAction extends HotelBaseAction {
 	//酒店房型列表
 	public function index () {
 
+       if(!$_SERVER["HTTP_REFERER"]){
+        $this->error('非法操作！');
+        exit;
+       }
 		//获取参数
 		$hotel_room_id = $this->_get('hotel_room_id');
 		if (empty($hotel_room_id)) $this->error('此房型不存在！');
