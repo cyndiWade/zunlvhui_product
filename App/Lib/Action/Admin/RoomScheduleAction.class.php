@@ -51,7 +51,7 @@ class RoomScheduleAction extends AdminBaseAction {
 	public function Ajax_room_schedule_edit() {
 		if ($this->isPost()) {
 			
-			$arr = array('hotel_room_id','spot_payment','prepay');
+			$arr = array('hotel_room_id','spot_payment','prepay','room_num');
 			$post_data = $this->_post();
 			$int_start_time= strtotime($post_data['start_time']);		//开始日期
 			$int_over_time = strtotime($post_data['over_time']);		//结束如期

@@ -83,18 +83,19 @@ var Calendar = function () {
 					var check_result = true;
 					var post_data = {};
 					
-					arr_input.each(function () {
+					arr_input.each(function () {		//收集提交的值
 						var _this = $(this);
 						if (_this.val() == '') {
 							alert('不得为空！');
 							_this.focus();
 							check_result = false;
-							return false;
+							return false;		//退出循环
 						} else {
-							post_data[_this.attr('name')] = _this.val();
+							post_data[_this.attr('name')] = _this.val();			//放入数组中
 						}
 					});	
 					
+					if (check_result == false)  return false;
 				//	console.log(post_data);
 	
 					//日期验证
@@ -110,6 +111,10 @@ var Calendar = function () {
 					//到付
 					if (post_data.prepay.match(/^[1-9][0-9]+$/gim) == undefined)  {
 						alert('价格只能是数字');
+						check_result = false;
+					}
+					if (post_data.room_num.match(/^[1-9][0-9]+$/gim) == undefined)  {
+						alert('房间数量只能是数字');
 						check_result = false;
 					}
 					
@@ -181,7 +186,16 @@ var Calendar = function () {
 					var event_data = [];			
 					if (result.status == 0) {
 						//现付价格
-						for (var obj in result.data) {			
+						for (var obj in result.data) {	
+							event_data.push({
+								id : result.data[obj].id,
+			                	title :'数量:' + result.data[obj].room_num,
+			                	start: result.data[obj].day,
+								end : result.data[obj].day,		
+								className:'hand',
+								backgroundColor:App.getLayoutColorCode('green'),
+								allDay: true
+			                });
 							event_data.push({
 								id : result.data[obj].id,
 			                	title :'预付:' + result.data[obj].spot_payment,
