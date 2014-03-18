@@ -64,12 +64,14 @@
         	<th>房型</th>
             <th>详情</th>
             <th>价格</th>
+            <th>操作</th>
         </tr>
         <volist name="vo['room']" id="vo_room" >
         <tr>
        	    <td><span class="blue">{$vo_room.title}</span></td>
             <td><a href="javasrcipt:;" class="js__p_start" data-id="{$vo_room.id}">查看详情</a></td>
             <td><a target="_blank" href="?s=/Hotel/RoomSchedule/index/hotel_room_id/{$vo_room.id}" >日历编辑</a></td>
+            <td><a target="_blank" href="?s=/Hotel/RoomPutaway/index/hotel_room_id/{$vo_room.id}/hotel_id/{$vo_room.hotel_id}" >下架设置</a></td>
         </tr>
         </volist>
        

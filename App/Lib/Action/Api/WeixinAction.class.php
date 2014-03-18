@@ -398,9 +398,11 @@ private function receiveText($object)
 				$step = 0;
 		 	}
 		 }else{
-		 	$resultStr = $this->transmitText($postObj, $text, $funcFlag);
-			//tolog('/web/www/ftp/tjr/wxadmin/App/Lib/Action/Api/a.txt',$resultStr);
-		 	die($resultStr);
+		 	if($step <1){
+				$resultStr = $this->transmitText($postObj, $text, $funcFlag);
+				//tolog('/web/www/ftp/tjr/wxadmin/App/Lib/Action/Api/a.txt',$resultStr);
+				die($resultStr);
+			}
 		 }
          switch($step){
 		 
