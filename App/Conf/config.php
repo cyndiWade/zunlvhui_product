@@ -93,7 +93,7 @@ $system  = array(
 
 /* 自定设置 */
 $custom= array (		
-		'SESSION_NAME' => 'zun',	//session别名
+		'SESSION_DOMAIN' => 'zun',	//项目session域
 		
 		//用户类型
 		'ACCOUNT_TYPE' => array (
