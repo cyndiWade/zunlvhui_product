@@ -20,7 +20,6 @@ class LoginAction extends AdminBaseAction {
 
     	if ($this->isPost()) {
     		$Users = D('Users');									//系统用户表模型
-    		$StaffBase = D('StaffBase');						//员工基本信息模型表
     		
     		import("@.Tool.Validate");							//验证类
     			
@@ -58,7 +57,8 @@ class LoginAction extends AdminBaseAction {
     				);
     			}
     				
-    			$_SESSION['zun']['user_info'] = $tmp_arr;		//写入session
+    			//$_SESSION['zun']['user_info'] = $tmp_arr;		//写入session
+    			$_SESSION[C('SESSION_DOMAIN')][GROUP_NAME]['user_info'] = $tmp_arr;
     			//更新用户信息
     			$Users->up_login_info($user_info['id']);
     			$this->redirect('/Admin/User/personal');
@@ -72,8 +72,9 @@ class LoginAction extends AdminBaseAction {
     //退出登陆
     public function logout () {
     	if (session_start()) {
-    		session_destroy();
-    		$this->success('退出成功',U('Admin/Login/login'));
+    		//session_destroy();
+    		unset($_SESSION[C('SESSION_DOMAIN')][GROUP_NAME]);
+    		$this->success('退出成功',U(GROUP_NAME.'/Login/login'));
     	} 
     }
     

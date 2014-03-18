@@ -159,6 +159,19 @@ class WeixinAction extends AppBaseAction{
 						      $WxUser->where(array('wxid'=>"$user_code"))->save(array('user_id'=>$data['user_id'],'hotel_id'=>$data['hotel_id']));
 						  }
 					   }
+					   $resultStr = $this->transmitText($object, $code_id);
+				    }else{
+				       $userinfo = $WxUser->get_wx_user($user_code);
+					   if(!empty($userinfo)){
+					      if($userinfo['user_id']==0 and $userinfo['hotel_id']==0){
+							  $code_id = $object->EventKey;
+							  $data = $WxCode->get_hotel_user_id($code_id);
+							  if(empty($data)){
+								   $data = array('user_id'=>0,'hotel_id'=>0);
+							  }
+						      $WxUser->where(array('wxid'=>"$user_code"))->save(array('user_id'=>$data['user_id'],'hotel_id'=>$data['hotel_id']));
+						  }
+					   }
 				    }
 					break;
 				case "CLICK":
@@ -385,9 +398,11 @@ private function receiveText($object)
 				$step = 0;
 		 	}
 		 }else{
-		 	$resultStr = $this->transmitText($postObj, $text, $funcFlag);
-			//tolog('/web/www/ftp/tjr/wxadmin/App/Lib/Action/Api/a.txt',$resultStr);
-		 	die($resultStr);
+		 	if($step <1){
+				$resultStr = $this->transmitText($postObj, $text, $funcFlag);
+				//tolog('/web/www/ftp/tjr/wxadmin/App/Lib/Action/Api/a.txt',$resultStr);
+				die($resultStr);
+			}
 		 }
          switch($step){
 		 

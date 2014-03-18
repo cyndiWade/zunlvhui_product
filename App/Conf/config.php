@@ -18,7 +18,9 @@ $system  = array(
 	    'DB_SQL_BUILD_QUEUE'    => 'file',   // SQL缓存队列的缓存方式 支持 file xcache和apc
 	    'DB_SQL_BUILD_LENGTH'   => 20, // SQL缓存的队列长度
 	    'DB_SQL_LOG'            => false, // SQL执行日志记录
-		'SESSION_AUTO_START'    => true,
+	    
+		/* SESSOIN配置 */
+		'SESSION_AUTO_START'    => true,		//常开
 
 		/* URL配置 */
 		'URL_MODEL'             => 3,
@@ -66,9 +68,9 @@ $system  = array(
 		//'TOKEN_RESET'=>true,  					//令牌验证出错后是否重置令牌 默认为true
 		
 		//缓存配置
-		'DATA_CACHE_TYPE' =>'File',										//缓存类型
-		'DATA_CACHE_PATH' =>'Home/Runtime/Temp/',		//缓存文件目录
-		'DATA_CACHE_TIME'=>'60'	,										//缓存有效秒数	
+		//'DATA_CACHE_TYPE' =>'File',										//缓存类型
+		//'DATA_CACHE_PATH' =>'Home/Runtime/Temp/',		//缓存文件目录
+		//'DATA_CACHE_TIME'=>'60'	,										//缓存有效秒数	
 		
 		/** 静态缓存
 		'HTML_CACHE_ON'=>true, // 开启静态缓存
@@ -91,6 +93,8 @@ $system  = array(
 
 /* 自定设置 */
 $custom= array (		
+		'SESSION_DOMAIN' => 'zun',	//项目session域
+		
 		//用户类型
 		'ACCOUNT_TYPE' => array (
 				'ADMIN' => 0,			//管理员
@@ -199,6 +203,29 @@ $custom= array (
 					'explain' => '关键字',
 			),	
 		),
+		
+		//付款方式
+		'PayType' => array (
+			1 => array (
+					'num' => 1,
+					'explain' => '预付微信支付',
+			),
+			2 => array (
+					'num' => 2,
+					'explain' => '现付酒店前台支付',
+			),	
+		),
+		'IsFrom' => array (
+			1 => array (
+					'num' => 1,
+					'explain' => '来自网页',
+			),
+			2 => array (
+					'num' => 2,
+					'explain' => '来自微信',
+			),	
+		),
+		
 		
 );
 
