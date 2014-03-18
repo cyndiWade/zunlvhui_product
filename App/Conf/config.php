@@ -204,6 +204,29 @@ $custom= array (
 			),	
 		),
 		
+		//付款方式
+		'PayType' => array (
+			1 => array (
+					'num' => 1,
+					'explain' => '预付微信支付',
+			),
+			2 => array (
+					'num' => 2,
+					'explain' => '现付酒店前台支付',
+			),	
+		),
+		'IsFrom' => array (
+			1 => array (
+					'num' => 1,
+					'explain' => '来自网页',
+			),
+			2 => array (
+					'num' => 2,
+					'explain' => '来自微信',
+			),	
+		),
+		
+		
 );
 
 return array_merge($db_config,$system,$custom);
