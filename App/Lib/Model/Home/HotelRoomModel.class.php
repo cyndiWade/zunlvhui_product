@@ -79,8 +79,8 @@ class HotelRoomModel extends HomeBaseModel {
 	  		
 	  		$data[$key]['url'] = $this->get_room_img($val['rid']);
 	  	}
-	  	echo '<pre>';print_R($data);echo '</pre>';
-	  	/*echo $this->getLastSql();
+	  	/*echo '<pre>';print_R($data);echo '</pre>';
+	  	echo $this->getLastSql();
 	  	exit;*/
 	  	return $data;
 	  	
