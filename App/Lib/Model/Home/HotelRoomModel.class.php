@@ -55,6 +55,48 @@ class HotelRoomModel extends HomeBaseModel {
 	  }
 
 	
+	  
+	  //获得酒店的房型
+	  public function get_hotel_room($hotel_id=151){
+
+	  	$id = $this->room_putaway();  //下架的房型的id
+	  	$where = array(
+		  	'r.hotel_id'=>$hotel_id, //酒店的id
+		  	'i.type'=>2,        //房型图片的类型
+		  	'r.is_del'=>0,      //房型是否删除
+		  	'i.is_del'=>0,      //图片是否删除
+		  	's.is_del'=>0,       //房型的价格是否删除
+	  	    's.room_num' =>array('gt',0), //房间数量大于0
+	  	    's.day'=>strtotime( date( 'Y-m-d',time() ) ), // 今天
+	  	    'r.id'=>array('not in',$id)
+	  	);
+	  	$data = $this->field('r.id as rid ,r.title,r.info,s.spot_payment,s.prepay,s.room_num,s.id as sid,i.url') 
+	  	->table($this->prefix.'hotel_room AS r')
+	  	->join($this->prefix.'room_schedule AS s on s.hotel_room_id = r.id')
+	  	->join($this->prefix.'room_img AS i on i.hotel_room_id = s.id')
+	  	->where($where)->select();
+	  	return $data;
+	/*  	echo $this->getLastSql();
+	  	echo'<pre>';print_R($data);echo'</pre>';*/
+	  	
+	  }
+	  //获得下架的房型
+	  
+	  public function room_putaway(){
+	  	$where = array(
+		  	'p.is_del'=>0,
+		  	'p.start_time'=>array('elt',strtotime( date( 'Y-m-d',time() ) )),
+		  	'p.over_time'=>array('egt',strtotime( date( 'Y-m-d',time() ) ))
+	  	);
+	  	
+	  	$data = $this->field('p.hotel_room_id')
+	  	->table($this->prefix.'room_putaway as p')
+	  	->where($where)->select();
+	  	foreach($data as $key=>$val){
+	  		$arr[] = $val['hotel_room_id'];
+	  	}
+	  	return array_unique($arr);  // 去除重复的值
+	  }
 
 	
 }

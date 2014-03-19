@@ -61,22 +61,26 @@ class HotelListAction extends HomeBaseAction{
 	     $HotelRoom  = $this->db['HotelRoom'];
 	  	 $hotel_id = $this->_get('hotel_id');
 	  	 $user_code = $this->_get('user_code');
+	  	 
 	     $list = $Hotel->get_one_hotel(array('id'=>$hotel_id));
+	     $data = $HotelRoom->get_hotel_room($hotel_id); // 获得房型
 	    
 	     if($list == true){
-	      	$rooms    = $HotelRoom->get_price_room(array('hotel_id'=>$hotel_id )); 
-		    $room_sort     = regroupKey($rooms,'hotel_id');   
+	      	//$rooms    = $HotelRoom->get_price_room(array('hotel_id'=>$hotel_id )); 
+		    //$room_sort     = regroupKey($rooms,'hotel_id');   
 			$list['img']         = $Hotel->get_img($list['id'],3);
-			$list['roomtype']     = $room_sort[$list['id']];
+			//$list['roomtype']     = $room_sort[$list['id']];
 
 	      }
-	     
+	     parent::public_file_dir($data,'url','images/');
 	  	 $html = array(
 		  	 'list'=>$list,
+	  	     'roomtype' =>$data,
 		  	 'user_code'=>$user_code,
 			 'hotel_cs'=> passport_encrypt($list['hotel_cs'],'hotel')
 	  	 );
-		// echo '<pre>';print_R($html);echo '</pre>';exit;
+
+		 //echo'<pre>';print_R($html);echo '</pre>';exit;
 	     $this->assign('html',$html);
 	  	 $this->display();
 	  
