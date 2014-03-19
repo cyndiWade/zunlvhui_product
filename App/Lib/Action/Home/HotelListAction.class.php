@@ -55,7 +55,7 @@ class HotelListAction extends HomeBaseAction{
 	      $this->assign('html',$html);
 	      $this->display();
 	  }
-
+//单个酒店的详细信息
 	  public function get_hotel_info(){
 	     $Hotel  = $this->db['Hotel'];
 	     $HotelRoom  = $this->db['HotelRoom'];
