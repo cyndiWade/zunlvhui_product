@@ -63,16 +63,13 @@ class HotelListAction extends HomeBaseAction{
 	  	 $user_code = $this->_get('user_code');
 	  	 
 	     $list = $Hotel->get_one_hotel(array('id'=>$hotel_id));
-	     $data = $HotelRoom->get_hotel_room($hotel_id); // 获得房型
+	     $data = $HotelRoom->get_hotel_room(); // 获得房型
 	    
 	     if($list == true){
-	      	//$rooms    = $HotelRoom->get_price_room(array('hotel_id'=>$hotel_id )); 
-		    //$room_sort     = regroupKey($rooms,'hotel_id');   
+	     	  
 			$list['img']         = $Hotel->get_img($list['id'],3);
-			//$list['roomtype']     = $room_sort[$list['id']];
 
-	      }
-	     parent::public_file_dir($data,'url','images/');
+	     }
 	  	 $html = array(
 		  	 'list'=>$list,
 	  	     'roomtype' =>$data,
