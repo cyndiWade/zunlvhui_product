@@ -62,8 +62,15 @@ class RoomScheduleAction extends HotelBaseAction {
 			'spot_payment'=>'现付价格',
 			'prepay'=>'预付价格');
 			$post_data = $this->_post();
+			$room_num  = $post_data['room_num'];
 			$int_start_time= strtotime($post_data['startDate']);		//开始日期
 			$int_over_time = strtotime($post_data['endDate']);		//结束如期
+			
+			$now_data = strtotime(date('Y-m-d',time()));					//当天日期
+
+			//时间验证
+			if($int_start_time < $now_data) parent::callback(C('STATUS_NOT_CHECK'),'开始日期不得小于当天日期！');
+			if($int_start_time > $int_over_time) parent::callback(C('STATUS_NOT_CHECK'),'开始日期不得大于结束日期！');
 			
 			//连接数据库
 			$RoomSchedule = $this->db['RoomSchedule'];	

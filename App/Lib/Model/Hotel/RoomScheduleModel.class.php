@@ -26,7 +26,7 @@ class RoomScheduleModel extends AppBaseModel {
 	
 	/* 获取指定记录 */
 	public function Seek_All_Schedule ($hotel_room_id) {
-		$data =  $this->field('id,hotel_room_id,day,spot_payment,prepay')->where(array('hotel_room_id'=>$hotel_room_id,'is_del'=>0))->order('id ASC')->select();
+		$data =  $this->field('id,hotel_room_id,room_num,day,spot_payment,prepay')->where(array('hotel_room_id'=>$hotel_room_id,'is_del'=>0))->order('id ASC')->select();
 		parent::set_all_time($data, array('day'),'Y-m-d');
 		return $data;
 	}

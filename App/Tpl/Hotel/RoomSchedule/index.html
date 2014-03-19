@@ -122,6 +122,14 @@
 							className:'red',
 							allDay: true
 		                });
+						event_data.push({
+							id : result.data[obj].id,
+		                	title :'房间数量:' + result.data[obj].room_num,
+		                	start: result.data[obj].day,
+							end : result.data[obj].day,
+							className:'red',
+							allDay: true
+		                });
 					}					
 					//日程写入到日历中
                 	callback(event_data);	
@@ -269,6 +277,7 @@ function Ajaxsubmit(){
 	 var startDate =   $("#startDate").val();
 	 var endDate   =   $("#endDate").val();
 	 var prepay    =   $("#prepay").val();
+	 var room_num  =   $("#room_num").val();
 	 var spot_payment   =   $("#spot_payment").val();
 	 var hotel_room_id     =   $("#hotel_room_id").val();
 	 if(!startDate){
@@ -279,9 +288,21 @@ function Ajaxsubmit(){
 		 alert('结束时间不能为空');
 		 return false;
 	 }
+	 if(!room_num){
+   
+         alert('房间数量不能为空');
+         
+	 }else{
+         if(room_num<=0){
+        	 alert('房间数量至少为1');
+             return false;
+         }
+	 
+	 }
      $data = {
     		 startDate    :  startDate,
     		 endDate      :  endDate,
+    		 room_num	  :  room_num,
     		 prepay       :  prepay	,
     		 spot_payment :  spot_payment,
     		 hotel_room_id     :  hotel_room_id
@@ -303,6 +324,7 @@ function Ajaxsubmit(){
 <h4>日历</h4>
 <p>开始日期<input type="text" name="startDate" id="startDate" class="tjr_datetimepicker"/></p>
 <p>结束日期<input type="text" name="endDate" id="endDate" class="tjr_datetimepicker" /></p>
+<p>房间数量<input type="text" name="room_num" id="room_num" /></p>
 <p>预付价格<input type="text" name="prepay" id="prepay" onblur="checkPrice(this)"/></p>
 <p>现付价格<input type="text" name="spot_payment" id="spot_payment" onblur="checkPrice(this)" /></p>
 <input type="hidden" value="{$html.hotel_room_id}" name="hotel_room_id" id="hotel_room_id" />
