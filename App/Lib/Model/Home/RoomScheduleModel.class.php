@@ -40,7 +40,7 @@ class RoomScheduleModel extends HomeBaseModel {
 		
 
 	} 
-	
+	//判断房间数量是否足够
    public function room_num_enough($data){
 
 		$where= array(
@@ -50,12 +50,29 @@ class RoomScheduleModel extends HomeBaseModel {
 				array('egt',strtotime($data['checkinday']) ),
 				array('elt',strtotime($data['checkoutday']) )
 		    ),
-			
 		);
      
 		$arr = $this->where($where)->having('room_num <'.$data['house'])->select();
 	
 		return $arr;
+		
+	}
+	//订单完成后对应的当天 对应的酒店房型 -1
+	public function Update_Room_num($where,$room_num){
+		
+		 $data = $this->where($where)->select();
+
+		 foreach($data as $key=>$val){
+		 	
+		 	$arr = array(
+		 		'room_num'=>$val['room_num']-$room_num
+		 	);
+		 	
+		 	$this->where(array('id'=>$val['id']))
+		 	->save($arr);
+		 	
+		 }
+		 
 		
 	}
 	

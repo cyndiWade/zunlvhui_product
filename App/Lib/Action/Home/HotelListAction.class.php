@@ -226,7 +226,17 @@ class HotelListAction extends HomeBaseAction{
 	      
 	      $HotelOrder = $this->db['HotelOrder'];
 	      $lastid = $HotelOrder->done_add($data);
+	      
+	      $where = array(
+		      'day' =>array(
+					array('egt',$data['in_date'] ),
+					array('elt',$data['out_date'] )
+			    ),
+			  'hotel_room_id'=>$data['hotel_room_id'],
+	      );
 
+	      $RoomSchedule->Update_Room_num($where,$data['room_num']);
+	      
 	  	  if(!empty($lastid)){
 
 	  	  	  header("location:index.php?s=/Home/HotelList/order_info/order_id/$lastid/showwxpaytitle/1");
@@ -379,6 +389,25 @@ class HotelListAction extends HomeBaseAction{
 	  	}
 	  	
 	  	
+	  }
+	  
+	  public function test(){
+	  	$RoomSchedule = $this->db['RoomSchedule'];
+	  	$data['in_date'] ='1395158400';
+	  	$data['out_date']='1395244800';
+	  	$data['hotel_room_id']='289';
+	  	$data['room_num'] =2;
+	  	 $where = array(
+		      'day' =>array(
+					array('egt',$data['in_date'] ),
+					array('elt',$data['out_date'] )
+			    ),
+			  'hotel_room_id'=>$data['hotel_room_id'],
+	      );
+	      $RoomSchedule->Update_Room_num($where,$data['room_num']);
+	      
+	      exit;
+	      
 	  }
 	  
 
