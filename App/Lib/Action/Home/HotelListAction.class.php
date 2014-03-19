@@ -329,7 +329,7 @@ class HotelListAction extends HomeBaseAction{
 		 
 	  
 	  }
-
+//订单的取消
 	  public function quxiao_dingdan(){
 	  
 	        $order_id =  $this->_post('order_id');
@@ -350,6 +350,35 @@ class HotelListAction extends HomeBaseAction{
 			}
 	  
 	  
+	  }
+	  //判断房间 数量是否足够
+	  public function room_num_enough(){
+	  	$RoomSchedule = $this->db['RoomSchedule'];
+	  	$data = $this->_post();
+	  	$room_num = $data['house'];
+	   /* $data = array(
+	    	'room_id'=>289,
+	        'house'=>2,
+		    'checkinday'=>'2014-03-19',
+		    'checkoutday'=>'2014-03-20'
+	    );*/
+	  	if($data){
+	  			
+	  	    $arr = $RoomSchedule->room_num_enough($data);
+	  	    if(!empty($arr)){
+	  	    	foreach($arr as $key=>$val){
+	  	    		$str[]= date('Y-m-d',$val['day']).'号房间数量为'.$val['room_num'];
+	  	    	}
+	  	    	parent::callback(C('STATUS_UPDATE_DATA'),'房间数量不够',$str);
+	  	    	
+	  	    }else{
+	  	    	parent::callback(C('STATUS_SUCCESS'),'');
+	  	    }
+	  	}else{
+	  		parent::callback(C('STATUS_UPDATE_DATA'),'没有此订单号！');
+	  	}
+	  	
+	  	
 	  }
 	  
 

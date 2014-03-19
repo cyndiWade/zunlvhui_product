@@ -23,7 +23,10 @@ function submit_order(){
    var Inperson       = document.getElementById('Inperson').value;
    var telperson      = document.getElementById('telperson').value;
    var tel            = document.getElementById('tel').value;
-
+   var house          = document.getElementById('house').value;
+   var room_id 		  = document.getElementById('room_id').value;
+   var checkinday       = document.getElementById('checkinday').value;
+   var checkoutday      = document.getElementById('checkoutday').value;
    if(!Inperson){
      alert('填写入住人');
      return false;
@@ -42,11 +45,25 @@ function submit_order(){
      alert('请填写手机号');
      return false;
    }
+   $data={
+		   room_id : room_id,
+		   house :house,
+		   checkinday :checkinday,
+		   checkoutday : checkoutday
+   }
+   var result = ajax_post_setup('?s=/Home/HotelList/room_num_enough',$data);
+   if(result.status != 0 ){
+
+      alert(result.msg+result.data);
+   }
+   return false;
+   
 }
 
 //选择房间之后改变价格
 
 function changePrice(type){
+   
    var house            = document.getElementById('house').value;
    var checkinday       = document.getElementById('checkinday').value;
    var checkoutday      = document.getElementById('checkoutday').value;
@@ -59,7 +76,7 @@ function changePrice(type){
 		   pay_type    : pay_type,
 		   room_id     : room_id
 		   
-   };
+  };
   var result = ajax_post_setup('?s=/Home/HotelList/update_price',$data);
 
   if(result.status ==0 ){

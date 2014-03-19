@@ -41,6 +41,24 @@ class RoomScheduleModel extends HomeBaseModel {
 
 	} 
 	
+   public function room_num_enough($data){
+
+		$where= array(
+			'hotel_room_id'=>$data['room_id'],
+		    //'room_num'=>min('room_num'),
+			'day' =>array(
+				array('egt',strtotime($data['checkinday']) ),
+				array('elt',strtotime($data['checkoutday']) )
+		    ),
+			
+		);
+     
+		$arr = $this->where($where)->having('room_num <'.$data['house'])->select();
+	
+		return $arr;
+		
+	}
+	
 	
 }
 
