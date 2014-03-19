@@ -57,7 +57,7 @@ class RoomScheduleModel extends HomeBaseModel {
 		return $arr;
 		
 	}
-	//订单完成后对应的当天 对应的酒店房型 -1
+	//订单完成后对应的当天 对应的酒店房型 -对应的房间数量
 	public function Update_Room_num($where,$room_num){
 		
 		 $data = $this->where($where)->select();
