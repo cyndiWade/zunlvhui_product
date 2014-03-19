@@ -55,8 +55,9 @@ function submit_order(){
    if(result.status != 0 ){
 
       alert(result.msg+result.data);
+      return false;
    }
-   return false;
+
    
 }
 

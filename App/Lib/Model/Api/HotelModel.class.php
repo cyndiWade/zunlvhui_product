@@ -12,6 +12,7 @@ class HotelModel extends ApiBaseModel{
 			->join($this->prefix.'hotel_room AS hr ON h.id=hr.hotel_id')
 			->join($this->prefix.'room_schedule AS rs on rs.hotel_room_id = hr.id')
 			->where(array('hotel_cs'=>$hotel_cs,'h.is_del'=>0,'rs.day'=>strtotime( date('Y-m-d',time())) )  )
+			->order('h.sort DESC')
 			->select();
 			$arr = array();
             $arr[0] = array(
