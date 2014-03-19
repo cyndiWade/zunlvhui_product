@@ -63,7 +63,7 @@ class HotelListAction extends HomeBaseAction{
 	  	 $user_code = $this->_get('user_code');
 	  	 
 	     $list = $Hotel->get_one_hotel(array('id'=>$hotel_id));
-	     $data = $HotelRoom->get_hotel_room(); // 获得房型
+	     $data = $HotelRoom->get_hotel_room($hotel_id); // 获得房型
 	    
 	     if($list == true){
 	     	  

@@ -58,7 +58,7 @@ class HotelRoomModel extends HomeBaseModel {
 	  
 	  //获得酒店的房型
 	  public function get_hotel_room($hotel_id=151){
-        $hotel_id=151;
+
 	  	$id = $this->room_putaway();  //下架的房型的id
 	  	$where = array(
 		  	'r.hotel_id'=>$hotel_id, //酒店的id
@@ -79,9 +79,10 @@ class HotelRoomModel extends HomeBaseModel {
 	  		
 	  		$data[$key]['url'] = $this->get_room_img($val['rid']);
 	  	}
+	  	/*echo '<pre>';print_R($data);echo '</pre>';
+	  	echo $this->getLastSql();
+	  	exit;*/
 	  	return $data;
-	 	//echo $this->getLastSql();
-	  	echo'<pre>';print_R($data);echo'</pre>';
 	  	
 	  }
 	  //获得图片
