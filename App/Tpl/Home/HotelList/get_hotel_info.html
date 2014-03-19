@@ -131,7 +131,7 @@ function submit_order(id,type){
         <div class="right p210"> 
         <span class="zx7 f30  pr_15">￥{$vo.prepay}</span> 
         <span>
-        <a href="javascript:void(0)" class="btn_yd" onclick="submit_order({$vo.hotel_room_id},2)" > 
+        <a href="javascript:void(0)" class="btn_yd" onclick="submit_order({$vo.rid},2)" > 
         <img style="width:82px" src="{$Think.const.APP_PATH}Public/Home/images/yuding.png"> </a> 
         </span> 
         </div>
@@ -159,7 +159,7 @@ function submit_order(id,type){
         <span class="zx7 f30  pr_15">
         <span style="font-size:18px;">预付</span>￥{$vo.spot_payment}</span> 
         <span>
-        <a href="javascript:void(0)" class="btn_yd" onclick="submit_order({$vo.hotel_room_id},1)" > 
+        <a href="javascript:void(0)" class="btn_yd" onclick="submit_order({$vo.rid},1)" > 
         <img style="width:82px" src="{$Think.const.APP_PATH}Public/Home/images/yuding.png"> </a> 
         </span> 
         </div>
@@ -179,7 +179,10 @@ function submit_order(id,type){
       <div><img src="{$html.list.img}" width="580" height="308"></div>
     </div>
   </div>
-  <div align="right"  class="price1"> <span class="right close"><a href="javascript:;"> <img src="{$Think.const.APP_PATH}Public/Home/images/detail_txt3.png"></a></span></div>
+  <div align="right"  class="price1"> <span class="right close">
+  <a href="javascript:;"> 
+  <img src="{$Think.const.APP_PATH}Public/Home/images/detail_txt3.png">
+  </a></span></div>
 </div>
 
 <!--第一个图片-->
