@@ -21,7 +21,7 @@ class RBAC {
 	 * 初始化
 	 */
 	static public function init($parameter) {
-		
+
 		/* 数据表 */
 		self::$table_prefix = $parameter->table_prefix;		//表前缀
 		self::$node_table = $parameter->node_table;		//节点表
@@ -79,40 +79,45 @@ class RBAC {
 		foreach ($rbac_list AS $key=>$val) {
 			$rbac_group[$val['group_id']][] = $val;
 		}
-		
-//dump($rbac_group);
 
 		/* 权限验证 */
 		/* 获取已有的权限 */
 		$have_jurisdiction = array();		
+		$tmp_pid = array();
 		foreach ($rbac_group AS $groupKey=>$groupVal) {
+
+						
+			foreach ($groupVal AS $key=>$val) {
+				
+				//分组
+				if ($val['level'] == 1 && $val['name'] ==self::$action[$val['level']]){
+					$have_jurisdiction[$groupKey][1] = $val['name']; 	//保存已有的权限
+					$tmp_pid[$groupKey][1]['pid'] = $val['id'];	
+				}
 			
-			
-			
-			dump($groupVal);
-			//$have_jurisdiction[$groupKey] = regroupKey($groupVal,'level');
-			
-			
+				//类
+				if ($val['level'] ==2 && $val['name'] ==self::$action[$val['level']] && $val['pid'] == $tmp_pid[$groupKey][1]['pid']) {
+					$have_jurisdiction[$groupKey][2] = $val['name']; 	//保存已有的权限
+					$tmp_pid[$groupKey][2]['pid'] = $val['id'];
+				}
+				
+				//方法
+				if ($val['level'] ==3 && $val['name'] ==self::$action[$val['level']] && $val['pid'] == $tmp_pid[$groupKey][2]['pid']) {
+					$have_jurisdiction[$groupKey][3] = $val['name']; 	//保存已有的权限
+				}
+		
+			}
 			
 // 			foreach ($groupVal AS $key=>$val) {
-				
-				
-				
-// 				//验证当前组中，已有的权限
-// 				if ($val['pid'] == 0 && $val['name'] == self::$action[$val['level']]) {
-// 					$have_jurisdiction[$groupKey][$val['level']] = $val['name']; 	//保存已有的权限
-// 				} elseif ($val['pid'] == 1) {
-					
-// 				}
-			
 // 				if ($val['name'] == self::$action[$val['level']] ) {
 // 					$have_jurisdiction[$groupKey][$val['level']] = $val['name']; 	//保存已有的权限
 // 				}
 // 			}
+			
+			
 		}
 
-dump($have_jurisdiction[54]);
-exit;
+
 		/* 拿已有的权限与URL的动作进行对比 */
 		foreach ($have_jurisdiction AS $key=>$val) {
 			$tmp = array_diff(self::$action,$val);	//计算URL动作与已有权限的差集
@@ -129,8 +134,11 @@ exit;
 		}
 		
 		return $result;
+		
+		
 	}
 	
+
 }
 
 
