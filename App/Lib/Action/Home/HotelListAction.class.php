@@ -55,28 +55,29 @@ class HotelListAction extends HomeBaseAction{
 	      $this->assign('html',$html);
 	      $this->display();
 	  }
-
+//单个酒店的详细信息
 	  public function get_hotel_info(){
 	     $Hotel  = $this->db['Hotel'];
 	     $HotelRoom  = $this->db['HotelRoom'];
 	  	 $hotel_id = $this->_get('hotel_id');
 	  	 $user_code = $this->_get('user_code');
+	  	 
 	     $list = $Hotel->get_one_hotel(array('id'=>$hotel_id));
+	     $data = $HotelRoom->get_hotel_room($hotel_id); // 获得房型
 	    
 	     if($list == true){
-	      	$rooms    = $HotelRoom->get_price_room(array('hotel_id'=>$hotel_id )); 
-		    $room_sort     = regroupKey($rooms,'hotel_id');   
+	     	  
 			$list['img']         = $Hotel->get_img($list['id'],3);
-			$list['roomtype']     = $room_sort[$list['id']];
 
-	      }
-	     
+	     }
 	  	 $html = array(
 		  	 'list'=>$list,
+	  	     'roomtype' =>$data,
 		  	 'user_code'=>$user_code,
 			 'hotel_cs'=> passport_encrypt($list['hotel_cs'],'hotel')
 	  	 );
-		// echo '<pre>';print_R($html);echo '</pre>';exit;
+
+		 //echo'<pre>';print_R($html);echo '</pre>';exit;
 	     $this->assign('html',$html);
 	  	 $this->display();
 	  
@@ -225,7 +226,17 @@ class HotelListAction extends HomeBaseAction{
 	      
 	      $HotelOrder = $this->db['HotelOrder'];
 	      $lastid = $HotelOrder->done_add($data);
+	      
+	      $where = array(
+		      'day' =>array(
+					array('egt',$data['in_date'] ),
+					array('elt',$data['out_date'] )
+			    ),
+			  'hotel_room_id'=>$data['hotel_room_id'],
+	      );
 
+	      $RoomSchedule->Update_Room_num($where,$data['room_num']);
+	      
 	  	  if(!empty($lastid)){
 
 	  	  	  header("location:index.php?s=/Home/HotelList/order_info/order_id/$lastid/showwxpaytitle/1");
@@ -328,7 +339,7 @@ class HotelListAction extends HomeBaseAction{
 		 
 	  
 	  }
-
+//订单的取消
 	  public function quxiao_dingdan(){
 	  
 	        $order_id =  $this->_post('order_id');
@@ -349,6 +360,54 @@ class HotelListAction extends HomeBaseAction{
 			}
 	  
 	  
+	  }
+	  //判断房间 数量是否足够
+	  public function room_num_enough(){
+	  	$RoomSchedule = $this->db['RoomSchedule'];
+	  	$data = $this->_post();
+	  	$room_num = $data['house'];
+	   /* $data = array(
+	    	'room_id'=>289,
+	        'house'=>2,
+		    'checkinday'=>'2014-03-19',
+		    'checkoutday'=>'2014-03-20'
+	    );*/
+	  	if($data){
+	  			
+	  	    $arr = $RoomSchedule->room_num_enough($data);
+	  	    if(!empty($arr)){
+	  	    	foreach($arr as $key=>$val){
+	  	    		$str[]= date('Y-m-d',$val['day']).'号房间数量为'.$val['room_num'];
+	  	    	}
+	  	    	parent::callback(C('STATUS_UPDATE_DATA'),'房间数量不够',$str);
+	  	    	
+	  	    }else{
+	  	    	parent::callback(C('STATUS_SUCCESS'),'');
+	  	    }
+	  	}else{
+	  		parent::callback(C('STATUS_UPDATE_DATA'),'没有此订单号！');
+	  	}
+	  	
+	  	
+	  }
+	  
+	  public function test(){
+	  	$RoomSchedule = $this->db['RoomSchedule'];
+	  	$data['in_date'] ='1395158400';
+	  	$data['out_date']='1395244800';
+	  	$data['hotel_room_id']='289';
+	  	$data['room_num'] =2;
+	  	 $where = array(
+		      'day' =>array(
+					array('egt',$data['in_date'] ),
+					array('elt',$data['out_date'] )
+			    ),
+			  'hotel_room_id'=>$data['hotel_room_id'],
+	      );
+	      $RoomSchedule->Update_Room_num($where,$data['room_num']);
+	      
+	      exit;
+	      
 	  }
 	  
 

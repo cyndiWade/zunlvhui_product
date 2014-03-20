@@ -16,17 +16,17 @@ class HotelModel extends HomeBaseModel{
 		array_add_to($con,$condition);
         
 
-		return $this->where($con)->field($field)->select();
+		return $this->where($con)->field($field)->order('sort DESC')->select();
 
-		$data = $this->where($con)->field($field)->select();
-		foreach ($data as $key=>$val){
-            $data[$key]['img'] = $this->get_img($val['id'],2);//array('hotel_id'=>$hotel_id )
-			$price = $this->get_price($val['id']);
-			$data[$key]['spot_payment'] = $price['spot_payment'];
-			$data[$key]['prepay'] = $price['prepay'];
-
-		}
-		return $data;
+//		$data = $this->where($con)->field($field)->select();
+//		foreach ($data as $key=>$val){
+//            $data[$key]['img'] = $this->get_img($val['id'],2);//array('hotel_id'=>$hotel_id )
+//			$price = $this->get_price($val['id']);
+//			$data[$key]['spot_payment'] = $price['spot_payment'];
+//			$data[$key]['prepay'] = $price['prepay'];
+//
+//		}
+//		return $data;
 
 		
 	}

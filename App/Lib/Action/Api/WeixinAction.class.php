@@ -466,7 +466,7 @@ private function receiveText($object)
 					  
 				 }
 				 $data = array('step'=>$step+1,'room_id'=>$arr_item['room_id'],'room_name'=>$arr_item['title'],'room_price'=>$arr_item['price'],'pay_type'=>$arr_item['pay_type'],'endtime'=>time()+$T);
-				 $contentStr = '您选了：'.$arr_item['title']." 房型 \n".'价格为 ：'.$arr_item['price'] .'元 '."\n".'付款方式为 : '.$PAY_TYPE[$arr_item['pay_type']]['explain']."\n".'请输入入住时间。如 (今天 ,明天 后天)';
+				 $contentStr = '您选了：'.$arr_item['title']." 房型 \n".'价格为 ：'.$arr_item['price'] .'元 '."\n".'付款方式为 : '.$PAY_TYPE[$arr_item['pay_type']]['explain']."\n".'请输入入住日期。如 (今天 ,明天 ,后天,2014年2月1日)';
 				 $resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
 				 break;
 			 case 3 :

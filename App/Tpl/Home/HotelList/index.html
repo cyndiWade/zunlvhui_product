@@ -34,8 +34,11 @@
 	    <span class="left zx5 f24">{$vo.hotel_name}</span> 
 	    <span class="right zx2 f18">
 	    
-	    <img src="{$Think.const.APP_PATH}Public/Home/images/5.png" alt="{$vo.hotel_xj}星级" />
-	
+	  
+	    <for start="1" end="$vo['hotel_xj']" >
+    
+        <img src="{$Think.const.APP_PATH}Public/Home/images/1.png" style="width:26px;height:26px;" title="{$vo.hotel_xj}星级酒店" alt="{$vo.hotel_xj}星级" /> 
+		</for>
 	    </span> 	    
 	    </div>
             <div class="m_txt1 autohei"> 

@@ -225,6 +225,7 @@ $custom= array (
 					'explain' => '来自微信',
 			),	
 		),
+		'NO_PIC'=>'default/default.jpg',
 		
 		
 		//订单状态
