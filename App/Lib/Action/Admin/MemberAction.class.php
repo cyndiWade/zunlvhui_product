@@ -9,7 +9,6 @@ class MemberAction extends AdminBaseAction {
 	//初始化数据库连接
 	protected  $db = array(
 		'WxUser'=>'WxUser',		//微信会员表
-
 	);
 	
 
@@ -26,7 +25,7 @@ class MemberAction extends AdminBaseAction {
 	
 	
 	
-	//语义列表
+	//微信会员列表
 	public function wx_index () {
 		//连接数据库
 		$WxUser = $this->db['WxUser'];
@@ -44,6 +43,8 @@ class MemberAction extends AdminBaseAction {
 		$this->display();
 	}
 	
+	
+	/*
 	public function edit () {
 		$act = $this->_get('act');						//操作类型
 		$WxUser = $this->db['WxUser'];
@@ -87,7 +88,7 @@ class MemberAction extends AdminBaseAction {
 		$this->display();
 	}
 
-	
+	*/
 	
 
     

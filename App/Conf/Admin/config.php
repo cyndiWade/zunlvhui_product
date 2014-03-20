@@ -34,6 +34,10 @@ return array(
 						'num' => 2,
 						'explain' => '处理中',	
 				),
+				3 => array(
+						'num'=>3,
+						'explain'=> '订单已取消'
+				)
 		),
 		
 		//处理状态
