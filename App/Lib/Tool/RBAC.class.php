@@ -60,7 +60,7 @@ class RBAC {
 		
 		/* 获取用户存在的权限 */
 		$DB = M();
-		$rbac_list = $DB->field('gn.group_id,n.name,n.title,n.level')
+		$rbac_list = $DB->field('gn.group_id,n.id,n.pid,n.name,n.title,n.level')
 		->table(self::$table_prefix.self::$group_user_table.' AS gu')
 		->join(self::$table_prefix.self::$group_node_table.' AS gn ON gu.group_id = gn.group_id')
 		->join(self::$table_prefix.self::$node_table.' AS n ON gn.node_id = n.id')
@@ -78,22 +78,41 @@ class RBAC {
 		$rbac_group = array();		
 		foreach ($rbac_list AS $key=>$val) {
 			$rbac_group[$val['group_id']][] = $val;
-		}	
+		}
 		
+//dump($rbac_group);
 
 		/* 权限验证 */
 		/* 获取已有的权限 */
 		$have_jurisdiction = array();		
 		foreach ($rbac_group AS $groupKey=>$groupVal) {
-			foreach ($groupVal AS $key=>$val) {
-				//验证当前组中，已有的权限
-				if ($val['name'] == self::$action[$val['level']]) {
-					$have_jurisdiction[$groupKey][$val['level']] = $val['name']; 	//保存已有的权限
-				}
-			}
+			
+			
+			
+			dump($groupVal);
+			//$have_jurisdiction[$groupKey] = regroupKey($groupVal,'level');
+			
+			
+			
+// 			foreach ($groupVal AS $key=>$val) {
+				
+				
+				
+// 				//验证当前组中，已有的权限
+// 				if ($val['pid'] == 0 && $val['name'] == self::$action[$val['level']]) {
+// 					$have_jurisdiction[$groupKey][$val['level']] = $val['name']; 	//保存已有的权限
+// 				} elseif ($val['pid'] == 1) {
+					
+// 				}
+			
+// 				if ($val['name'] == self::$action[$val['level']] ) {
+// 					$have_jurisdiction[$groupKey][$val['level']] = $val['name']; 	//保存已有的权限
+// 				}
+// 			}
 		}
 
-
+dump($have_jurisdiction[54]);
+exit;
 		/* 拿已有的权限与URL的动作进行对比 */
 		foreach ($have_jurisdiction AS $key=>$val) {
 			$tmp = array_diff(self::$action,$val);	//计算URL动作与已有权限的差集
@@ -108,6 +127,7 @@ class RBAC {
 				$result['message'] = '你没有权限访问：'.implode(',',$tmp);
 			}
 		}
+		
 		return $result;
 	}
 	
