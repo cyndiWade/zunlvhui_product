@@ -20,55 +20,7 @@ return array(
 		'NOT_AUTH_MODULE' => 'Login', 	// 默认无需认证模块，多个用,号分割
 		'NOT_AUTH_ACTION' => '', 						// 默认无需认证方法，多个用,号分割
 		
-		//订单状态
-		'ORDER_STATUS' => array(
-				0 => array(
-					'num' => 0,
-					'explain' => '未处理',	
-				),
-				1 => array(
-						'num' => 1,
-						'explain' => '已处理',		
-				),
-				2 => array(
-						'num' => 2,
-						'explain' => '处理中',	
-				),
-				3 => array(
-						'num'=>3,
-						'explain'=> '订单已取消'
-				)
-		),
 		
-		//处理状态
-		'DISPOSE_STATUS'=> array(
-				0 => array(
-					'num' => 0,
-					'explain' => '新订单',	
-					'admin_explain'	=> '新预订'
-				),
-				1 => array(
-					'num' => 1,
-					'explain' => '确认',
-					'admin_explain'	=> '确认'			
-				),
-				2 => array(
-					'num' => 2,
-					'explain' => '无法确认',
-					'admin_explain'	=> '酒店拒绝'
-				),
-				3 => array(
-					'num' => 3,
-					'explain' => '客人同意拒绝',
-					'admin_explain'	=> '客人同意拒绝'
-				),
-				4 => array(
-					'num' => 4,
-					'explain' => '客人不同意拒绝',
-					'admin_explain'	=> '客人不同意拒绝'
-				),
-		),
-		
-		
+
 );
 ?>

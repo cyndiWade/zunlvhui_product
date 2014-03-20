@@ -42,24 +42,7 @@ return array(
 	                  'explain'=>'已付款'
 	                )
                 ),
-        'ORDER_STATUS' => array(
-				0 => array(
-					'num' => 0,
-					'explain' => '未处理',	
-				),
-				1 => array(
-						'num' => 1,
-						'explain' => '已处理',		
-				),
-				2 => array(
-						'num' => 2,
-						'explain' => '处理中',	
-				),
-				3 => array(
-				        'num'=>3,
-				        'explain'=> '订单已取消'
-				)
-		),
+       
                 
 );
 ?>
