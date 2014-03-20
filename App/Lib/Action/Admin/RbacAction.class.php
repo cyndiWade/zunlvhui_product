@@ -388,26 +388,26 @@ class RbacAction extends AdminBaseAction {
 				
 			if (empty($data)) parent::callback(C('STATUS_OTHER'),'请求的用户为空');
 			if (empty($group_id)) parent::callback(C('STATUS_OTHER'),'请求组为空');
-		
+			
 			/* 请求的节点数据处理 */
+			$data = stripslashes($data);
 			$data_tmp = json_decode($data);		//转化为数组格式
+
 			$auto_user = array();		//保存请求的节点ID
 			foreach ($data_tmp As $key =>$val) {
 				if (!empty($val->id)) {
 					array_push($auto_user,$val->id);
 				}
 			}
-				
 			/* 已有的节点数据处理 */
 			$user_list = $GroupUser->where(array('group_id'=>$group_id))->select();		//当前组下所有的节点数据
 			$have_user = getArrayByField($user_list,'user_id');		//获取所有节点ID
 				
 			/* 计算需要插入与删除的节点ID */
 			$action = arrar_insert_delete($auto_user,$have_user);
-				
 			//插入节点
 			$insert = $action['insert'];
-			if ($insert) {
+			if (count($insert) >0) {
 				foreach ($insert AS $key=>$val) {
 					$GroupUser->add(array('group_id'=>$group_id,'user_id'=>$val));
 				}
@@ -415,7 +415,7 @@ class RbacAction extends AdminBaseAction {
 				
 			//删除节点
 			$delete = $action['delete'];
-			if ($delete) {
+			if (count($delete) >0) {
 				foreach ($delete AS $key=>$val) {
 					$GroupUser->where(array('group_id'=>$group_id,'user_id'=>$val))->delete();
 				}
