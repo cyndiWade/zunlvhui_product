@@ -407,7 +407,7 @@ class RbacAction extends AdminBaseAction {
 			$action = arrar_insert_delete($auto_user,$have_user);
 			//插入节点
 			$insert = $action['insert'];
-			if (count($insert) >0) {
+			if ($insert) {
 				foreach ($insert AS $key=>$val) {
 					$GroupUser->add(array('group_id'=>$group_id,'user_id'=>$val));
 				}
@@ -415,7 +415,7 @@ class RbacAction extends AdminBaseAction {
 				
 			//删除节点
 			$delete = $action['delete'];
-			if (count($delete) >0) {
+			if ($delete) {
 				foreach ($delete AS $key=>$val) {
 					$GroupUser->where(array('group_id'=>$group_id,'user_id'=>$val))->delete();
 				}

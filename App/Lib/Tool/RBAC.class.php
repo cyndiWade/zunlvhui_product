@@ -87,32 +87,32 @@ class RBAC {
 		foreach ($rbac_group AS $groupKey=>$groupVal) {
 
 						
-			foreach ($groupVal AS $key=>$val) {
-				
-				//分组
-				if ($val['level'] == 1 && $val['name'] ==self::$action[$val['level']]){
-					$have_jurisdiction[$groupKey][1] = $val['name']; 	//保存已有的权限
-					$tmp_pid[$groupKey][1]['pid'] = $val['id'];	
-				}
-			
-				//类
-				if ($val['level'] ==2 && $val['name'] ==self::$action[$val['level']] && $val['pid'] == $tmp_pid[$groupKey][1]['pid']) {
-					$have_jurisdiction[$groupKey][2] = $val['name']; 	//保存已有的权限
-					$tmp_pid[$groupKey][2]['pid'] = $val['id'];
-				}
-				
-				//方法
-				if ($val['level'] ==3 && $val['name'] ==self::$action[$val['level']] && $val['pid'] == $tmp_pid[$groupKey][2]['pid']) {
-					$have_jurisdiction[$groupKey][3] = $val['name']; 	//保存已有的权限
-				}
-		
-			}
-			
 // 			foreach ($groupVal AS $key=>$val) {
-// 				if ($val['name'] == self::$action[$val['level']] ) {
-// 					$have_jurisdiction[$groupKey][$val['level']] = $val['name']; 	//保存已有的权限
+				
+// 				//分组
+// 				if ($val['level'] == 1 && $val['name'] ==self::$action[$val['level']]){
+// 					$have_jurisdiction[$groupKey][1] = $val['name']; 	//保存已有的权限
+// 					$tmp_pid[$groupKey][1]['pid'] = $val['id'];	
 // 				}
+			
+// 				//类
+// 				if ($val['level'] ==2 && $val['name'] ==self::$action[$val['level']] && $val['pid'] == $tmp_pid[$groupKey][1]['pid']) {
+// 					$have_jurisdiction[$groupKey][2] = $val['name']; 	//保存已有的权限
+// 					$tmp_pid[$groupKey][2]['pid'] = $val['id'];
+// 				}
+				
+// 				//方法
+// 				if ($val['level'] ==3 && $val['name'] ==self::$action[$val['level']] && $val['pid'] == $tmp_pid[$groupKey][2]['pid']) {
+// 					$have_jurisdiction[$groupKey][3] = $val['name']; 	//保存已有的权限
+// 				}
+		
 // 			}
+			
+			foreach ($groupVal AS $key=>$val) {
+				if ($val['name'] == self::$action[$val['level']] ) {
+					$have_jurisdiction[$groupKey][$val['level']] = $val['name']; 	//保存已有的权限
+				}
+			}
 			
 			
 		}
