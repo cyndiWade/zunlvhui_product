@@ -88,7 +88,7 @@ function submit_order(id,type){
   <div class="blank1"></div>
   <div class="m_boxbg1 padding0 jd_info">
     <ul>
-      <li><span class="left m_dot1 zx2 f24">{$html.list.hotel_syq}</span> 
+      <li><span class="left m_dot1 zx2 f24">{$html.list.hotel_syq} ({$html.list.hotel_dz})</span> 
       <span class="right m_dot4 zx7 f20"> 
       <a href="index.php?s=/Home/HotelList/map/hotel_id/{$html.list.id}/user_code/{$html.user_code}">地图</a>
       </span></li>
@@ -156,8 +156,8 @@ function submit_order(id,type){
           </div>
         </div>
         <div class="right p210"> 
-        <span class="zx7 f30  pr_15">
-        <span style="font-size:18px;">预付</span>￥{$vo.spot_payment}</span> 
+        <span class="zx7 f30  pr_15">￥{$vo.spot_payment}</span><br />
+        <span style="font-size:26px; color:#F4D24B;">预付</span> 
         <span>
         <a href="javascript:void(0)" class="btn_yd" onclick="submit_order({$vo.rid},1)" > 
         <img style="width:82px" src="{$Think.const.APP_PATH}Public/Home/images/yuding.png"> </a> 

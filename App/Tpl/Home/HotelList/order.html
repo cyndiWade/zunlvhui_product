@@ -19,6 +19,18 @@ function china(str) {
 	var pattern = ze ;
 	return str.match(pattern);
 }
+
+function is_phone(obj){
+	var val = obj.value;
+	re= /^(13[0-9]{9})|(15[89][0-9]{8})$/
+	
+    if(!re.test(val) || val.length!=11){
+
+    	obj.focus();
+        alert('请输入正确的手机号'); 
+    }
+	
+}
 function submit_order(){
    var Inperson       = document.getElementById('Inperson').value;
    var telperson      = document.getElementById('telperson').value;
@@ -158,7 +170,8 @@ function changePrice(type){
     	<li><span class="left zx2 f24 wit120">联系人</span>  
 	 <input type="text" id="telperson" name="telperson" class="left inp1" placeholder="" /></li>
       <li><span class="left zx2 f24 wit120">手机</span>  
-      <input type="tel" class="left inp1" id="tel" name="tel" placeholder="" /></li>
+      <input type="tel" class="left inp1" id="tel" name="tel" placeholder="" onblur="is_phone(this)" />
+      </li>
  
       <li style="border-bottom:none;">
       <span class="left zx2 f24 wit120">特殊要求</span> 
