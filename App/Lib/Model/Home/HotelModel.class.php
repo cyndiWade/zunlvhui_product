@@ -71,7 +71,76 @@ class HotelModel extends HomeBaseModel{
 		  return $data;
 	  
 	  }
+  /*
+   * 新加 获得酒店房型的图片
+   */
+      //获得酒店的房型
+	  public function get_hotel_room($hotel_id,$type){
 
-	
+	  
+	  	$where = array(
+		  	'r.hotel_id'=>$hotel_id, //酒店的id
+		  	'r.is_del'=>0,      //房型是否删除
+		  	's.is_del'=>0,       //房型的价格是否删除
+	  	    's.room_num' =>array('gt',0), //房间数量大于0
+	  	    's.day'=>strtotime( date( 'Y-m-d',time() ) ), // 今天
+
+	  	);
+	  	
+	  	$data = $this->field('r.id as rid ,r.title,r.info,s.spot_payment,s.prepay,s.room_num,s.id as sid') 
+	  	->table($this->prefix.'hotel_room AS r')
+	  	->join($this->prefix.'room_schedule AS s on s.hotel_room_id = r.id')
+	  	->where($where)->select();
+	  	
+	  	foreach($data as $key=>$val){
+	  		
+	  		$data[$key]['url'] = $this->get_room_img($val['rid'],$type);
+	  	}
+	  	return $data;
+	  	
+	  }
+	  //获得图片
+	  public function get_room_img($room_id,$type){	  	
+	  	$where = array(
+		  	'i.is_del'=>0,
+		  	'i.hotel_room_id' =>$room_id,
+	  	    'i.type'  =>$type
+	  	);	  	
+	  	$data = $this->table($this->prefix.'room_img as i')
+	  	->where($where)->getField('url');	
+	  	$img = empty($data) ? C('NO_PIC') : $data;  	
+	  	return C('PUBLIC_VISIT.domain').C('UPLOAD_DIR.image').$img;
+	  	
+	  }
+	  
+	  // 获得酒店
+	  public function get_hotel($condition){
+	  	$con = array('is_del'=>0);
+		array_add_to($con,$condition);
+        
+        
+		$data = $this->where($con)->field($field)->order('sort DESC')->select();
+		
+		foreach($data as $key=>$val){
+			$data[$key]['img'] = $this->get_img($val['id'],4); // 酒店的图片
+			$data[$key]['price'] = $this->get_room_price($val['id']);
+		}
+		//echo $this->getLastSql();
+		return $data;
+	  	
+	  }
+	  
+	  // 获得酒店房型的价格
+	  public function get_room_price($hotel_id){
+	  	 
+	  	$data = $this->field('rs.spot_payment,rs.prepay')
+			->table($this->prefix.'hotel_room AS r')
+			->join($this->prefix.'room_schedule AS rs on rs.hotel_room_id = r.id')
+			->where(array('r.hotel_id'=>$hotel_id,'r.is_del'=>0,'rs.day'=>strtotime( date('Y-m-d',time())) )  )
+			->find();
+
+		  return $data;
+	  	
+	  }
 	
 }

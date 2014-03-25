@@ -59,13 +59,22 @@ var coverage = [];		//弹出层
 	var tmp_html  = "<a href='index.php?s=/Home/HotelList/get_hotel_info/hotel_id/{$val.id}/user_code/{$html.user_code}' >"
 		 +"<div id='{$val.id}'  class='map_info'>"
 		 +"<span class='left sm_img'>"
-
 		 +"<img src='{$val.img}' /></span>"
-
 		 +"<div class='autohei'>"
 			 +"<div class='autohei info_txt1'>{$val.hotel_name}</div>"
-			 +"<div class='autohei info_txt2'><span class='left'><img src='images/{$val.hotel_xj}.png' alt ='{$val.hotel_xj}星级' height='20' /></span><span class='right'>{$val.hotel_pf}分</span></div>"
-			 +"<div class='autohei info_txt3'><span class='left'>￥{$val.spot_payment}<small>起</small></span><span class='right'><button class='btn1'>预订</button></span></div>"
+			 +"<div class='autohei info_txt2'>"
+			 +"<span class='left'>"
+			 <for start="0" end="$val['hotel_xj']" >
+			    
+		        +"<img src='{$Think.const.APP_PATH}Public/Home/images/1.png' height='20'  title='{$val.hotel_xj}星级酒店' alt='{$val.hotel_xj}星级' /> "
+			 </for>
+			 //+"<img src='images/{$val.hotel_xj}.png' alt ='{$val.hotel_xj}星级' height='20' />"
+			 +"</span>"
+			 +"<span class='right'>{$val.hotel_pf}分</span>"
+			 +"</div>"
+			 +"<div class='autohei info_txt3'>"
+			 +"<span class='left'>￥{$val.price.spot_payment}<small>起</small>"
+			 +"</span><span class='right'><button class='btn1'>预订</button></span></div>"
 		 +"</div>"
 		 +"<div class='clear'></div>"
 		 

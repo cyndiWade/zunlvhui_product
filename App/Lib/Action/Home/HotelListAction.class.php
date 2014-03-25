@@ -50,24 +50,26 @@ class HotelListAction extends HomeBaseAction{
 	      //echo '<pre>';print_R($list);echo '</pre>';exit;
 	      $html = array(
 			  'list'=>$list,
-			  'hotel_cs'=> passport_encrypt($hotel_cs,'hotel')
+			  'hotel_cs'=> passport_encrypt($hotel_cs,'hotel'),
+	          'user_code'=>$this->_get('user_code')
 			  );
 	      $this->assign('html',$html);
 	      $this->display();
 	  }
 //单个酒店的详细信息
 	  public function get_hotel_info(){
+	  	 
 	     $Hotel  = $this->db['Hotel'];
 	     $HotelRoom  = $this->db['HotelRoom'];
 	  	 $hotel_id = $this->_get('hotel_id');
 	  	 $user_code = $this->_get('user_code');
 	  	 
 	     $list = $Hotel->get_one_hotel(array('id'=>$hotel_id));
-	     $data = $HotelRoom->get_hotel_room($hotel_id); // 获得房型
-	    
+	     $data = $Hotel->get_hotel_room($hotel_id,2); // 获得房型
+	   
 	     if($list == true){
 	     	  
-			$list['img']         = $Hotel->get_img($list['id'],3);
+			$list['img']         = $Hotel->get_img($list['id'],4);
 
 	     }
 	  	 $html = array(
@@ -92,9 +94,13 @@ class HotelListAction extends HomeBaseAction{
 	      $user_code   = $this->_get('user_code');
 	      $hotel_id    = $this->_get('hotel_id');
 	      $countday = countDays($checkinday,$checkoutday,1);
+	      
 	      $user_code   = $this->_get('user_code');
 	      $HotelRoom = $this->db['HotelRoom'];
+	      $total_price = $HotelRoom->total_price($room_id,$checkinday,$checkoutday,$pay_type);//计算价格
+	     
 	      $list = $HotelRoom->get_price_room(array('hr.id'=>$room_id));
+	       
 	      $price = $pay_type ==1 ? $list[0]['spot_payment']  : $list[0]['prepay'];
 	      $html = array(
 		      'room_id'    =>$room_id,
@@ -103,7 +109,7 @@ class HotelListAction extends HomeBaseAction{
 		      'checkoutday'=>$checkoutday,
 		      'user_code'  =>$user_code,
 	          'price'      => $price,
-	          'total_price'=> $price *$countday, 
+	          'total_price'=> $total_price, 
 	          'list'       =>$list[0],
 	          'user_code'=>$user_code,
 	          'hotel_id'=>$hotel_id,
@@ -125,7 +131,8 @@ class HotelListAction extends HomeBaseAction{
 	  	  	 $con = array('hotel_cs'=>"$hotel_cs");
 	  	  }
 	  	  $Hotel  = $this->db['Hotel'];  
-	      $list = $Hotel->get_hotels($con);
+	      $list = $Hotel->get_hotel($con);
+	      //echo '<pre>';print_R($list);echo '</pre>';exit;
 		  $list = regroupKey($list,'id',true);
 			if($id){		//ID存在时
 				$list[$id] = $list[$id];	
@@ -156,11 +163,12 @@ class HotelListAction extends HomeBaseAction{
 	      $checkinday  = $this->_post('checkinday');
 	      $checkoutday = $this->_post('checkoutday');
 	      $house = $this->_post('house');
-	      $countday = countDays($checkinday,$checkoutday,1);
+	      //$countday = countDays($checkinday,$checkoutday,1);
 	      $user_code   = $this->_post('user_code');
 	      $HotelRoom = $this->db['HotelRoom'];
 	      $list = $HotelRoom->get_price_room(array('hr.id'=>$room_id));
 	      $price = $pay_type ==1 ? $list[0]['spot_payment']  : $list[0]['prepay'];
+	      $total_price = $HotelRoom->total_price($room_id,$checkinday,$checkoutday,$pay_type);//计算价格
 	      $html = array(
 		      'room_id'    =>$room_id,
 		      'pay_type'   =>$pay_type,
@@ -168,7 +176,7 @@ class HotelListAction extends HomeBaseAction{
 		      'checkoutday'=>$checkoutday,
 		      'user_code'  =>$user_code,
 	          'price'      => $price,
-	          'total_price'=> $price *$countday*$house, 
+	          'total_price'=> $total_price*$house, 
 	      );
 	  	  parent::callback(C('STATUS_SUCCESS'),'处理成功！',$html);
 	  	
@@ -198,6 +206,7 @@ class HotelListAction extends HomeBaseAction{
 	      $countday = countDays($checkinday,$checkoutday,1);
 	      $user_code   = $this->_post('user_code');
           $UsersHotel = $this->db['UsersHotel'];
+          $RoomSchedule = $this->db['RoomSchedule'];
 
           $user_id = $UsersHotel->get_user_id(array('hotel_id'=>$hotel_id));
 	      $user_id = $user_id == true ? $user_id : 0;

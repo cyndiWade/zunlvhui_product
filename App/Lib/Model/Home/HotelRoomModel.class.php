@@ -116,6 +116,30 @@ class HotelRoomModel extends HomeBaseModel {
 	  	return array_unique($arr);  // 去除重复的值
 	  }
 
+	  
+	  // 计算价格
+	  public function total_price($hotel_room_id,$starttime,$endtime,$type){
+	  	
+	  	$filed = $type == 1 ? 'spot_payment' : 'prepay';
+	  	$where = array(
+		  	's.is_del'=>0,
+		  	's.day' =>array(
+				array('egt',strtotime($starttime) ),
+				array('lt',strtotime($endtime) )
+		    ),
+	  	    's.hotel_room_id'=>$hotel_room_id,
+		  	
+	  	);
+	  	
+	  	$data = $this->field('*')
+	  			->table($this->prefix.'room_schedule as s')
+	  			->where($where)
+	  			//->select();
+	  			->sum($filed);
+	  	return $data;
+	  
+	  	
+	  }
 	
 }
 

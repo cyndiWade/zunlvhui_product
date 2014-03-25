@@ -24,7 +24,7 @@
 
 <volist name="html['list']" id="vo" key="k" >
       <li>
-        <a href="index.php?s=/Home/HotelList/get_hotel_info/hotel_id/{$vo.id}" >
+        <a href="index.php?s=/Home/HotelList/get_hotel_info/hotel_id/{$vo.id}/user_code/{$html.user_code}" >
 	<div class="autohei"> 
 	<span class="left m_img1">
 	<img src="{$vo.img}" >
@@ -35,7 +35,7 @@
 	    <span class="right zx2 f18">
 	    
 	  
-	    <for start="1" end="$vo['hotel_xj']" >
+	    <for start="0" end="$vo['hotel_xj']" >
     
         <img src="{$Think.const.APP_PATH}Public/Home/images/1.png" style="width:26px;height:26px;" title="{$vo.hotel_xj}星级酒店" alt="{$vo.hotel_xj}星级" /> 
 		</for>
