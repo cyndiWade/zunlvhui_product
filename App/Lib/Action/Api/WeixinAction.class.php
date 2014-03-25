@@ -598,14 +598,10 @@ private function receiveText($object)
 		  $Hotel       = $this->db['Hotel'];
 		  $WxCode      = $this->db['WxCode'];
 		  $Siri        = $this->db['Siri'];
-		  $text ='深圳';
-		  echo '<pre>';print_R($this->get_city());echo '</pre>';
-        if(in_array("深圳",$this->get_city())){
-		 	echo 'a';
-		 }
-          
-          echo '<pre>';print_R($Siri->seek_explain(array('keyword'=>array('like','深圳'))));echo '</pre>';
-   
+		  $user_code ='o_kNsuDTFNH42UvcZIN7BH4mszPY';
+		 $data =$OrderState->get_order_info($user_code);
+		 
+        echo '<pre>';print_R($data);echo '</pre>';exit;
    }
 
    public function valid()

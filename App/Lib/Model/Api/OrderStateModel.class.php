@@ -48,18 +48,22 @@ class OrderStateModel extends ApiBaseModel{
 	  
 	  
 	    $data = $this->where(array('user_code'=>"$wxuid") )->find();
-
+	    
+       // echo '<pre>';print_R($data);echo '</pre>';exit;
 		$day = daysDiff($data['endlikai'],$data['startrz']);
-
-        $arr = array('total'=>$day*$data['room_price']);
+        $HotelRoom = D('HotelRoom');  // 房型模型
+	    $total_price = $HotelRoom->total_price($data['room_id'],date('Y-m-d',$data['startrz']),date('Y-m-d',$data['endlikai']),$data['pay_type']);//计算价格
+	    //echo $HotelRoom->getLastSql();
+	     
+        $arr = array('total'=>$total_price);
 
 		$this->where(array('user_code'=>"$wxuid"))->save($arr);
-        $data['total'] = $day*$data['room_price'];
+        $data['total'] = $total_price;
 	    $result['str'] = '订单提交成功。您选的是：'.$data['hotel_name']."\n".
 			   '房型是：'.$data['room_name']."\n".
 			   '入住时间是：'.date('Y-m-d',$data['startrz'])."\n".
 			   '离开时间是：'.date('Y-m-d',$data['endlikai'])."\n".
-			   '总费用是：'.$day*$data['room_price']."元。\n".'请进入我的账户->我的订单 来查看订单。';
+			   '总费用是：'.$total_price."元。\n".'请进入我的账户->我的订单 来查看订单。';
 		$result['data'] = $data;
 		return $result;
 	  }
