@@ -46,8 +46,11 @@ $system  = array(
 		'DEFAULT_ACTION'        => 'index', 						// 默认操作名称
 		'APP_GROUP_MODE'        =>  0, 							 // 分组模式 0 普通分组 1 独立分组
 		
-		'APP_SUB_DOMAIN_DEPLOY' => false,  			 // 是否开启子域名部署
+		'APP_SUB_DOMAIN_DEPLOY' => true,  			 // 是否开启子域名部署
 		'APP_SUB_DOMAIN_RULES'  => array(
+		
+			'admin'=>array('Admin/'),  // admin域名指向Admin分组
+			'hotel'=>array('Hotel/'),  // hotel域名指向Hotel分组
 			// 子域名部署规则
 			//'192.168.1.100'    => array('Api/'),	//指向对应的分组。
 		), 			
