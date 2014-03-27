@@ -116,24 +116,46 @@ class WeixinAction extends AppBaseAction{
 			{
 				case "subscribe":
 					    //判断是否是扫描二维码过来的
-				        if($object->EventKey){
+				        if($object->EventKey){ //扫描关注 判断是否又参数二维码的参数
+				        	
 							$code_id = str_replace('qrscene_','',$object->EventKey);
 							$data = $WxCode->get_hotel_user_id($code_id);
 							if(empty($data)){
-							   $data = array('user_id'=>0,'hotel_id'=>0);
+							   $data = array('user_id'=>0,'hotel_id'=>0,'code_id'=>0); // 默认
 							}
-							$wxuser = $WxUser->The_existence_of_wxuser($user_code);
+							$wxuser = $WxUser->The_existence_of_wxuser($user_code); //判断是否有用户 如果没有添加一条
 							if(empty($wxuser)){
-								$WxUser->add(array('subscribe'=>1,'wxid'=>"$user_code",'subscribe_time'=>time(),'user_id'=>$data['user_id'],'hotel_id'=>$data['hotel_id']));
+								$userdata = array('subscribe'=>1,
+										'wxid'=>"$user_code",
+										'subscribe_time'=>time(),
+										'user_id'=>$data['user_id'],
+										'hotel_id'=>$data['hotel_id']
+								);
+								$WxUser->add($userdata);
 							}else{
-								$WxUser->where(array('wxid'=>"$user_code"))->save(array('subscribe'=>1,'user_id'=>$data['user_id'],'hotel_id'=>$data['hotel_id']));
+								$userdata = array(
+										'subscribe'=>1,
+										'user_id'=>$data['user_id'],
+										'hotel_id'=>$data['hotel_id'],
+										'code_id'=>$code_id //来源的二维码的参数
+								);
+								$WxUser->where(array('wxid'=>"$user_code"))->save($userdata);
 							}
 				        }else{
                             $wxuser = $WxUser->The_existence_of_wxuser($user_code);
 							if(empty($wxuser)){
-								$WxUser->add(array('subscribe'=>1,'wxid'=>"$user_code",'subscribe_time'=>time(),'user_id'=>0,'hotel_id'=>0));
+								$userdata = array(
+										'subscribe'=>1,
+										'wxid'=>"$user_code",
+										'subscribe_time'=>time(),
+										'user_id'=>0,
+										'hotel_id'=>0,
+										'code_id'=>0
+								);
+								$WxUser->add($userdata);
 							}else{
-								$WxUser->where(array('wxid'=>"$user_code"))->save(array('subscribe'=>1,'user_id'=>0,'hotel_id'=>0));
+								$userdata = array('subscribe'=>1,'user_id'=>0,'hotel_id'=>0,'code_id'=>0); // 没有来源的时候默认为0
+								$WxUser->where(array('wxid'=>"$user_code"))->save($userdata);
 							}
 						
 						}
