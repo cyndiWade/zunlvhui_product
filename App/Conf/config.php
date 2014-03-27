@@ -42,12 +42,15 @@ $system  = array(
 
 		//项目分组
 		'APP_GROUP_LIST'        => 'Home,Admin,Api,Main,Hotel',  	// 项目分组设定,多个组之间用逗号分隔,例如'Home,Admin'
-		'DEFAULT_GROUP'         => 'Admin',  					// 默认分组
+		//'DEFAULT_GROUP'         => 'Admin',  					// 默认分组
 		'DEFAULT_ACTION'        => 'index', 						// 默认操作名称
 		'APP_GROUP_MODE'        =>  0, 							 // 分组模式 0 普通分组 1 独立分组
 		
-		'APP_SUB_DOMAIN_DEPLOY' => false,  			 // 是否开启子域名部署
+		'APP_SUB_DOMAIN_DEPLOY' => 1,  			 // 是否开启子域名部署
 		'APP_SUB_DOMAIN_RULES'  => array(
+		
+			'admin.zunlvhui.com.cn'=>array('Admin/'),  // admin域名指向Admin分组
+			'hotel.zunlvhui.com.cn'=>array('Hotel/'),  // hotel域名指向Hotel分组
 			// 子域名部署规则
 			//'192.168.1.100'    => array('Api/'),	//指向对应的分组。
 		), 			

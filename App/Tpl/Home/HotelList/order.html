@@ -14,7 +14,7 @@
 
 	
 function china(str) {
-	ze = /^([\u4E00-\u9FA5\uf900-\ufa2dA-Za-z]){1,20}$/	
+	ze = /^([\u4E00-\u9FA5\uf900-\ufa2dA-Za-z]){1,20}$/	 
 
 	var pattern = ze ;
 	return str.match(pattern);
@@ -22,7 +22,7 @@ function china(str) {
 
 function is_phone(obj){
 	var val = obj.value;
-	re= /^(13[0-9]{9})|(15[89][0-9]{8})$/
+	re= /^(1[345689][0-9]{9})$/  //判断手机号的正则表达式。
 	
     if(!re.test(val) || val.length!=11){
 
