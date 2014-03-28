@@ -114,50 +114,24 @@ class WeixinAction extends AppBaseAction{
 		tolog('/web/www/ftp/tjr/wxadmin/App/Lib/Action/Api/a.txt',$object->Event);
 			switch ($object->Event)
 			{
-				case "subscribe":
-					    //判断是否是扫描二维码过来的
-				        if($object->EventKey){ //扫描关注 判断是否又参数二维码的参数
-				        	
+				case "subscribe":  // 关注事件
+			           if(strlen($object->EventKey)<42 and strlen($object->EventKey)>0){ //这个key不能只判断有没有
 							$code_id = str_replace('qrscene_','',$object->EventKey);
 							$data = $WxCode->get_hotel_user_id($code_id);
 							if(empty($data)){
-							   $data = array('user_id'=>0,'hotel_id'=>0,'code_id'=>0); // 默认
+							   $data = array('user_id'=>0,'hotel_id'=>0);
 							}
-							$wxuser = $WxUser->The_existence_of_wxuser($user_code); //判断是否有用户 如果没有添加一条
+							$wxuser = $WxUser->The_existence_of_wxuser($user_code);
 							if(empty($wxuser)){
-								$userdata = array('subscribe'=>1,
-										'wxid'=>"$user_code",
-										'subscribe_time'=>time(),
-										'user_id'=>$data['user_id'],
-										'hotel_id'=>$data['hotel_id']
-								);
-								$WxUser->add($userdata);
-							}else{
-								$userdata = array(
-										'subscribe'=>1,
-										'user_id'=>$data['user_id'],
-										'hotel_id'=>$data['hotel_id'],
-										'code_id'=>$code_id //来源的二维码的参数
-								);
-								$WxUser->where(array('wxid'=>"$user_code"))->save($userdata);
+								$WxUser->add(array('subscribe'=>1,'wxid'=>"$user_code",'subscribe_time'=>time(),'user_id'=>$data['user_id'],'is_from'=>1,'hotel_id'=>$data['hotel_id'],'code_id'=>$code_id));
 							}
+
 				        }else{
                             $wxuser = $WxUser->The_existence_of_wxuser($user_code);
 							if(empty($wxuser)){
-								$userdata = array(
-										'subscribe'=>1,
-										'wxid'=>"$user_code",
-										'subscribe_time'=>time(),
-										'user_id'=>0,
-										'hotel_id'=>0,
-										'code_id'=>0
-								);
-								$WxUser->add($userdata);
-							}else{
-								$userdata = array('subscribe'=>1,'user_id'=>0,'hotel_id'=>0,'code_id'=>0); // 没有来源的时候默认为0
-								$WxUser->where(array('wxid'=>"$user_code"))->save($userdata);
+								$WxUser->add(array('subscribe'=>1,'wxid'=>"$user_code",'subscribe_time'=>time(),'is_from'=>0,'user_id'=>0,'hotel_id'=>0,'code_id'=>0));
 							}
-						
+	
 						}
 					    $contentStr = "欢迎关注尊旅会公众号";
 						$resultStr = $this->transmitText($object, $contentStr);
@@ -169,32 +143,20 @@ class WeixinAction extends AppBaseAction{
 					
 					break;
 				case "SCAN":
-                    if($user_code=='o_kNsuDTFNH42UvcZIN7BH4mszPY'){
-					   $userinfo = $WxUser->get_wx_user($user_code);
-					   if(!empty($userinfo)){
-					      if($userinfo['user_id']==0 and $userinfo['hotel_id']==0){
-							  $code_id = $object->EventKey;
-							  $data = $WxCode->get_hotel_user_id($code_id);
-							  if(empty($data)){
-								   $data = array('user_id'=>0,'hotel_id'=>0);
-							  }
-						      $WxUser->where(array('wxid'=>"$user_code"))->save(array('user_id'=>$data['user_id'],'hotel_id'=>$data['hotel_id']));
-						  }
-					   }
-					   $resultStr = $this->transmitText($object, $code_id);
-				    }else{
-				       $userinfo = $WxUser->get_wx_user($user_code);
-					   if(!empty($userinfo)){
-					      if($userinfo['user_id']==0 and $userinfo['hotel_id']==0){
-							  $code_id = $object->EventKey;
-							  $data = $WxCode->get_hotel_user_id($code_id);
-							  if(empty($data)){
-								   $data = array('user_id'=>0,'hotel_id'=>0);
-							  }
-						      $WxUser->where(array('wxid'=>"$user_code"))->save(array('user_id'=>$data['user_id'],'hotel_id'=>$data['hotel_id']));
-						  }
-					   }
-				    }
+					$userinfo = $WxUser->get_wx_user($user_code); // 判断有没有用户
+					if(empty($userinfo)){ 
+						$userdata = array(
+								'subscribe'=>1,
+								'wxid'=>"$user_code",
+								'subscribe_time'=>time(),
+								'user_id'=>0,
+								'is_from'=>2, //关注以后扫描的二维码
+								'hotel_id'=>0,
+								'code_id'=>0
+						);
+						$WxUser->add($userdata);
+					}
+                   
 					break;
 				case "CLICK":
 					//验证手机号

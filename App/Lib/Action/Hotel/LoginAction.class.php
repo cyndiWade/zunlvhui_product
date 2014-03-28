@@ -57,7 +57,8 @@ class LoginAction extends HotelBaseAction{
     			
     		}
     	} else {
-    		$this->redirect('/Hotel/Login/login');
+    	
+    		$this->redirect('Login/login');
     	}
 	 }
 
