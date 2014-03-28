@@ -92,7 +92,8 @@ class AdminBaseAction extends AppBaseAction {
 		}  		
 
 		if (empty($this->oUser) && !in_array(MODULE_NAME,explode(',',C('NOT_AUTH_MODULE')))) {		
-			$this->error('请先登录','?s=/Admin/Login/login');
+			//$this->error('请先登录','?s=/Admin/Login/login');
+			$this->error('请先登录',U('Login/login'));
 			exit;
 		}
 	
