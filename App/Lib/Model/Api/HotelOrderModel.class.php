@@ -3,12 +3,16 @@ class HotelOrderModel extends ApiBaseModel{
 
 
        public function get_order($user_code){
-	   
+	     $where = array('user_code'=>"$user_code",
+	     		'o.is_del'=>0,
+	     		'o.order_status'=>array('neq',3),
+	     		'o.out_date'=>array('GT',time())
+	      );
 	     $data = $this->field('o.*,o.id as oid ,h.*,hr.*')
 			->table($this->prefix.'hotel_order AS o')
 			->join($this->prefix.'hotel_room AS hr ON o.hotel_room_id=hr.id')
 			->join($this->prefix.'hotel AS h on h.id = o.hotel_id')
-			->where(array('user_code'=>"$user_code",'o.is_del'=>0,'o.order_status'=>array('neq',3))  )
+			->where($where) 
 			->select();
 		    $arr = array();
 	        $i = 1 ;
