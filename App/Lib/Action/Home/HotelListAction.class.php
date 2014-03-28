@@ -351,7 +351,7 @@ class HotelListAction extends HomeBaseAction{
 //订单的取消
 	  public function quxiao_dingdan(){
 	  
-	        $order_id =  $this->_post('order_id');
+	        $order_id   =  $this->_post('order_id');
 	        $HotelOrder = $this->db['HotelOrder'];
 	        $OrderLog   = $this->db['OrderLog'];
 	        if($order_id){

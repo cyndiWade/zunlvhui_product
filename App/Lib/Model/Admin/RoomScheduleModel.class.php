@@ -31,6 +31,27 @@ class RoomScheduleModel extends AdminBaseModel {
 		return $data;
 	}
 	
+	/*根据酒店订单中的信息来获取每日的价格
+	 * 
+	 */
+	
+	public function Seek_Data_Schedule($data){
+		$where= array(
+				'hotel_room_id'=>$data['hotel_room_id'],
+
+				'day' =>array(
+						array('egt',$data['in_date'] ),
+						array('lt',$data['out_date'] )
+				),
+		);
+		
+		$data = $this->where($where)->select();
+		parent::set_all_time($data, array('day'),'Y-m-d');
+		
+		return $data;
+		
+	}
+	
 	
 }
 

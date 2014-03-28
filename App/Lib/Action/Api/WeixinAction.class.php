@@ -392,11 +392,11 @@ private function receiveText($object)
 		 
 		     case 0 :
 				 //城市名
-			    if(!in_array("$text",$this->get_city())){
-					$contentStr = '您输入的不是城市名称。';
-					$resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
-					die($resultStr);
-				}
+				    if(!in_array("$text",$this->get_city())){
+						$contentStr = '您输入的不是城市名称。';
+						$resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
+						die($resultStr);
+					}
 				    $data = array('user_code'=>"$user_code",'hotel_add'=>"$text",'step'=>$step+1,'endtime'=>time()+$T);
 					$arr_item = $Hotel->get_all_hotel("$text");	
 					if(!$arr_item){
@@ -570,7 +570,7 @@ private function receiveText($object)
    }
    
    public function test(){
-   
+          header("Content-type:text/html;charset=utf-8");
           $OrderState  = $this->db['OrderState'];
           $RoomPutaway = $this->db['RoomPutaway'];
 		  $Hotel       = $this->db['Hotel'];
@@ -583,9 +583,10 @@ private function receiveText($object)
 		  $WxCode      = $this->db['WxCode'];
 		  $Siri        = $this->db['Siri'];
 		  $user_code ='o_kNsuDTFNH42UvcZIN7BH4mszPY';
-		 $data =$OrderState->get_order_info($user_code);
-		 
-        echo '<pre>';print_R($data);echo '</pre>';exit;
+		 //$data =$OrderState->get_order_info($user_code);
+		 //$arr_item = $Hotel->get_all_hotel("敦煌");
+		 $arr_item =  $Hotel->get_Hotel("敦煌");
+        echo '<pre>';print_R($arr_item);echo '</pre>';exit;
    }
 
    public function valid()
