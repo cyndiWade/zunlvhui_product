@@ -49,8 +49,8 @@ $system  = array(
 		'APP_SUB_DOMAIN_DEPLOY' => false,  			 // 是否开启子域名部署
 		'APP_SUB_DOMAIN_RULES'  => array(
 		
-			//'admin.zunlvhui.com.cn'=>array('Admin/'),  // admin域名指向Admin分组
-			//'hotel.zunlvhui.com.cn'=>array('Hotel/'),  // hotel域名指向Hotel分组
+			'admin.zunlvhui.com.cn'=>array('Admin/'),  // admin域名指向Admin分组
+			'hotel.zunlvhui.com.cn'=>array('Hotel/'),  // hotel域名指向Hotel分组
 			// 子域名部署规则
 			//'192.168.1.100'    => array('Api/'),	//指向对应的分组。
 		), 			
