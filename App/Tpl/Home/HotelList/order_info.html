@@ -31,7 +31,9 @@ function quxiao(id){
     var result = ajax_post_setup('?s=/Home/HotelList/quxiao_dingdan',$data);
 
 	if(result.status==0){
+		   
 	       alert(result.msg);
+	       location.reload();
 	}else{
 	    alert(result.msg);
 	
@@ -93,7 +95,7 @@ function quxiao(id){
       <a href="index.php?s=/Home/HotelList/map/hotel_id/{$html.hotel_id}/user_code/{$html.user_code}">地图</a></span> 
       </li>
       <li> <span class="left m_dot5 zx2 f24">{$html.hotel_tel}</span> 
-      <span class="right m_dot4 zx4 f20"><a href="#">服务热线</a>
+      <span class="right m_dot4 zx4 f20"><a href="tel:{$html.hotel_tel}">服务热线</a>
       </span> 
       </li>
     </ul>
