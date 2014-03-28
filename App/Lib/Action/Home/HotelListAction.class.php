@@ -11,7 +11,7 @@ class HotelListAction extends HomeBaseAction{
 	    'UsersHotel'   => 'UsersHotel',
 		'Coupon'       => 'Coupon',
 		'WxUser'       => 'WxUser',
-
+        'OrderLog'     => 'OrderLog',
 		'UserCoupon'   => 'UserCoupon'
 	 );
 	 	/**
@@ -353,13 +353,20 @@ class HotelListAction extends HomeBaseAction{
 	  
 	        $order_id =  $this->_post('order_id');
 	        $HotelOrder = $this->db['HotelOrder'];
+	        $OrderLog   = $this->db['OrderLog'];
 	        if($order_id){
 			  $mes = $HotelOrder->quxiao_dingdan($order_id);
-			  print_R($mes);
+			 // print_R($mes);
 			  if($mes === false){
 				   parent::callback(C('STATUS_UPDATE_DATA'),'取消失败');
 			     
 			  }else{
+			  	 $data = array(
+			  	 		'order_id'=> $order_id,
+			  	 		'addtime' => time(),
+			  	 		'msg'     => '订单取消'
+			  	 );
+			  	  $OrderLog->add_order_log($data);
 			      parent::callback(C('STATUS_SUCCESS'),'取消成功！');
 			  } 
 			

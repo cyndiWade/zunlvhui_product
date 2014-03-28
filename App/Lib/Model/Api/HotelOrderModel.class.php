@@ -27,14 +27,14 @@ class HotelOrderModel extends ApiBaseModel{
 					  '离店时间: '.$val['checkoutday']."\n".*/
 
 					  "---------------------------------\n".
-					  '酒店名字: '.$val['hotel_name']."\n".
+					  '酒店名称: '.$val['hotel_name']."\n".
 
 					  "---------------------------------\n".
 					  '酒店房型: '.$val['title']."\n".
 
 					  "---------------------------------\n".
 
-                          '订单金额: ￥'.$val['total_price']."\n".
+                          '订单金额: ￥'.str_replace('.00', '', $val['total_price'])."\n".
 
 					  "---------------------------------\n".
 
