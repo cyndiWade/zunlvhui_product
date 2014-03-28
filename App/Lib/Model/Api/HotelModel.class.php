@@ -64,7 +64,7 @@ class HotelModel extends ApiBaseModel{
 			    $arr[] = array(
 						'Title'=>$val['hotel_name']."\n". $val['title']."\n".$val['hotel_pf'].'分 预付 ￥'.$val['spot_payment'].' 现付 ￥'.$val['prepay'],
 						'Description'=>'',
-						'Picurl' =>$this->get_img($val['id'],2),//C('logo_url'),
+						'Picurl' =>$this->get_room_img($val['id'],2),//C('logo_url'),
 						'Url'    =>C('Hotel_info_url').$val['id'],
 						);
 			   $hotel_id =$val['id'];
@@ -80,7 +80,7 @@ class HotelModel extends ApiBaseModel{
 	  
 	  }
 
-      
+      //获取酒店的图片
 	  public function get_img($hotel_id,$type){
 	  
 	        
@@ -94,7 +94,19 @@ class HotelModel extends ApiBaseModel{
 	  
 	  
 	  }
-
+	  //获得房型图片
+	  public function get_room_img($room_id,$type=1){
+	  	$where = array(
+	  			'i.is_del'=>0,
+	  			'i.hotel_room_id' =>$room_id,
+	  			'i.type'  =>$type
+	  	);
+	  	$data = $this->table($this->prefix.'room_img as i')
+	  	->where($where)->getField('url');
+	  	$img = empty($data) ? C('NO_PIC') : $data;
+	  	return C('PUBLIC_VISIT.domain').C('UPLOAD_DIR.image').$img;
+	  
+	  }
 
 	  public function get_map($hotel_cs){
 	  

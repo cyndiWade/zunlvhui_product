@@ -99,6 +99,32 @@ class HotelModel extends HomeBaseModel{
 	  	return $data;
 	  	
 	  }
+	  
+	  //根据客人选择的日期获得价格
+	  public function get_date_room_info($hotel_id,$type,$date){
+	  
+	  	 
+	  	$where = array(
+	  			'r.hotel_id'=>$hotel_id, //酒店的id
+	  			'r.is_del'=>0,      //房型是否删除
+	  			's.is_del'=>0,       //房型的价格是否删除
+	  			's.room_num' =>array('gt',0), //房间数量大于0
+	  			's.day'=>strtotime( $date ), // 今天
+	  
+	  	);
+	  
+	  	$data = $this->field('r.id as rid ,r.title,r.info,s.spot_payment,s.prepay,s.room_num,s.id as sid')
+	  	->table($this->prefix.'hotel_room AS r')
+	  	->join($this->prefix.'room_schedule AS s on s.hotel_room_id = r.id')
+	  	->where($where)->select();
+	  
+	  	foreach($data as $key=>$val){
+	  	  
+	  		$data[$key]['url'] = $this->get_room_img($val['rid'],$type);
+	  	}
+	  	return $data;
+	  
+	  }
 	  //获得图片
 	  public function get_room_img($room_id,$type){	  	
 	  	$where = array(

@@ -351,7 +351,7 @@ class HotelListAction extends HomeBaseAction{
 //订单的取消
 	  public function quxiao_dingdan(){
 	  
-	        $order_id =  $this->_post('order_id');
+	        $order_id   =  $this->_post('order_id');
 	        $HotelOrder = $this->db['HotelOrder'];
 	        $OrderLog   = $this->db['OrderLog'];
 	        if($order_id){
@@ -406,7 +406,29 @@ class HotelListAction extends HomeBaseAction{
 	  	
 	  	
 	  }
-	  
+	  //根据客人选择的日期获得当天的价格
+	  public function ajax_get_date_info(){
+	  	 
+	  	$Hotel  = $this->db['Hotel'];
+	  	$HotelRoom  = $this->db['HotelRoom'];
+	  	if($this->_post()){
+	  		
+	  		$hotel_id = $this->_post('hotel_id');
+	  		$date = $this->_post('checkinday');
+	  		//$list = $Hotel->get_one_hotel(array('id'=>$hotel_id));
+	  		$data = $Hotel->get_hotel_room($hotel_id,2,$date); // 获得房型
+	  		$html = array(
+	  				'roomtype' =>$data,
+	  				//'user_code'=>$user_code,
+	  				//'hotel_cs'=> passport_encrypt($list['hotel_cs'],'hotel')
+	  		);
+	  		$this->assign('html',$html);
+	  		$this->display();
+	  	}else{
+	  		
+	  	}
+ 
+	  }
 	  public function test(){
 	  	$RoomSchedule = $this->db['RoomSchedule'];
 	  	$data['in_date'] ='1395158400';
