@@ -7,9 +7,7 @@ class LoginAction extends AdminBaseAction {
 	//获取首页信息
 	public function login(){
 	
-		
-		//if (!empty($this->oUser)) $this->redirect('/Admin/User/personal');
-		if (!empty($this->oUser)) $this->redirect(U('/Admin/User/personal'));
+		if (!empty($this->oUser)) $this->redirect('/Admin/User/personal');
 	
 		$this->display();
     }
@@ -63,12 +61,10 @@ class LoginAction extends AdminBaseAction {
     			$_SESSION[C('SESSION_DOMAIN')][GROUP_NAME]['user_info'] = $tmp_arr;
     			//更新用户信息
     			$Users->up_login_info($user_info['id']);
-    			//$this->redirect('/Admin/User/personal');
-    			$this->redirect(U('/User/personal'));
+    			$this->redirect('/Admin/User/personal');
     		}
     	} else {
-    		//$this->redirect('/Admin/Login/login');
-    		$this->redirect(U('/Login/login'));
+    		$this->redirect('/Admin/Login/login');
     	}
     }
     
