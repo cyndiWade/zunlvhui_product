@@ -12,6 +12,9 @@ class AppBaseAction extends GlobalParameterAction {
 	public function __construct() {
 		//G('begin'); 							// 记录开始标记位（运行开始）
 		
+		//$domain_name = $_SERVER['SERVER_NAME'];
+		//if ($domain_name == 'admin.zunlvhui.com.cn') header('Location: http://www.www.org/');
+		
 		//初始化数据库连接
 		$this->db_init();	
 		
