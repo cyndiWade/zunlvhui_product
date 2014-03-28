@@ -46,7 +46,7 @@
 									<thead>
 										<tr>
 											<th>序号</th>											<th>微信ID(腾讯加密)</th>
-											<th>关注日期</th>
+											<th>关注日期</th>											<th>是否关注</th>											<th>来源方式</th>
 											<th>手机号码</th>											<!-- 	
 											<th>操作</th>											-->	
 										</tr>
@@ -54,7 +54,7 @@
 									<tbody>																		<volist name="html['list']" id="vo" key="i">
 										<tr class="odd gradeX">
 											<td >{$i}</td>											<th>{$vo.wxid}</th>
-											<td>{$vo.subscribe_time}</a></td>											<td>{$vo.phone}</td>											<!--
+											<td>{$vo.subscribe_time}</a></td>											<td>{$vo.subscribe}</td>											<td>{$vo.is_from</td>											<td>{$vo.phone}</td>											<!--
 											<td class="center">												<a href="javascript:;" class="btn_bak"  data-record_prev="1" data-url="{:U('Admin/Siri/edit',array('act'=>'update','siri_id'=>$vo['id']))}">编辑</a>												| <a href="{:U('Admin/Siri/edit',array('act'=>'delete','siri_id'=>$vo['id']))}" class="check" >删除</a>											</td>											-->
 										</tr>										</volist>
 									</tbody>

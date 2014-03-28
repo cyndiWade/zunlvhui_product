@@ -92,7 +92,7 @@ class HotelBaseAction extends AppBaseAction {
 		}  		
 
 		if (empty($this->oUser) && !in_array(MODULE_NAME,explode(',',C('NOT_AUTH_MODULE')))) {		
-			$this->error('请先登录','?s=/Hotel/Login/login');
+			$this->error('请先登录','?s=/Login/login');
 			exit;
 		}
 
