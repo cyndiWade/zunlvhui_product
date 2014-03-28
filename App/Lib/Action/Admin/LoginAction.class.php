@@ -9,7 +9,7 @@ class LoginAction extends AdminBaseAction {
 	
 		
 		//if (!empty($this->oUser)) $this->redirect('/Admin/User/personal');
-		if (!empty($this->oUser)) $this->redirect(U('/User/personal'));
+		if (!empty($this->oUser)) $this->redirect(U('/Admin/User/personal'));
 	
 		$this->display();
     }
