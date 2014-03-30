@@ -4,15 +4,14 @@
  */
 class CodeAction extends AdminBaseAction {
 	//控制器说明
-	private $module_name = '语义分析';
+	private $module_name = '二维码管理';
 	
 	//初始化数据库连接
 	protected  $db = array(
-		'Siri'=>'Siri',		//语义表
 		'WxCode' => 'WxCode',	//微信二维码
 	);
-	
 
+	
 	/**
 	 * 构造方法
 	 */
@@ -26,8 +25,13 @@ class CodeAction extends AdminBaseAction {
 	
 	
 	
+	public function inbox() {
+		$this->display();
+	}
+	
 	//管理二维码
 	public function manage () {		
+		$this->error('开发中');
 		//连接数据库
 		$Siri = $this->db['Siri'];
 		$WxCode = $this->db['WxCode'];
@@ -100,9 +104,68 @@ class CodeAction extends AdminBaseAction {
 	
 	//分配二维码
 	public function allocation () {
-		echo 13;
+		import('@.ORG.Util.Page');
+		
+		//二维码列表
+		$WxCode = $this->db['WxCode'];
+
+		$map['hotel_id'] = 0; 
+		//计算结果记录条数
+		$code_count = $WxCode->where($map)->count();
+		$Page = new Page($code_count,10);	//分页
+		
+		//计算查询结果集
+		$orderList = $WxCode->where($map)->limit($Page->firstRow.','.$Page->listRows)->select();
+
+		//设置分页样式
+		$Page->setConfig('prev','<span class="pageAnthor">上一页</span>');
+		$Page->setConfig('next','<span class="pageAnthor">下一页</span>');
+		$Page->setConfig('first','<span class="pageAnthor" title="第一页">...</span>');
+		$Page->setConfig('last','<span class="pageAnthor" title="最后一页">...</span>');
+		$Page->setConfig('theme','%first% %upPage%　%linkPage% %downPage%　%end%　%nowPage%/%totalPage%页');
+		
+		$html['list'] = $orderList;
+		$html['page'] = $Page->show();
+		
+		parent::global_tpl_view( array(
+				'action_name'=>'分配二维码',
+				'title_name'=>$title_name,
+		));
+		$this->assign('html',$html);
+		$this->display();
 	}
 	
+	//ajax设置二维码归属的酒店
+	public function AJAX_set_code_from_hotel () {
+		if ($this->isPost()) {
+			$code_ids = $this->_post('code_ids');
+			$hotel_id = $this->_post('hotel_id');
+			
+			if (empty($code_ids) || empty($hotel_id)) parent::callback(C('STATUS_DATA_LOST'),'上传数据丢失！');
+			
+			$WxCode = $this->db['WxCode'];
+			$code_ids = explode(',',$code_ids);
+			
+			if (is_array($code_ids)) {
+				$is_save_ok = false;
+				foreach ($code_ids as $val) {
+					$WxCode->hotel_id = $hotel_id;
+					if ($WxCode->where(array('id'=>$val))->save()) $is_save_ok = true;
+				}
+				if ($is_save_ok == true) {
+					parent::callback(C('STATUS_SUCCESS'),'分配成功！');
+				} else {
+					parent::callback(C('STATUS_UPDATE_DATA'),'没有数据被修改！');
+				}
+			} else {
+				parent::callback(C('STATUS_DATA_LOST'),'上传数据丢失！');
+			}
+			
+			
+		} else {
+			parent::callback(C('STATUS_ACCESS'),'非法访问！');
+		}
+	}
 	
 
     

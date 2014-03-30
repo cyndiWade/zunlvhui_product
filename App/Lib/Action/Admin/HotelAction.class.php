@@ -208,7 +208,7 @@ class HotelAction extends AdminBaseAction {
 
 	
 	/**
-	 * AJAX处理上传车辆图片
+	 * AJAX处理上传图片
 	 */
 	public function ajax_photo_upload() {
 		header('Content-Type:text/html;charset=utf-8');
@@ -221,7 +221,7 @@ class HotelAction extends AdminBaseAction {
 	
 			/* 执行上传 */
 			$file = $_FILES['photo_files'];					//上传的文件
-			$hotel_id = $this->_post('hotel_id');				//车辆ID
+			$hotel_id = $this->_post('hotel_id');				//酒店ID
 			$type = $this->_post('type');						//图片类型
 	
 			/* 参数验证 */
@@ -260,7 +260,7 @@ class HotelAction extends AdminBaseAction {
 	
 	
 	/**
-	 * AJAX车辆删除图片
+	 * AJAX删除图片
 	 */
 	public function ajax_photo_remove () {
 		if ($this->isPost()) {
@@ -271,5 +271,17 @@ class HotelAction extends AdminBaseAction {
 			parent::callback(C('STATUS_ACCESS'),'非法访问！');
 		}
 	}
+	
+	
+	
+	public function show_hotel_list () {
+		$Hotel = $this->db['Hotel'];
+		
+		$html['list'] = $Hotel->field('id,hotel_name,hotel_sf,hotel_cs,hotel_q,hotel_xj,hotel_pf,hotel_syq,hotel_dz,hotel_tel')->where(array('is_del'=>0))->select();
+		
+		$this->assign('html',$html);
+		$this->display();
+	}
+	
     
 }
