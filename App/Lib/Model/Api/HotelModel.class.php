@@ -117,7 +117,7 @@ class HotelModel extends ApiBaseModel{
 	    	 
 	    	$arr[$val['hotel_cs']]=$key.'.png';
 	    }
-	    return C('HOTEL_MAP_IMG').$arr[$hotel_cs];
+	    return C('HOTELMAPIMAGES').$arr[$hotel_cs];
 
 	  }
 
