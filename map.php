@@ -32,7 +32,7 @@ while($row = $db->fetchRow($queryc)){
 		$i++;
 		//echo '<pre>';print_R($row);echo'</pre>';
 	}
-	//echo '<pre>';print_R($result);echo'</pre>';
+	
 	$mar = '';
 	$mars = '';
 	foreach($result as $key=>$val){
@@ -43,20 +43,21 @@ while($row = $db->fetchRow($queryc)){
 
 	$url = 'http://api.map.baidu.com/staticimage?width=360&height=200'."&center=".$result[0]['markers'].'&zoom=11&markers='.$mar.'&markerStyles='.$mars;
     //echo $url.'</br>';
-	foreach($id[$a] as $key=>$v){
+	/* foreach($id[$a] as $key=>$v){
 		if(file_exists(ROOT_PATH.'mapimg/'.$v.'.png')){
 			
 			@unlink(ROOT_PATH.'mapimg/'.$v.'.png');
 			Dowload_code2($url,ROOT_PATH.'mapimg/'.$v.'.png').'</br>';
 		}
-		//echo Dowload_code2($url,ROOT_PATH.'mapimg/'.$v.'.png').'</br>';
-	}
-    //echo Dowload_code2($url,ROOT_PATH.'wxadmin/images/city1/'.$a.'.png').'</br>';
+		
+	} */
+    
   
    unset($id);
    $a++;
 
 }
+
 //echo Dowload_code2($url,'shanghai.png');
 
 function Dowload_code2($url,$filename=""){

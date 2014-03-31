@@ -208,7 +208,7 @@ class HotelAction extends AdminBaseAction {
 
 	
 	/**
-	 * AJAX处理上传车辆图片
+	 * AJAX处理上传图片
 	 */
 	public function ajax_photo_upload() {
 		header('Content-Type:text/html;charset=utf-8');
@@ -221,7 +221,7 @@ class HotelAction extends AdminBaseAction {
 	
 			/* 执行上传 */
 			$file = $_FILES['photo_files'];					//上传的文件
-			$hotel_id = $this->_post('hotel_id');				//车辆ID
+			$hotel_id = $this->_post('hotel_id');				//酒店ID
 			$type = $this->_post('type');						//图片类型
 	
 			/* 参数验证 */
@@ -260,7 +260,7 @@ class HotelAction extends AdminBaseAction {
 	
 	
 	/**
-	 * AJAX车辆删除图片
+	 * AJAX删除图片
 	 */
 	public function ajax_photo_remove () {
 		if ($this->isPost()) {
@@ -271,5 +271,73 @@ class HotelAction extends AdminBaseAction {
 			parent::callback(C('STATUS_ACCESS'),'非法访问！');
 		}
 	}
+	
+	
+	
+	public function show_hotel_list () {
+		$Hotel = $this->db['Hotel'];
+		
+		$html['list'] = $Hotel->field('id,hotel_name,hotel_sf,hotel_cs,hotel_q,hotel_xj,hotel_pf,hotel_syq,hotel_dz,hotel_tel')->where(array('is_del'=>0))->select();
+		
+		$this->assign('html',$html);
+		$this->display();
+	}
+	
+	/*
+	 * 微信端酒店地图生成
+	 */
+	
+	public function get_map(){
+	
+	   define('MAP_PATH',str_replace('\\','/',str_replace('Lib\Action\Admin\HotelAction.class.php','',__FILE__)));
+	   $Hotel = $this->db['Hotel'];
+	   $Mapdata = $Hotel->get_hotel_city();  //根据酒店的城市分组找到所有的城市   
+	   $Map = array();
+	   $Mar = array(0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f','g','h','i','j','k'); //标记地图的点
+	   foreach ($Mapdata as $key=>$val){
+	   	  $Map[$key]['city'] = $val['hotel_cs'];
+	   	  $Map[$key]['map']  = $Hotel->get_hotel(array('hotel_cs'=>$val['hotel_cs']),10,'hotel_location_x,hotel_location_y');
+	   	  
+	   }
+	   foreach ($Map as $k1=>$v1){
+	   	    $num = count($v1['map']);
+	   	    $i = 0; 
+	   	    $mar = '';
+	   	    $mars = '';
+	   	    foreach($v1['map'] as $k2=>$v2){
+	   	    	$m = $num-1 > $i ?  '|' : '';
+				$arr = array(
+				  'markers'=>$v2['hotel_location_x'].','.$v2['hotel_location_y'],
+				  'markerStyle'=>'l,'.$Mar[$i],
+				  'm' => $m,
+				);
+				$mar  .= $v2['hotel_location_x'].','.$v2['hotel_location_y'].$m;
+				$mars .= 'l,'.$Mar[$i].$m;				
+				$Map[$k1]['mar'][$i] = $arr;
+				unset($arr);
+				$i++;
+	   	    }
+	   	    $Map[$k1]['center'] =$Map[$k1]['mar'][0]['markers'];
+	   	    $Map[$k1]['markers'] =  $mar;
+	   	    $Map[$k1]['markerStyle'] =  $mars;
+	   	    unset($mar);unset($mars);
+
+	   }
+	   foreach ($Map as $k1=>$v1){
+	   
+		   	$url = 'http://api.map.baidu.com/staticimage?width=360&height=200'."&center=".$v1['center'].'&zoom=11&markers='.$v1['markers'].'&markerStyles='.$v1['markerStyle'];
+		   if(file_exists(MAP_PATH.C('UPLOAD_DIR.mapimage').$k1.'.png')){		
+				@unlink(MAP_PATH.C('UPLOAD_DIR.mapimage').$k1.'.png');
+				echo Dowload_code2($url,MAP_PATH.C('UPLOAD_DIR.mapimage').$k1.'.png').'</br>';
+			}else{
+				echo Dowload_code2($url,MAP_PATH.C('UPLOAD_DIR.mapimage').$k1.'.png').'</br>';
+			}
+		    //echo Dowload_code2($url,MAP_PATH.C('UPLOAD_DIR.mapimage').$k1.'.png').'</br>';
+	   }
+	   //echo '<pre>';print_R($Map);echo '</pre>';
+		
+	}
+	
+	
     
 }

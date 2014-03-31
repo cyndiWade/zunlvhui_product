@@ -892,8 +892,8 @@ class cls_mysql
     }
 }
 $dbhost  = 'localhost';  //主机
-$dbuser  = 'zun';    // 数据库用户名
-$dbpw    = 'zun818';//密码
+$dbuser  = 'root';    // 数据库用户名
+$dbpw    = '';//密码
 $dbname  = 'zun';//数据库名称
 $charset = 'utf8';//数据库的编码
 $db = new cls_mysql($dbhost, $dbuser, $dbpw, $dbname , $charset , $pconnect = 0, $quiet = 0);

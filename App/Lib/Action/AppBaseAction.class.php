@@ -93,6 +93,7 @@ class AppBaseAction extends GlobalParameterAction {
 	 * @param Array $arr								//要组合地址的数组
 	 * @param String Or Array	 $field			//组合的字段key  如：pic 或  array('pic','head')
 	 * @param String $dir_type						//目录类型  如：images/
+	 * parent::public_file_dir($arr,array(img,hearder),images/);
 	 */
 	protected function public_file_dir (Array &$arr,$field,$dir_type) {
 		$public_file_dir =  C('PUBLIC_VISIT.domain').C('PUBLIC_VISIT.dir').$dir_type;			//域名、文件目录

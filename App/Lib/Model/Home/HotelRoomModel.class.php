@@ -85,7 +85,7 @@ class HotelRoomModel extends HomeBaseModel {
 	  	return $data;
 	  	
 	  }
-	  //获得图片
+	  //获得房型图片
 	  public function get_room_img($room_id,$type=1){	  	
 	  	$where = array(
 		  	'i.is_del'=>0,

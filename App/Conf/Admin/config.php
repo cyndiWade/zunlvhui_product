@@ -19,6 +19,8 @@ return array(
 		//'NOT_AUTH_GROUP'=> '',						//无需认证分组，多个用,号分割
 		'NOT_AUTH_MODULE' => 'Login', 			// 默认无需认证模块，多个用,号分割
 	//	'NOT_AUTH_ACTION' => 'login', 						// 默认无需认证方法，多个用,号分割
+
+		'VAR_PAGE' => 'page',		//分页标识
 		
 		
 

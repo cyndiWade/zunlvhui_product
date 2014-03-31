@@ -516,4 +516,17 @@ function is_phone($phone_num){
 
 }
 
+//下载二维码
+function Dowload_code2($url,$filename=""){
+	ob_start();
+	readfile($url);
+	$img = ob_get_contents();
+	ob_end_clean();
+	$size = strlen($img);
+	$fp2 = fopen($filename , "a");
+	fwrite($fp2, $img);
+	fclose($fp2);
+	return $filename;
+}
+
 ?>

@@ -9,7 +9,8 @@ class HotelOrderAction extends AdminBaseAction {
 	//初始化数据库连接
 	protected  $db = array(
 		'HotelOrder'=>'HotelOrder',		//订单表
-		'OrderLog' => 'OrderLog'			//订单日志表
+		'OrderLog' => 'OrderLog',			//订单日志表
+		'RoomSchedule'=>'RoomSchedule' //酒店房型的价格
 	);
 	
 
@@ -135,6 +136,35 @@ class HotelOrderAction extends AdminBaseAction {
 		$this->display();
 	}
 	
+	
+	//订单中每日的价格
+	public function order_price_info(){
+		$hotel_order_id = $this->_get('hotel_order_id');
+		$HotelOrder = $this->db['HotelOrder'];
+		$RoomSchedule = $this->db['RoomSchedule'];
+		if (empty($hotel_order_id)) $this->error('非法操作！');
+		$order_info = $HotelOrder->seek_one_hotel(array('id'=>$hotel_order_id),'id,hotel_room_id,in_date,out_date');
+		if (empty($order_info)) $this->error('此订单不存在！');
+		
+		$data = array(
+				'hotel_room_id' => $order_info['hotel_room_id'],
+				'in_date'       => $order_info['in_date'],
+				'out_date'      => $order_info['out_date']
+		);
+		
+		$order_price_list = $RoomSchedule->Seek_Data_Schedule($data);
+	
+		
+		parent::global_tpl_view(array(
+				'action_name'=>'订单每日的价格',
+				'title_name'=>'订单：'.$order_info['order_sn'].'-价格',
+		));
+		
+		$html['list'] = $order_price_list;
+		$this->assign('html',$html);
+		
+		$this->display();
+	}
 	
 	//添加订单日志
 	private function add_data_order_log ($order_id,$msg) {
