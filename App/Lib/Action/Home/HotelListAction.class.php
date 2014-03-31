@@ -395,6 +395,7 @@ class HotelListAction extends HomeBaseAction{
 	  	    	foreach($arr as $key=>$val){
 	  	    		$str[]= date('Y-m-d',$val['day']).'号房间数量为'.$val['room_num'];
 	  	    	}
+	  	    	
 	  	    	parent::callback(C('STATUS_UPDATE_DATA'),'房间数量不够',$str);
 	  	    	
 	  	    }else{
