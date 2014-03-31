@@ -288,7 +288,7 @@ class HotelAction extends AdminBaseAction {
 	 */
 	
 	public function get_map(){
-	
+	   echo __FILE__;
 	   define('MAP_PATH',str_replace('Lib/Action/Admin/HotelAction.class.php','',str_replace('\\','/',__FILE__)));
 	   echo MAP_PATH;exit;
 	   $Hotel = $this->db['Hotel'];
