@@ -288,7 +288,10 @@ class HotelAction extends AdminBaseAction {
 	 */
 	
 	public function get_map(){
-
+		if(!$_SERVER["HTTP_REFERER"]){
+			$this->error('非法操作！');
+			exit;
+		}
 	   define('MAP_PATH',str_replace('Lib/Action/Admin/HotelAction.class.php','',str_replace('\\','/',__FILE__)));
 
 	   $Hotel = $this->db['Hotel'];
