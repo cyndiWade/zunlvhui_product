@@ -291,7 +291,6 @@ class HotelAction extends AdminBaseAction {
 
 	   define('MAP_PATH',str_replace('Lib/Action/Admin/HotelAction.class.php','',str_replace('\\','/',__FILE__)));
 
-	   echo MAP_PATH;exit;
 	   $Hotel = $this->db['Hotel'];
 	   $Mapdata = $Hotel->get_hotel_city();  //根据酒店的城市分组找到所有的城市   
 	   $Map = array();
