@@ -585,7 +585,8 @@ private function receiveText($object)
 		  $user_code ='o_kNsuDTFNH42UvcZIN7BH4mszPY';
 		 //$data =$OrderState->get_order_info($user_code);
 		 //$arr_item = $Hotel->get_all_hotel("敦煌");
-		 $arr_item =  $Hotel->get_Hotel("敦煌");
+		 //$arr_item =  $Hotel->get_Hotel("敦煌");
+		 $arr_item = $Hotel->get_map(敦煌);
         echo '<pre>';print_R($arr_item);echo '</pre>';exit;
    }
 

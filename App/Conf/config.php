@@ -51,6 +51,7 @@ $system  = array(
 		
 			'admin.zunlvhui.com.cn'=>array('Admin/'),  // admin域名指向Admin分组
 			'hotel.zunlvhui.com.cn'=>array('Hotel/'),  // hotel域名指向Hotel分组
+			//'www.zunlvhui.com.cn'  =>array('Api/'),
 			// 子域名部署规则
 			//'192.168.1.100'    => array('Api/'),	//指向对应的分组。
 		), 			
@@ -114,6 +115,7 @@ $custom= array (
 		'UPLOAD_DIR' => array(
 				'web_dir' => $_SERVER['DOCUMENT_ROOT'].'/',
 				'image' => 'files/zun/images/',		//图片地址
+				'mapimage'=>'Public/Home/mapimages/'
 		),
 
 		
