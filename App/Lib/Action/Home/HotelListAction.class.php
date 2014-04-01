@@ -70,7 +70,6 @@ class HotelListAction extends HomeBaseAction{
 	     if($list == true){
 	     	  
 			$list['img']         = $Hotel->get_img($list['id'],4);
-
 	     }
 	  	 $html = array(
 		  	 'list'=>$list,
@@ -270,6 +269,7 @@ class HotelListAction extends HomeBaseAction{
         $list['contact_person']  = empty($list['contact_person']) ? '本人' : $list['contact_person'];
 		//$list['total_price'] = str_replace('.','',$list['total_price']);
 		$list['total_prices'] = str_replace('.','',$list['total_price']);
+		$list['total_price'] =str_replace('.00','',$list['total_price']);
 		//echo '<pre>';print_R($list);echo '</pre>';exit;
 	  	$this->assign('html',$list);
 	  	$this->display();

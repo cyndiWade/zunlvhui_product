@@ -36,13 +36,13 @@ a:link, a:visited { text-decoration:none; }
 a:hover { text-decoration:underline; }
 .red, .red a { color:#F00; }
 .left { float:left; }
-.right { float:right; }
+.right { float:right; text-align:right}
 .autohei { height:auto; overflow:hidden; zoom:1; }
 .clear { font-size:0; line-height:0; clear:both; overflow:hidden; zoom:1; }
 .blank { height:10px; font-size:0; line-height:0; clear:both; overflow:hidden; }
 .blank8 { height:0px; font-size:0; line-height:0; clear:both; overflow:hidden; }
 .blank1 { background:#131211; height:15px; font-size:0; line-height:0; clear:both; overflow:hidden; }
-.m_nav{ background:#f6cf44;height:40px; line-height:40px;overflow:hidden;zoom:1; width:100%;}
+.m_nav{ background:#f6cf44;height:62px; line-height:40px;overflow:hidden;zoom:1; width:100%;}
 .m_nav span.left{ display:inline; margin:0px 0px 0 30px; position:absolute;}
 .m_nav span.right a{ display:inline-block; padding:0 30px; background:#e0ab29;font-size:30px;height:40px;vertical-align:top;}
 .m_nav span.right a:hover{ text-decoration:none}
@@ -74,7 +74,7 @@ small{ font-size:20px;}
 .padding_15{ padding-left:20px;}
 .padding_60{ padding-left:130px;}
 .zx1,.zx1 a{ color:#92ccbf;}
-.zx2,.zx2 a{ color:#8a8379; }
+.zx2,.zx2 a{ color:#fff; }
 .zx3,.zx3 a{ color:#494949; }
 .zx4,.zx4 a{ color:#666; }
 .zx5,.zx5 a{ color:#fff;}
@@ -177,8 +177,8 @@ small{ font-size:20px;}
 .Zebra_DatePicker .dp_header td             { color: #444 }
 
 .Zebra_DatePicker .dp_header .dp_previous,
-.Zebra_DatePicker .dp_header .dp_next       { width: 30px }
-
+.Zebra_DatePicker .dp_header .dp_next       { width: 50px }
+.dp_next .dp_previous      {font-size:50px; }
 .Zebra_DatePicker .dp_header .dp_caption    { font-weight: bold }
 .Zebra_DatePicker .dp_header .dp_hover      { background: #D8D8D8; color: #FFF }
 .Zebra_DatePicker .dp_header .dp_blocked    { color: #888; cursor: default }
