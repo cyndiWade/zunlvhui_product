@@ -29,7 +29,7 @@ class CodeAction extends AdminBaseAction {
 		$this->display();
 	}
 	
-	//管理二维码
+	//
 	public function manage () {		
 		$this->error('开发中');
 		//连接数据库
@@ -102,14 +102,16 @@ class CodeAction extends AdminBaseAction {
 
 	
 	
-	//分配二维码
+	//管理二维码
 	public function allocation () {
 		import('@.ORG.Util.Page');
 		
 		//二维码列表
 		$WxCode = $this->db['WxCode'];
 
-		$map['hotel_id'] = 0; 
+		$map['hotel_id'] = 0;
+		$map['is_del'] = 0;
+		
 		//计算结果记录条数
 		$code_count = $WxCode->where($map)->count();
 		$Page = new Page($code_count,10);	//分页
@@ -131,6 +133,7 @@ class CodeAction extends AdminBaseAction {
 				'action_name'=>'分配二维码',
 				'title_name'=>$title_name,
 		));
+		
 		$this->assign('html',$html);
 		$this->display();
 	}

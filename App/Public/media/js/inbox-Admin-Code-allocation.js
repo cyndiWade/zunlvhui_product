@@ -1,12 +1,9 @@
 var Inbox = function () {
 
-    var content = $('.inbox-content');
-    var loading = $('.inbox-loading');
-	
-	
 	var select_all_ipt = $('#select_all_ipt');		//全选
 	var code_ipt = $('.code_ipt');			//所有ipt
 	var menu = $('.dropdown-menu li');				//操作
+	
 	
 	//全选
 	select_all_ipt.click(function () {
@@ -18,6 +15,7 @@ var Inbox = function () {
 			code_ipt.prop("checked", false);
 		}
 	});
+	
 	
 	menu.click(function () {
 		var _index = $(this).index();
@@ -45,11 +43,21 @@ var Inbox = function () {
 						height:600,
 						title: "分配给酒店"
 					});	
+					
+					var closeDialog = $('.closeDialog');		//关闭
+					//关闭刷新页面
+					closeDialog.click(function (){
+						if (confirm('关闭后刷新页面！') == true) {
+							window.location.reload();
+						}
+					}) 
 				}
-			break;
+				break;
 		}
 
 	});
+	
+	
 	
 	
 
@@ -104,13 +112,13 @@ var Inbox = function () {
 	*/
 
             //handle loading content based on URL parameter
-            if (App.getURLParameter("a") === "view") {
-                loadMessage();
-            } else if (App.getURLParameter("a") === "compose") {
-                loadCompose();
-            } else {
-               // loadInbox('inbox');
-            }
+//            if (App.getURLParameter("a") === "view") {
+//                loadMessage();
+//            } else if (App.getURLParameter("a") === "compose") {
+//                loadCompose();
+//            } else {
+//               // loadInbox('inbox');
+//            }
 
         }
 
