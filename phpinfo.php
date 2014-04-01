@@ -19,4 +19,7 @@ for ($i=0;$i<=5;$i++){
 	$r = test();
 }
 echo $r;
+
+  
+  echo    mb_substr('5.00',-1,-5);
 ?>

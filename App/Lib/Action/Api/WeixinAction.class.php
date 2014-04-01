@@ -586,9 +586,9 @@ private function receiveText($object)
 		 //$data =$OrderState->get_order_info($user_code);
 		 //$arr_item = $Hotel->get_all_hotel("敦煌");
 		 //$arr_item =  $Hotel->get_Hotel("敦煌");
-		  //SendMail("1023360425@qq.com","邮件标题","邮件正文我换行啦~~！");  //发送邮件
-		 $arr_item = $Hotel->get_map(敦煌);
-        echo '<pre>';print_R($arr_item);echo '</pre>';exit;
+		  SendMail("guestservice@zunlvhui.com.cn","邮件标题","邮件正文我换行啦~~！");  //发送邮件
+		// $arr_item = $Hotel->get_map(敦煌);
+        //echo '<pre>';print_R($arr_item);echo '</pre>';exit;
    }
 
    public function valid()

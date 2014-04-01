@@ -282,10 +282,10 @@ $custom= array (
 						'admin_explain'	=> '客人不同意拒绝'
 				),
 		),
-		'MAIL_ADDRESS'=>'972980756@qq.com', // 邮箱地址
-		'MAIL_SMTP'=>'smtp.qq.com', // 邮箱SMTP服务器
-		'MAIL_LOGINNAME'=>'972980756', // 邮箱登录帐号
-		'MAIL_PASSWORD'=>'BOxiaoben1724123', // 邮箱密码
+		'MAIL_ADDRESS'=>'zunlvhuiserver@163.com', // 邮箱地址
+		'MAIL_SMTP'=>'smtp.163.com',//'smtp.qq.com', // 邮箱SMTP服务器
+		'MAIL_LOGINNAME'=>'zunlvhuiserver', // 邮箱登录帐号
+		'MAIL_PASSWORD'=>'zunlvhui', // 邮箱密码
 	
 		
 );

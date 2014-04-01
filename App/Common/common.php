@@ -554,7 +554,7 @@ function SendMail($address,$title,$message)
     $mail->From=C('MAIL_ADDRESS');
 
     // 设置发件人名字
-    $mail->FromName='LilyRecruit';
+    $mail->FromName='尊旅会';
 
     // 设置邮件标题
     $mail->Subject=$title;
