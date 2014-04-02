@@ -273,7 +273,7 @@ class HotelAction extends AdminBaseAction {
 	}
 	
 	
-	
+	//显示酒店，供分配二维码时使用
 	public function show_hotel_list () {
 		$Hotel = $this->db['Hotel'];
 		

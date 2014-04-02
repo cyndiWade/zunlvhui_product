@@ -24,11 +24,6 @@ class CodeAction extends AdminBaseAction {
 	}
 	
 	
-	
-	public function inbox() {
-		$this->display();
-	}
-	
 	//管理二维码
 	public function manage () {		
 		$this->error('开发中');
