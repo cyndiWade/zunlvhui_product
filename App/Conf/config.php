@@ -121,8 +121,8 @@ $custom= array (
 		
 		//外部文件访问地址(用来填写专用的文件服务器)
 		'PUBLIC_VISIT' => array(
- 				//'domain' =>	'http://'.$_SERVER['SERVER_NAME'].'/',
-				'domain' =>	'http://zunimages.jsonlin.cn/',
+ 				'domain' =>	'http://'.$_SERVER['SERVER_NAME'].'/',
+				//'domain' =>	'http://zunimages.jsonlin.cn/',
  				'dir' => 'files/zun/',							//项目文件目录
 		),
 
