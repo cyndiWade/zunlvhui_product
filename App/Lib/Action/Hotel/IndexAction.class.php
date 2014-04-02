@@ -18,8 +18,8 @@ class IndexAction extends HotelBaseAction{
 	  	//$list = $WxUser->get_wx_user($this->oUser->id);
 	 
 	  	$list =$WxUser->get_all_wx_user($this->oUser->id);
-	  	
-//echo '<pre>';print_R($WxUser->get_all_wx_user($this->oUser->id));echo '</pre>';
+
+//echo '<pre>';print_R($list);echo '</pre>';exit;
 	  	$url = $_SERVER["REQUEST_URI"];
 	  	$html = array('hover'=>parent::getAction($url),
 	  		'list'=>$list,
@@ -28,7 +28,7 @@ class IndexAction extends HotelBaseAction{
 	    $this->assign('html',$html);
 	    $this->display();
 	  }
-            
+	       
 
 
 }

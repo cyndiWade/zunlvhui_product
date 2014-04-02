@@ -23,6 +23,7 @@ return array(
 		'Hotel_more'=>'http://yunqiserver.xicp.net/ftp/tjr/wxadmin/index.php?s=/Home/HotelList/index/hotel_cs/',
 
 		'HOTEL_MAP_IMG'=>'http://yunqiserver.xicp.net/ftp/tjr/wxadmin/App/Public/Home/images/city/',
+		'HOTELMAPIMAGES'=>'http://www.zunlvhui.com.cn/Public/Home/mapimages/',
 		'COUPON_IMG'=>'http://yunqiserver.xicp.net/files/zun/images/',// 优惠券图片的url;
 		'COUPON_URL'=>'http://yunqiserver.xicp.net/ftp/tjr/wxadmin/index.php?s=/Home/HotelList/get_coupon/coupon_id/', //优惠券详情的url
 		'HOTEL_MAP' => 'http://yunqiserver.xicp.net/ftp/tjr/wxadmin/index.php?s=/Home/HotelList/map/hotel_cs/',

@@ -70,7 +70,6 @@ class HotelListAction extends HomeBaseAction{
 	     if($list == true){
 	     	  
 			$list['img']         = $Hotel->get_img($list['id'],4);
-
 	     }
 	  	 $html = array(
 		  	 'list'=>$list,
@@ -270,6 +269,7 @@ class HotelListAction extends HomeBaseAction{
         $list['contact_person']  = empty($list['contact_person']) ? '本人' : $list['contact_person'];
 		//$list['total_price'] = str_replace('.','',$list['total_price']);
 		$list['total_prices'] = str_replace('.','',$list['total_price']);
+		$list['total_price'] =str_replace('.00','',$list['total_price']);
 		//echo '<pre>';print_R($list);echo '</pre>';exit;
 	  	$this->assign('html',$list);
 	  	$this->display();
@@ -392,9 +392,14 @@ class HotelListAction extends HomeBaseAction{
 	  			
 	  	    $arr = $RoomSchedule->room_num_enough($data);
 	  	    if(!empty($arr)){
+	  	    	$data = $RoomSchedule->get_hotel($data['room_id']);
+	  	    	$msg = '';
+	  	    	$msg .=$data['hotel_name']."\n";
 	  	    	foreach($arr as $key=>$val){
 	  	    		$str[]= date('Y-m-d',$val['day']).'号房间数量为'.$val['room_num'];
+	  	    		$msg .= date('Y-m-d',$val['day']).'号房间数量为'.$val['room_num']."\n";
 	  	    	}
+	  	    	SendMail("guestservice@zunlvhui.com.cn","房间不足",$msg);
 	  	    	parent::callback(C('STATUS_UPDATE_DATA'),'房间数量不够',$str);
 	  	    	
 	  	    }else{
@@ -431,19 +436,8 @@ class HotelListAction extends HomeBaseAction{
 	  }
 	  public function test(){
 	  	$RoomSchedule = $this->db['RoomSchedule'];
-	  	$data['in_date'] ='1395158400';
-	  	$data['out_date']='1395244800';
-	  	$data['hotel_room_id']='289';
-	  	$data['room_num'] =2;
-	  	 $where = array(
-		      'day' =>array(
-					array('egt',$data['in_date'] ),
-					array('elt',$data['out_date'] )
-			    ),
-			  'hotel_room_id'=>$data['hotel_room_id'],
-	      );
-	      $RoomSchedule->Update_Room_num($where,$data['room_num']);
-	      
+	  	$data = $RoomSchedule->get_hotel(661);
+	    echo '<pre>';print_r($data);echo '</pre>';  
 	      exit;
 	      
 	  }

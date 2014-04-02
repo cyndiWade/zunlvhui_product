@@ -76,6 +76,18 @@ class RoomScheduleModel extends HomeBaseModel {
 		
 	}
 	
+	//根据酒店放房型的id获得酒店
+	public function get_hotel($room_id){
+		
+		$data = $this->field('h.hotel_name')
+		->table($this->prefix.'hotel AS h')
+		->join($this->prefix.'hotel_room AS hr ON h.id=hr.hotel_id')
+		->where(array('h.is_del'=>0,'hr.is_del'=>0,'hr.id'=>$room_id))
+		->find();
+		return $data;
+		
+	}
+	
 	
 }
 
