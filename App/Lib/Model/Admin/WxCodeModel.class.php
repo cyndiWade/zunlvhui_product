@@ -29,7 +29,6 @@ class WxCodeModel extends AdminBaseModel {
 
 		return array('obj'=>$Page,'data'=>$data);
 
-		
 	}
 	
 	//获取一条数据
