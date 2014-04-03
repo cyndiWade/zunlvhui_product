@@ -9,6 +9,7 @@ class WxCodeAction extends AdminBaseAction {
 	//初始化数据库连接
 	protected  $db = array(
 		'WxCode' => 'WxCode',	//微信二维码
+		'UsersHotel' => 'UsersHotel'		//酒店用户关系表
 	);
 
 	
@@ -139,12 +140,17 @@ class WxCodeAction extends AdminBaseAction {
 			if (empty($code_ids) || empty($hotel_id)) parent::callback(C('STATUS_DATA_LOST'),'上传数据丢失！');
 			
 			$WxCode = $this->db['WxCode'];
+			$UsersHotel = $this->db['UsersHotel'];
+			
 			$code_ids = explode(',',$code_ids);
+			
+			$user_id = $UsersHotel->get_hotel_userid($hotel_id);
 			
 			if (is_array($code_ids)) {
 				$is_save_ok = false;
 				foreach ($code_ids as $val) {
 					$WxCode->hotel_id = $hotel_id;
+					$WxCode->user_id = $user_id;
 					if ($WxCode->where(array('id'=>$val))->save()) $is_save_ok = true;
 				}
 				if ($is_save_ok == true) {

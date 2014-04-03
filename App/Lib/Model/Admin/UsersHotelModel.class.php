@@ -19,6 +19,11 @@ class UsersHotelModel extends AdminBaseModel {
 		return $this->delete_data(array('user_id'=>$user_id,'hotel_id'=>$hotel_id));
 	}
 	
+	//获取酒店ID
+	public function get_hotel_userid($hotel_id) {
+		return $this->where(array('hotel_id'=>$hotel_id))->getField('user_id');
+	}
+	
 }
 
 ?>
