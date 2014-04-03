@@ -33,7 +33,7 @@ class WxCodeAction extends AdminBaseAction {
 		
 		//已分配酒店的二维码
 		$condition['wc.hotel_id'] = array('neq',0); 
-		$result =  $WxCode->seek_hotel_codes($condition,'wc.id,wc.code_id,wc.code_url,wc.yuangong,h.hotel_name');
+		$result =  $WxCode->seek_hotel_codes($condition,'wc.id,wc.code_id,wc.code_url,wc.yuangong,wc.yuangong,hotel_remarks,h.hotel_name');
 		
 		//分页
 		$Page = $result['obj'];
