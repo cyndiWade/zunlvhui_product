@@ -39,7 +39,10 @@ class WxCodeModel extends AdminBaseModel {
 		return $this->where($con)->field($field)->find();
 	}
 	
-
+	//修改一条数据
+	public function save_one_code ($code_id) {
+		return parent::save_one_data(array('id'=>$code_id))	;
+	}
 
 	
 }

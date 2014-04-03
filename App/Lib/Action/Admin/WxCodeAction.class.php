@@ -102,11 +102,12 @@ class WxCodeAction extends AdminBaseAction {
 		$act = $this->_get('act');						//操作类型
 		$WxCode = $this->db['WxCode'];
 		$code_id = $this->_get('code_id');
-	
+
+		
 		if ($act == 'update') {			//修改
 			if ($this->isPost()) {
 				$WxCode->create();
-				$WxCode->save_one_siri($code_id) ? $this->success('修改成功！') : $this->error('没有做出任何修改！');
+				$WxCode->save_one_code($code_id) ? $this->success('修改成功！') : $this->error('没有做出任何修改！');
 				exit;
 			}
 			//查找
