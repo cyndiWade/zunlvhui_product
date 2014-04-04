@@ -33,10 +33,11 @@ class WxCodeAction extends HotelBaseAction {
 		$WxCode = $this->db['WxCode'];
 		$Hotel = $this->db['Hotel'];
 		$hotel_id = $this->_get('hotel_id');
-		
 		//验证
 		if ($hotel_id == false) parent::close_windows('此酒店不存在！');
-		$hotel_info = $Hotel->get_one_hotel(array('hotel_id'=>$hotel_id),'id,hotel_name');
+		$hotel_info = $Hotel->get_one_hotel(array('id'=>$hotel_id),'id,hotel_name');
+
+		
 		if (empty($hotel_info)) {
 			parent::close_windows('此酒店不存在！');
 		}
