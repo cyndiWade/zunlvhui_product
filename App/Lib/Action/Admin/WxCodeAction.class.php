@@ -22,10 +22,11 @@ class WxCodeAction extends AdminBaseAction {
 
 		parent::global_tpl_view(array('module_name'=>$this->module_name));
 	}
-	
-	
+
+
 	//已分配
 	public function manage () {		
+
 		import('@.ORG.Util.Page');
 		
 		//连接数据库表
@@ -34,7 +35,7 @@ class WxCodeAction extends AdminBaseAction {
 		//已分配酒店的二维码
 		$condition['wc.hotel_id'] = array('neq',0); 
 		$result =  $WxCode->seek_hotel_codes($condition,'wc.id,wc.code_id,wc.code_url,wc.yuangong,wc.yuangong,hotel_remarks,h.hotel_name');
-		
+		//<if condition="($vo['prepay'] neq 0)">
 		//分页
 		$Page = $result['obj'];
 		$orderList = $result['data'];
