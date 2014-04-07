@@ -57,7 +57,9 @@ function quxiao(id){
   </div>
   <div class="autohei m_boxbg1">
     <span class="left f30 zx9">订单信息</span>
-    <div class="right zx2 f30">订单总额 <span class="zx7">{$html.total_price}</span> 
+    <div class="right zx2 f30">订单总额 
+    <span class="zx7">{$html.total_price}
+    </span>元 
     </div>
   </div>
   <div class="autohei m_boxbg2 jd_info padding0">
@@ -94,8 +96,9 @@ function quxiao(id){
       <span class="right m_dot4 zx7 f20">
       <a href="index.php?s=/Home/HotelList/map/hotel_id/{$html.hotel_id}/user_code/{$html.user_code}">地图</a></span> 
       </li>
-      <li> <span class="left m_dot5 zx2 f24">{$html.hotel_tel}</span> 
-      <span class="right m_dot4 zx4 f20"><a href="tel:{$html.hotel_tel}">服务热线</a>
+      <li> <span class="left m_dot5 zx4 f24">{$html.hotel_tel}</span> 
+      <span class="right m_dot4 zx4 f20">
+      <a href="tel:{$html.hotel_tel}" >服务热线</a>
       </span> 
       </li>
     </ul>
@@ -125,7 +128,10 @@ function quxiao(id){
   </div>
   <div class="beizhu">
     <div class="beizhubox">
-      <p>如需修改取消订单，请在{$html.in_date} 12:00以前</p>
+      <p>酒店入住时间为下午14:00，退房结算时间为中午12:00 如需提前入住或者推迟离店，
+      均需酌情加收一定的费用
+      <!--  如需修改取消订单，请在{$html.in_date} 12:00以前-->
+      </p>
     </div>
   </div>
   <div class="blank1"></div>
@@ -135,13 +141,13 @@ function quxiao(id){
 
     <if condition="($html['order_type'] eq 1) and ($html['order_status'] neq 3)">
     <a id="getBrandWCPayRequest" href="javascript:void(0);">
-    <input type="image" src="{$Think.const.APP_PATH}Public/Home/images/submit2.jpg" />
+    <input style="vertical-align: top;" type="image" src="{$Think.const.APP_PATH}Public/Home/images/submit2.jpg" />
     </a>&nbsp;&nbsp;&nbsp;&nbsp;
     </if> 
     <if condition="($html['order_status'] neq 3)">
     <input style="vertical-align: top;" type="image" src="{$Think.const.APP_PATH}Public/Home/images/submit3.jpg" onclick="javascript:quxiao({$html.order_id})" />
     <else/>
-    <img style='width:209px;' src="{$Think.const.APP_PATH}Public/Home/images/quxiaodingdan.jpg" />
+    <img style='width:209px;vertical-align: top;' src="{$Think.const.APP_PATH}Public/Home/images/quxiaodingdan.jpg" />
     </if>
     </span>
     <span class="right f30" style="padding-right:30px" >订单总额：{$html.total_price}元
