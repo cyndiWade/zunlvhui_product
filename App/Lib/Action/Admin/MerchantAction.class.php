@@ -46,8 +46,8 @@ class MerchantAction extends AdminBaseAction {
 
 		parent::global_tpl_view( array(
 			'add_name' =>'添加商家',
-			'action_name'=>'所有语义',
-			'title_name'=>'所有语义',
+			'action_name'=>'商家首页',
+			'title_name'=>'所有商家',
 		));
 		
 		$html['list'] = $list;
