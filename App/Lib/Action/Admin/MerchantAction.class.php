@@ -79,7 +79,10 @@ class MerchantAction extends AdminBaseAction {
 		
 		} else if ($act == 'update') {			//修改
 			if ($this->isPost()) {
+				$merchant_type = $this->_post('merchant_type');
+				$merchant_type = implode(',',$merchant_type);
 				$Merchant->create();
+				$Merchant->merchant_type = $merchant_type;
 				$Merchant->save_one_merchant($merchant_id) ? $this->success('修改成功！') : $this->error('没有做出任何修改！');
 				exit;
 			}
