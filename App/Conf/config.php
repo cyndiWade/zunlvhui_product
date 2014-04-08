@@ -121,8 +121,8 @@ $custom= array (
 		
 		//外部文件访问地址(用来填写专用的文件服务器)
 		'PUBLIC_VISIT' => array(
- 				//'domain' =>	'http://'.$_SERVER['SERVER_NAME'].'/',
-				'domain' =>	'http://zunimages.jsonlin.cn/',
+ 				'domain' =>	'http://'.$_SERVER['SERVER_NAME'].'/',
+				//'domain' =>	'http://zunimages.jsonlin.cn/',
  				'dir' => 'files/zun/',							//项目文件目录
 		),
 
@@ -286,7 +286,36 @@ $custom= array (
 		'MAIL_SMTP'=>'smtp.163.com',//'smtp.qq.com', // 邮箱SMTP服务器
 		'MAIL_LOGINNAME'=>'zunlvhuiserver', // 邮箱登录帐号
 		'MAIL_PASSWORD'=>'zunlvhui', // 邮箱密码
-	
+		
+		/**
+		 * 商家类型
+		 */
+		'Merchant_Type' => array(
+				1 => array(
+						'num' => 1,
+						'explain' => '住',
+				),
+				2 => array(
+						'num' => 3,
+						'explain' => '游',
+				),
+				3 => array(
+						'num' => 3,
+						'explain' => '吃',
+				),
+				
+		),
+		//上下架状态
+		'Merchant_Status' => array(
+				0 => array(
+						'num' => 0,
+						'explain' => '上架',
+				),
+				1 => array(
+						'num' => 1,
+						'explain' => '下架',
+				)
+		),
 		
 );
 

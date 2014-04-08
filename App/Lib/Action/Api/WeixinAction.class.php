@@ -383,6 +383,7 @@ private function receiveText($object)
 		 	}
 		 }else{
 		 	if($step <1){
+		 		$text = '您输入的酒店名称未存在';
 				$resultStr = $this->transmitText($postObj, $text, $funcFlag);
 				//tolog('/web/www/ftp/tjr/wxadmin/App/Lib/Action/Api/a.txt',$resultStr);
 				die($resultStr);
@@ -583,12 +584,13 @@ private function receiveText($object)
 		  $WxCode      = $this->db['WxCode'];
 		  $Siri        = $this->db['Siri'];
 		  $user_code ='o_kNsuDTFNH42UvcZIN7BH4mszPY';
+		  $arr_item = $Hotel->get_all_hotel('上海');
 		 //$data =$OrderState->get_order_info($user_code);
 		 //$arr_item = $Hotel->get_all_hotel("敦煌");
 		 //$arr_item =  $Hotel->get_Hotel("敦煌");
-		  SendMail("guestservice@zunlvhui.com.cn","邮件标题","邮件正文我换行啦~~！");  //发送邮件
+		  //SendMail("guestservice@zunlvhui.com.cn","邮件标题","邮件正文我换行啦~~！");  //发送邮件
 		// $arr_item = $Hotel->get_map(敦煌);
-        //echo '<pre>';print_R($arr_item);echo '</pre>';exit;
+        echo '<pre>';print_R($arr_item);echo '</pre>';exit;
    }
 
    public function valid()

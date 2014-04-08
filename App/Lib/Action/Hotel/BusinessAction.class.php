@@ -4,7 +4,8 @@ class BusinessAction extends HotelBaseAction{
 
     private $module_name = '商家管理';
 	
-    private $no_logo  =array('url'=>'App/Public/media/hotel.jpg');
+ //   private $no_logo  =array('url'=>'App/Public/media/hotel.jpg');
+    private $no_logo  =array('url'=>'App/Public/Hotel/image/no_log.jpg');
 
 	
 	//初始化数据库连接
@@ -35,24 +36,27 @@ class BusinessAction extends HotelBaseAction{
         $HotelImg  = D('HotelImg');
         $userId =  $this->oUser->id; //用户id
         $list =  $UserHotel->get_user_hotels($userId);
+
 		if ($list == true) {
 		        $hotel_ids = getArrayByField($list,'id');
-		        $imgs  = $HotelImg->get_hotel_images(array('hotel_id'=>array('in',$hotel_ids),'type'=>array('eq',5) ),'hotel_id,type,url');
+		        $imgs  = $HotelImg->get_hotel_images(array('hotel_id'=>array('in',$hotel_ids),'type'=>array('eq',3) ),'hotel_id,type,url');
 				$rooms = $HotelRoom->get_room_type( array('hotel_id'=>array('in',$hotel_ids) ));
-		        
+		
 				if ($imgs == true or $rooms == true) {
 					//组合图片访问地址
 					parent::public_file_dir($imgs,'url','images/');
 		
+
 				   //public_file_dir
 					$imgs_sort  = regroupKey($imgs,'hotel_id');
 					$rooms_sort = regroupKey($rooms,'hotel_id');
-					
+				
 					foreach ($list AS $key=>$val) {
+
 						$list[$key]['logo'] = empty($imgs_sort[$val['id']]) ? $this->no_logo :  $imgs_sort[$val['id']][0];
 						$list[$key]['room'] = $rooms_sort[$val['id']];
 					}
-					
+	
 					
 				}
 					

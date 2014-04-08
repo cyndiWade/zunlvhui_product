@@ -28,6 +28,7 @@ function is_phone(obj){
 
     	obj.focus();
         alert('请输入正确的手机号'); 
+        return false;
     }
 	
 }
@@ -56,6 +57,8 @@ function submit_order(){
    if(!tel){
      alert('请填写手机号');
      return false;
+   }else{
+	   is_phone(document.getElementById('tel'));
    }
    $data={
 		   room_id : room_id,
@@ -103,7 +106,6 @@ function changePrice(type){
   
 }
 
-
 </script>
 </head>
 <body>
@@ -136,27 +138,12 @@ function changePrice(type){
   	<ul>
     <li><span class="left zx2 f24">{$html.list.title}</span> 
 	    <select id='house' name='house' class="right zx7 f20 sel1" onchange="changePrice({$html.pay_type})" >
-            <option value="1" selected>1间</option>
-            <option value="2">2间</option>
-            <option value="3">3间</option>
-            <option value="4">4间</option>
-            <option value="5">5间</option>
-            <option value="6">6间</option>
-            <option value="7">7间</option>
-            <option value="8">8间</option>
-	        <option value="9">9间</option>
-            <option value="10">10间</option>
-	        <option value="11">11间</option>
-            <option value="12">12间</option>
-            <option value="13">13间</option>
-            <option value="14">14间</option>
-            <option value="15">15间</option>
-            <option value="16">16间</option>
-            <option value="17">17间</option>
-            <option value="18">18间</option>
-	        <option value="19">19间</option>
-            <option value="20">20间</option>
-      </select></li>
+            <for start="1" end="$html['list']['room_num']+1" >
+            <option value="{$i}" >{$i}间</option>
+            </for>
+            
+         </select>
+    </li>
         <li style="border-bottom:none;">
 	<span class="left zx2 f24 wit120">入住人</span> 
 	<input type="text" id="Inperson" name="Inperson" class="left inp1" placeholder="" /> 

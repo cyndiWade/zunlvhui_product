@@ -66,7 +66,7 @@ class RoomScheduleAction extends AdminBaseAction {
 
 			//检测非法字段
 			foreach ($arr AS $key) {
-				if (empty($post_data[$key])) {
+				if ($post_data[$key] == '') {
 					parent::callback(C('STATUS_NOT_DATA'),$key.'不得为空！');
 				}
 			}

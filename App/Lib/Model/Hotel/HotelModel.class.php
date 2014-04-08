@@ -8,7 +8,7 @@ class HotelModel extends AppBaseModel {
 	public function get_one_hotel ($condition,$field = '*') {
 		$con = array('is_del'=>0);
 		array_add_to($con,$condition);
-
+		
 		return $this->where($con)->field($field)->find();
 	}
 	

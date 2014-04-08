@@ -112,6 +112,17 @@ class AppBaseAction extends GlobalParameterAction {
 	
 	
 	
+	/**
+	 * 弹窗关闭
+	 * @param String $msg
+	 */
+	protected  function close_windows($msg) {
+		import('@.Tool.Tool');		//工具类
+		header('Content-Type:text/html;charset=utf-8');
+		Tool::alertClose($msg);
+		exit;
+	}
+	
 	
 
 	

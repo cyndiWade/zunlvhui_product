@@ -104,16 +104,16 @@ var Calendar = function () {
 						check_result = false;
 					}
 					//现付价格验证
-					if (post_data.spot_payment.match(/^[1-9][0-9]+$/gim) == undefined) {
+					if (post_data.spot_payment.match(/^[0-9][0-9]*/gim) == undefined) {
 						alert('价格只能是数字');
 						check_result = false;
 					}
 					//到付
-					if (post_data.prepay.match(/^[1-9][0-9]+$/gim) == undefined)  {
+					if (post_data.prepay.match(/^[0-9][0-9]*$/gim) == undefined)  {
 						alert('价格只能是数字');
 						check_result = false;
 					}
-					if (post_data.room_num.match(/^[1-9][0-9]+$/gim) == undefined)  {
+					if (post_data.room_num.match(/^[1-9][0-9]*$/gim) == undefined)  {
 						alert('房间数量只能是数字');
 						check_result = false;
 					}

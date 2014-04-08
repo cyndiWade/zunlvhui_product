@@ -3,27 +3,35 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="{$Think.const.APP_PATH}Public/Hotel/css/hotel.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" href="{$Think.const.APP_PATH}Public/Hotel/css/jquery.popup.css" type="text/css">
+
 <script src="{$Think.const.APP_PATH}Public/Hotel/js/jquery-1.7.1.min.js"></script>
 <script src="{$Think.const.APP_PATH}Public/Hotel/js/hotel.common.js"></script>
-<link rel="stylesheet" href="{$Think.const.APP_PATH}Public/Hotel/css/jquery.popup.css" type="text/css">
+
+<!--
 <script type="text/javascript" src="{$Think.const.APP_PATH}Public/Hotel/js/jquery-1.7.min.js"></script>
+ -->
 <script type="text/javascript" src="{$Think.const.APP_PATH}Public/Hotel/js/jquery.popup.js"></script>
 <script type="text/javascript">
     $(function() {
-
-		var btn_alert_check = $(".js__p_start");
 		
 		
-		btn_alert_check.click(function () {
-			var _this = $(this);
+		//查看详情
+		(function () {
+			var btn_alert_check = $(".js__p_start");
+			btn_alert_check.click(function () {
+				var _this = $(this);
+				
+				$.get("?s=/Hotel/Business/ajax_info",{id:_this.data('id')}, function(data){
+				 
+				  $(".p_content").html(data);
+				});			
+				
+			});
+			btn_alert_check.simplePopup();
 			
-			$.get("?s=/Hotel/Business/ajax_info",{id:_this.data('id')}, function(data){
-			 
-			  $(".p_content").html(data);
-			});			
-			
-		});
-		btn_alert_check.simplePopup();
+		})();
+		
 		
     });
 </script>
@@ -54,7 +62,9 @@
         <div class="autohei">
         	<p ><span class="red score">{$vo.hotel_pf}分</span></p>
             <P>{$vo.hotel_sf}{$vo.hotel_cs}{$vo.hotel_q}| {$vo.hotel_syq} | {$vo.hotel_dz}</P>
-            <P>电话: <span  class="phone">{$vo.hotel_tel}</span></P>
+            <P>电话: <span  class="phone">{$vo.hotel_tel}</span>
+				<span class="phone"><a target="_blank" href="?s=/Hotel/WxCode/index/hotel_id/{$vo.id}">查看二维码</a></span>
+			</P>
         </div>
     </div>
   <div class="hotle_list">

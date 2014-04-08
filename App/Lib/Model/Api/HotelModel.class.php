@@ -7,13 +7,27 @@ class HotelModel extends ApiBaseModel{
 
 	        if(empty($hotel_cs))$hotel_cs ='青岛';
 			$h = passport_encrypt($hotel_cs,'hotel');
-			$data = $this->field('h.id,h.hotel_name , h.hotel_syq, h.hotel_pf ,rs.spot_payment,rs.prepay')
-			->table($this->prefix.'hotel AS h')
+			$data =  
+			$this->table($this->prefix.'hotel AS h')
+			->field('h.id,h.hotel_name , h.hotel_syq, h.hotel_pf')
+			->where(array('h.hotel_cs'=>$hotel_cs,'h.is_del'=>0))
+			->order('h.sort DESC')
+			->select();
+			$datas = $this->table($this->prefix.'hotel AS h')
+			->field('h.id,h.hotel_name , h.hotel_syq, h.hotel_pf ,rs.spot_payment,rs.prepay')
 			->join($this->prefix.'hotel_room AS hr ON h.id=hr.hotel_id')
 			->join($this->prefix.'room_schedule AS rs on rs.hotel_room_id = hr.id')
 			->where(array('hotel_cs'=>$hotel_cs,'h.is_del'=>0,'rs.day'=>strtotime( date('Y-m-d',time())) )  )
 			->order('h.sort DESC')
 			->select();
+			$datas = regroupKey($datas,id);
+
+			foreach($data as $k=>$v){
+		
+				$data[$k]['spot_payment'] = $datas[$v['id']][0]['spot_payment'];
+				$data[$k]['prepay'] = $datas[$v['id']][0]['prepay'];
+			}
+
 			$arr = array();
             $arr[0] = array(
 						'Title'=>'酒店地图',
@@ -167,7 +181,17 @@ class HotelModel extends ApiBaseModel{
 	  
 	  }
 
-      
+      public function get_hotel_price($hotel_id){
+      	$data = $this
+			->field('h.id,h.hotel_name , h.hotel_syq, h.hotel_pf ,rs.spot_payment,rs.prepay')
+			->join($this->prefix.'hotel_room AS hr ON h.id=hr.hotel_id')
+			->join($this->prefix.'room_schedule AS rs on rs.hotel_room_id = hr.id')
+			->where(array('h.id'=>$hotel_id,'h.is_del'=>0,'rs.day'=>strtotime( date('Y-m-d',time())) )  )
+			->order('h.sort DESC')
+			->select();
+			echo $this->getLastSql();
+			return $data;
+      }
 
 
 }
