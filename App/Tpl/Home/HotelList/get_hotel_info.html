@@ -83,8 +83,10 @@ function submit_order(id,type){
 <div class="color_f" >
   <input type="hidden" value="{$html.user_code}" name="user_code" id="user_code" />
   <input type="hidden" value="{$html.list.id}" name="hotel_id" id="hotel_id" />
-  <div class="m_nav f34"><span class="left f18">
-  <a href="s=/Home/HotelList/index/hotel_cs/{$html.hotel_cs}/user_code/{$html.user_code}"> 更多酒店>></a></span>
+  <div class="m_nav f34">
+  <span class="left f34">
+  <a href="s=/Home/HotelList/index/hotel_cs/{$html.hotel_cs}/user_code/{$html.user_code}"> 更多酒店>></a>
+  </span>
     <h6 align="center">酒店详情</h6>
   </div>
   <div class="blank8"></div>
@@ -125,10 +127,10 @@ function submit_order(id,type){
   <div class="blank1"></div>
   <div class="m_boxbg1 zx6 autohei ">
     <div class="blank"></div>
-    <span class="left m_dot3 f24">入住： </span>
+    <span class="left m_dot3 f24">入住日期： </span>
     <input type="text"  clicktag="2_2" class="stclick inp3 left stclick1" value="" name="" id="checkinday" readonly onblur="get_date_price(this.value)" >
   </div>
-  <div class="m_boxbg1 zx6 autohei "> <span class="left f24 m_dot3">退房： </span>
+  <div class="m_boxbg1 zx6 autohei "> <span class="left f24 m_dot3">退房日期： </span>
     <input type="text" clicktag="2_3" class="stclick inp3 left stclick2" value="" name="" id="checkoutday" readonly>
     <div class="blank"></div>
   </div>
@@ -138,6 +140,7 @@ function submit_order(id,type){
   
     <ul>
      <volist name="html['roomtype']" id="vo" key='k' >
+     <if condition="($vo['prepay'] neq 0)" >
       <li>
         <div class="left plef"> 
         <span class="left detail2">
@@ -155,15 +158,17 @@ function submit_order(id,type){
           </div>
         </div>
         <div class="right p210"> 
-        <span class="zx7 f30  pr_15">￥{$vo.prepay}</span> 
+        <span class="zx7 f30  pr_15">￥{$vo.prepay}</span></br>
         <span>
         <a href="javascript:void(0)" class="btn_yd" onclick="submit_order({$vo.rid},2)" > 
         <img style="width:82px" src="{$Think.const.APP_PATH}Public/Home/images/yuding.png"> </a> 
         </span> 
         </div>
+        </if>
       </li>
    </volist>  
    <volist name="html['roomtype']" id="vo" key='k' >
+   <if condition="($vo['spot_payment'] neq 0)" >
       <li>
         <div class="left plef"> 
         <span class="left detail2">
@@ -189,6 +194,7 @@ function submit_order(id,type){
         </span> 
         </div>
       </li>
+      </if>
     </volist>
     </ul>
     

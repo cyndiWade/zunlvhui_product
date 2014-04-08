@@ -43,7 +43,7 @@ a:hover { text-decoration:underline; }
 .blank8 { height:0px; font-size:0; line-height:0; clear:both; overflow:hidden; }
 .blank1 { background:#131211; height:15px; font-size:0; line-height:0; clear:both; overflow:hidden; }
 .m_nav{ background:#f6cf44;height:62px; line-height:40px;overflow:hidden;zoom:1; width:100%;}
-.m_nav span.left{ display:inline; margin:0px 0px 0 30px; position:absolute;}
+.m_nav span.left{ display:inline; margin:8px; position:absolute;}
 .m_nav span.right a{ display:inline-block; padding:0 30px; background:#e0ab29;font-size:30px;height:40px;vertical-align:top;}
 .m_nav span.right a:hover{ text-decoration:none}
 .m_nav h6{font-size:30px;}
@@ -76,7 +76,7 @@ small{ font-size:20px;}
 .zx1,.zx1 a{ color:#92ccbf;}
 .zx2,.zx2 a{ color:#fff; }
 .zx3,.zx3 a{ color:#494949; }
-.zx4,.zx4 a{ color:#666; }
+.zx4,.zx4 a{ color:#fff; }
 .zx5,.zx5 a{ color:#fff;}
 .zx6,.zx6 a{ color:#b7b2ab;}
 .zx7,.zx7 a{ color:#f4d24b;}
