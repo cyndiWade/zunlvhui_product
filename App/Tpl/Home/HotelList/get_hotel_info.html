@@ -74,11 +74,14 @@ function submit_order(id,type){
 		
 		
 	}
+
+	
 	/*$(function(){
-		$(".m_boxbg1").each(function(){
+		$("body").each(function(){
 			$(this).click(function(){
 				//alert('a')
-				$(".Zebra_DatePicker").hide();
+				alert($(".Zebra_DatePicker"));
+				//$(".Zebra_DatePicker").hide();
 			});
 		});
 	});
@@ -135,7 +138,7 @@ function submit_order(id,type){
       <a href="?s=/Home/HotelList/map/hotel_id/{$html.list.id}/user_code/{$html.user_code}">地图</a>
       </span></li>
       <li style="border-bottom:none;"> 
-      <span class="left m_dot2 zx2 f24">{$html.list.hotel_kynf}开业</span> 
+      <span class="left m_dot2 zx2 f24">{$html.list.hotel_kynf} 年开业</span> 
       <span class="right m_dot4 zx7 f20 detail"> 
       <a href="javascript:;">详情</a></span> </li>
     </ul>
@@ -151,6 +154,11 @@ function submit_order(id,type){
     <div class="blank"></div>
   </div>
   <!-- 房型 -->
+  
+
+  <empty name="html['roomtype']">
+  尊敬的宾客，此房型已售空，给您带来的不便非常抱歉
+  <else />
   
   <div class="jdlist2" id="fangxing" >
   
@@ -215,6 +223,7 @@ function submit_order(id,type){
     </ul>
     
   </div>
+  </empty>
   <!-- 房型 -->
 </div>
 
