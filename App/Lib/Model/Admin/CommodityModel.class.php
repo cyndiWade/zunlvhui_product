@@ -1,7 +1,7 @@
 <?php
 
 /**
- * 商家表
+ * 产品表
  */
 class MerchantModel extends AdminBaseModel {
 	

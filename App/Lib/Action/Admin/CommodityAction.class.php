@@ -8,7 +8,8 @@ class CommodityAction extends AdminBaseAction {
 	
 	//初始化数据库连接
 	protected  $db = array(
-		'Commodity'=>'Commodity',		//语义表
+		'Commodity'=>'Commodity',		//产品表
+		'Merchant' => 'Merchant'
 	);
 	
 	private $Commodity_Status;
@@ -31,9 +32,10 @@ class CommodityAction extends AdminBaseAction {
 	
 	//语义列表
 	public function index () {		
-		$this->error('研发中');
+		//$this->error('研发中');
 		//连接数据库
 		$Commodity = $this->db['Commodity'];
+		$merchant_id = $this->_get('merchant_id');
 		
 // 		//所有数据列表
 // 		$list = $Commodity->seek_all_data();
@@ -51,6 +53,7 @@ class CommodityAction extends AdminBaseAction {
 		));
 		
 		$html['list'] = $list;
+		$html['merchant_id'] = $merchant_id;
 		$this->assign('html',$html);
 		$this->display();
 	}
@@ -58,10 +61,19 @@ class CommodityAction extends AdminBaseAction {
 	
 	public function edit () {
 		$act = $this->_get('act');						//操作类型
-		$Commodity = $this->db['Commodity'];
-		$Commodity_id = $this->_get('Commodity_id');
 		$this->Commodity_Type = C('Commodity_Type');
+		$merchant_id = $this->_get('merchant_id');		//商品店铺ID
+		$commodity_id = $this->_get('commodity_id');	//产品ID
 		
+		$Merchant = $this->db['Merchant'];
+		$Commodity = $this->db['Commodity'];
+		
+		
+		$con_info = $Merchant->seek_one_data(array('merchant_id'=>$merchant_id),'id,merchant_type');
+		if (empty($con_info)) $this->error('你编辑的数据不存在');
+		
+		$Merchant_Type = explode(',',$con_info['merchant_type']);
+	
 
 		if ($act == 'add') {								//添加
 			if ($this->isPost()) {
@@ -106,9 +118,9 @@ class CommodityAction extends AdminBaseAction {
 			$this->error('非法操作！');
 		}
 		
-		//语音类型
-		$html['Commodity_Type'] = $this->global_system->Commodity_Type;
-		$html['Commodity_Status'] = $this->Commodity_Status;
+		
+		
+		$html['Merchant_Type'] = $Merchant_Type;
 
 		parent::global_tpl_view( array(
 				'action_name'=>'编辑',
