@@ -53,13 +53,12 @@ function quxiao(id){
   <span class="left"> 
   <a href="javascript:history.back();">
   <img src="{$Think.const.APP_PATH}Public/Home/images/m_dot1.png"></a></span>
-    <h6 align="center">订单详情</h6>
+    <h6 align="center" style="margin:8px;">订单详情</h6>
   </div>
   <div class="autohei m_boxbg1">
     <span class="left f30 zx9">订单信息</span>
-    <div class="right zx2 f30">订单总额 
-    <span class="zx7">{$html.total_price}
-    </span>元 
+    <div class="right zx2 f30">订单总额 <span class="zx7">{$html.total_price}</span> 元
+
     </div>
   </div>
   <div class="autohei m_boxbg2 jd_info padding0">
@@ -96,9 +95,10 @@ function quxiao(id){
       <span class="right m_dot4 zx7 f20">
       <a href="index.php?s=/Home/HotelList/map/hotel_id/{$html.hotel_id}/user_code/{$html.user_code}">地图</a></span> 
       </li>
-      <li> <span class="left m_dot5 zx4 f24">{$html.hotel_tel}</span> 
-      <span class="right m_dot4 zx4 f20">
-      <a href="tel:{$html.hotel_tel}" >服务热线</a>
+
+      <li> <span class="left m_dot5 zx2 f24">{$html.hotel_tel}</span> 
+      <span class="right m_dot4 zx7 f20"><a href="tel:{$html.hotel_tel}">服务热线</a>
+
       </span> 
       </li>
     </ul>

@@ -41,11 +41,12 @@ class HotelOrderAction extends AdminBaseAction {
 		//连接数据库
 		$HotelOrder = $this->db['HotelOrder'];	
 		$order_list = $HotelOrder->seek_order_list($condition);
-
+        $PayType  = C('PayType');
 		if ($order_list == true) {
 			foreach ($order_list as $key=>$val) {
 				$order_list[$key]['order_explain'] = $this->order_status[$val['order_status']]['explain'];
 				$order_list[$key]['dispose_admin_explain'] = $this->dispose_status[$val['dispose_status']]['admin_explain'];
+				$order_list[$key]['paytype']  = $PayType[$val['order_type']]['explain'];
 				//订单状态是酒店无法处理，等待尊旅会协商处理的。
 				if ($val['order_status'] == $this->order_status[2]['num']) {
 					$order_list[$key]['dispose'] = true;

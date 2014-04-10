@@ -12,6 +12,7 @@
 <script type="text/javascript" src="{$Think.const.APP_PATH}Public/Home/js/zebra_datepicker.js" /></script>
 <script type="text/javascript" src="{$Think.const.APP_PATH}Public/Home/js/common1.js" /></script>
 <script type="text/javascript" src="{$Think.const.APP_PATH}Public/Home/js/swipe.js" /></script>
+<script type="text/javascript" src="{$Think.const.APP_PATH}Public/Home/My97DatePicker/WdatePicker.js" /></script>
 <!--移动端版本兼容 -->
 <script type="text/javascript">
 
@@ -74,11 +75,14 @@ function submit_order(id,type){
 		
 		
 	}
+
+	
 	/*$(function(){
-		$(".m_boxbg1").each(function(){
+		$("body").each(function(){
 			$(this).click(function(){
 				//alert('a')
-				$(".Zebra_DatePicker").hide();
+				alert($(".Zebra_DatePicker"));
+				//$(".Zebra_DatePicker").hide();
 			});
 		});
 	});
@@ -96,10 +100,12 @@ function submit_order(id,type){
 <div class="color_f" >
   <input type="hidden" value="{$html.user_code}" name="user_code" id="user_code" />
   <input type="hidden" value="{$html.list.id}" name="hotel_id" id="hotel_id" />
-  <div class="m_nav f34">
-  <span class="left f20">
-  <a href="?s=/Home/HotelList/index/hotel_cs/{$html.hotel_cs}/user_code/{$html.user_code}"> 更多酒店>></a></span>
-    <h6 align="center">酒店详情</h6>
+  <div class="m_nav">
+  <span class="left">
+  <a href="?s=/Home/HotelList/index/hotel_cs/{$html.hotel_cs}/user_code/{$html.user_code}"> <h6 >更多酒店>></h6></a>
+  </span>
+
+    <h6 align="center" style="margin :8px;">酒店详情</h6>
   </div>
   <div class="blank8"></div>
   <div class="autohei m_boxbg1">
@@ -133,30 +139,34 @@ function submit_order(id,type){
       <a href="?s=/Home/HotelList/map/hotel_id/{$html.list.id}/user_code/{$html.user_code}">地图</a>
       </span></li>
       <li style="border-bottom:none;"> 
-      <span class="left m_dot2 zx2 f24">{$html.list.hotel_kynf}开业</span> 
+      <span class="left m_dot2 zx2 f24">{$html.list.hotel_kynf} 年开业</span> 
       <span class="right m_dot4 zx7 f20 detail"> 
       <a href="javascript:;">详情</a></span> </li>
     </ul>
   </div>
   <div class="blank1"></div>
-  <div class="m_boxbg1 padding0 jd_info" >
-	  <div class="m_boxbg1 zx6 autohei ">
-	    <div class="blank"></div>
-	    <span class="left m_dot3 f24">入住日期： </span>
-	    <input type="text"  clicktag="2_2" class="stclick inp3 left stclick1" value="" name="" id="checkinday" readonly onblur="get_date_price(this.value)" >
-	  </div>
-	  <div class="m_boxbg1 zx6 autohei "> 
-	  <span class="left f24 m_dot3">退房日期： </span>
-	    <input type="text" clicktag="2_3" class="stclick inp3 left stclick2" value="" name="" id="checkoutday" readonly>
-	    <div class="blank"></div>
-	  </div>
+  <div class="m_boxbg1 zx6 autohei ">
+    <div class="blank"></div>
+    <span class="left m_dot3 f24">入住日期： </span>
+    
+    <input type="text" class="stclick inp3 left stclick2"  onFocus="WdatePicker({$html.date})" value="" name="" id="checkinday" readonly onblur="get_date_price(this.value)" >
+  </div>
+  <div class="m_boxbg1 zx6 autohei "> <span class="left f24 m_dot3">退房日期： </span>
+    <input onFocus="WdatePicker({$html.date})" type="text" clicktag="2_3" class="stclick inp3 left stclick2" value="" name="" id="checkoutday" readonly>
+    <div class="blank"></div>
   </div>
   <!-- 房型 -->
+  
+
+  <empty name="html['roomtype']">
+  尊敬的宾客，此房型已售空，给您带来的不便非常抱歉
+  <else />
   
   <div class="jdlist2" id="fangxing" >
   
     <ul>
      <volist name="html['roomtype']" id="vo" key='k' >
+     <if condition="($vo['prepay'] neq 0)" >
       <li>
         <div class="left plef"> 
         <span class="left detail2">
@@ -174,15 +184,17 @@ function submit_order(id,type){
           </div>
         </div>
         <div class="right p210"> 
-        <span class="zx7 f30  pr_15">￥{$vo.prepay}</span> 
+        <span class="zx7 f30  pr_15">￥{$vo.prepay}</span></br>
         <span>
         <a href="javascript:void(0)" class="btn_yd" onclick="submit_order({$vo.rid},2)" > 
         <img style="width:82px" src="{$Think.const.APP_PATH}Public/Home/images/yuding.png"> </a> 
         </span> 
         </div>
+        </if>
       </li>
    </volist>  
    <volist name="html['roomtype']" id="vo" key='k' >
+   <if condition="($vo['spot_payment'] neq 0)" >
       <li>
         <div class="left plef"> 
         <span class="left detail2">
@@ -208,10 +220,12 @@ function submit_order(id,type){
         </span> 
         </div>
       </li>
+      </if>
     </volist>
     </ul>
     
   </div>
+  </empty>
   <!-- 房型 -->
 </div>
 

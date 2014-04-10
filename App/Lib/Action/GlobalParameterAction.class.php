@@ -35,7 +35,7 @@ class GlobalParameterAction extends Action {
 		$this->order_status = C('ORDER_STATUS');
 		$this->dispose_status = C('DISPOSE_STATUS');
 		$this->global_system->siri_type = C('SiriType');		//语言类型
-		$this->global_system->Merchant_Type =   C('Merchant_Type');
+		$this->global_system->Merchant_Type = C('Merchant_Type');
 	}
 
 	
