@@ -65,7 +65,7 @@ class HotelListAction extends HomeBaseAction{
 	  	 $user_code = $this->_get('user_code');
 	  	 
 	     $list = $Hotel->get_one_hotel(array('id'=>$hotel_id));
-	     $data = $Hotel->get_hotel_room($hotel_id,2); // 获得房型
+	     $data = $HotelRoom->get_hotel_room($hotel_id,2); // 获得房型
 	   
 	     if($list == true){
 	     	  
@@ -78,7 +78,8 @@ class HotelListAction extends HomeBaseAction{
 		  	 'user_code'=>$user_code,
 			 'hotel_cs'=> passport_encrypt($list['hotel_cs'],'hotel')
 	  	 );
-
+	
+	  	//echo '<pre>';print_R($data);echo '</pre>';exit;
 		 
 	     $this->assign('html',$html);
 	  	 $this->display();
