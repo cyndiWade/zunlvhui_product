@@ -186,14 +186,19 @@ var Calendar = function () {
 					var event_data = [];			
 					if (result.status == 0) {
 						//现付价格
-						for (var obj in result.data) {	
+						for (var obj in result.data) {
+
+							var a = result.data[obj].is_cut_off == 1 ? App.getLayoutColorCode('red') : App.getLayoutColorCode('green')
+							//var a = App.getLayoutColorCode('green');
+							var b = result.data[obj].is_cut_off == 1 ? App.getLayoutColorCode('red') : App.getLayoutColorCode('red');
+							var c = result.data[obj].is_cut_off == 1 ? App.getLayoutColorCode('red') : App.getLayoutColorCode('blue');
 							event_data.push({
 								id : result.data[obj].id,
 			                	title :'数量:' + result.data[obj].room_num,
 			                	start: result.data[obj].day,
 								end : result.data[obj].day,		
 								className:'hand',
-								backgroundColor:App.getLayoutColorCode('green'),
+								backgroundColor:a,
 								allDay: true
 			                });
 							event_data.push({
@@ -202,7 +207,7 @@ var Calendar = function () {
 			                	start: result.data[obj].day,
 								end : result.data[obj].day,		
 								className:'hand',
-								backgroundColor:App.getLayoutColorCode('red'),
+								backgroundColor:b,
 								allDay: true
 			                });
 							event_data.push({
@@ -211,6 +216,7 @@ var Calendar = function () {
 			                	start: result.data[obj].day,
 								end : result.data[obj].day,
 								className:'hand',
+								backgroundColor:c,
 								allDay: true
 			                });
 						}					
