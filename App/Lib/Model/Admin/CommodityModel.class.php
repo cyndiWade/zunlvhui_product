@@ -10,6 +10,7 @@ class CommodityModel extends AdminBaseModel {
 		$con = array('is_del'=>0);
 		array_add_to($con,$condition);
 		$data = $this->where($con)->select();
+		parent::set_all_time($data,array('indate_start','indate_over'),'Y-m-d');
 		return $data;
 	}
 	

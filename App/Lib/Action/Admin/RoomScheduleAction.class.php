@@ -119,6 +119,7 @@ class RoomScheduleAction extends AdminBaseAction {
 				parent::callback(C('STATUS_NOT_DATA'),'请求客房不存在！');
 			}	
 			$data_list = $RoomSchedule->Seek_All_Schedule($hotel_room_id);
+			
 			$data_list ?  parent::callback(C('STATUS_SUCCESS'),'获取成功！',$data_list) : parent::callback(C('STATUS_NOT_DATA'),'暂无数据！') ;
 		} else {
 			parent::callback(C('STATUS_ACCESS'),'非法访问！');

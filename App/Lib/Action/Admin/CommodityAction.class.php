@@ -9,7 +9,8 @@ class CommodityAction extends AdminBaseAction {
 	//初始化数据库连接
 	protected  $db = array(
 		'Commodity'=>'Commodity',		//产品表
-		'Merchant' => 'Merchant'
+		'Merchant' => 'Merchant',
+		'CommoditySpecial' => 'CommoditySpecial'	//产品特价表
 	);
 	
 	private $Commodity_Status;
@@ -30,7 +31,7 @@ class CommodityAction extends AdminBaseAction {
 	
 	
 	
-	//语义列表
+	//数据列表
 	public function index () {		
 		//$this->error('研发中');
 		//连接数据库
@@ -41,14 +42,17 @@ class CommodityAction extends AdminBaseAction {
 		$con_info = $Merchant->seek_one_data(array('id'=>$merchant_id),'id,merchant_type');
 		if (empty($con_info)) $this->error('你编辑的数据不存在');
 		
-// 		//所有数据列表
-// 		$list = $Commodity->seek_all_data();
+		$commodity_list = $Commodity->seek_all_data(array('merchant_id'=>$merchant_id));
+		if ($commodity_list == true) {
+			
+			foreach ($commodity_list as $key=>$val) {
+				$commodity_list[$key]['commodity_type'] = $this->global_system->Merchant_Type[$val['commodity_type']]['explain'];
+				 
+				$val['strategy'] ? $strategy_explain = '普通策略' : $strategy_explain = '特价策略';
+				$commodity_list[$key]['strategy'] = $strategy_explain;
+			}
+		}
 
-// 		if ($list == true) {
-// 			foreach ($list as $key=>$val) {
-// 				$list[$key]['status'] = $this->Commodity_Status[$val['status']]['explain'];
-// 			}
-// 		}
 
 		parent::global_tpl_view( array(
 			'action_name'=>'产品首页',
@@ -56,7 +60,7 @@ class CommodityAction extends AdminBaseAction {
 			'add_name' =>'添加产品',
 		));
 		
-		$html['list'] = $list;
+		$html['list'] = $commodity_list;
 		$html['merchant_id'] = $merchant_id;
 		$this->assign('html',$html);
 		$this->display();
@@ -71,13 +75,13 @@ class CommodityAction extends AdminBaseAction {
 		
 		$Merchant = $this->db['Merchant'];
 		$Commodity = $this->db['Commodity'];
+		$CommoditySpecial = $this->db['CommoditySpecial'];
 		
+		//数据验证是否存在
 		$con_info = $Merchant->seek_one_data(array('id'=>$merchant_id),'id,	merchant_type');
 		if (empty($con_info)) $this->error('你编辑的数据不存在');
-		
-		//$Merchant_Type = explode(',',$con_info['merchant_type']);
-		
-		
+
+		//对商家以后的产品类型进行编辑
 		$tmp_merchant_type = explode(',',$con_info['merchant_type']);
 		$Merchant_Type = array();
 		foreach ($tmp_merchant_type AS $v) {
@@ -86,29 +90,45 @@ class CommodityAction extends AdminBaseAction {
 				//$str .= $this->global_system->Merchant_Type[$v]['explain'].',';
 			}
 		}
-		
-		
-		
+
+		//添加操作		
 		if ($act == 'add') {								//添加
 			if ($this->isPost()) {
+	
 				$Commodity->create();
 				$Commodity->merchant_id = $merchant_id;
-				$id = $Commodity->add_one_data();
-				$id ? $this->success('添加成功！') : $this->error('添加失败请重新尝试！');
+				$commodity_add_id = $Commodity->add_one_data();
+				if ($commodity_add_id){
+					$strategy = $this->_post('strategy');	//特价类型
+				
+					if ($strategy == 1) {
+		
+						$CommoditySpecial->create();
+						$CommoditySpecial->commodity_id = $commodity_add_id;
+						$CommoditySpecial->add() ? $this->success('添加成功！') : $this->error('添加失败请重新尝试！');
+					}
+					$this->success('添加成功！');
+
+				} else {
+					$this->error('添加失败请重新尝试！');
+				}
+					
+				
 				exit;
 			}
 			//表单标题
-			$title_name = '添加商铺';
+			$title_name = '添加产品';
 		
 		} else if ($act == 'update') {			//修改
 			if ($this->isPost()) {
 				$Commodity->create();
-				$Commodity->save_one_Commodity($Commodity_id) ? $this->success('修改成功！') : $this->error('没有做出任何修改！');
+				$Commodity->save_one_Commodity($commodity_id) ? $this->success('修改成功！') : $this->error('没有做出任何修改！');
 				exit;
 			}
 			//查找
-			$info = $Commodity->seek_one_data(array('id'=>$Commodity_id));
-
+			$info = $Commodity->seek_one_data(array('id'=>$commodity_id));
+dump($info);
+exit;
 			if (empty($info)) $this->error('您编辑的数据不存在！');
 			
 			$Commodity_type = explode(',',$info['Commodity_type']);
@@ -123,7 +143,7 @@ class CommodityAction extends AdminBaseAction {
 			$html = $info;
 		
 		} else if ($act == 'delete') {			//删除
-			$Commodity->del_one_data($Commodity_id) ? $this->success('删除成功！') : $this->error('删除失败，请稍后重试！');
+			$Commodity->del_one_data($commodity_id) ? $this->success('删除成功！') : $this->error('删除失败，请稍后重试！');
 			exit;
 		} else {
 			$this->error('非法操作！');

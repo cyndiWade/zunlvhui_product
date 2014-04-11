@@ -1,15 +1,15 @@
 var FormValidation = function () {
 
 	var strategy = $('.strategy');
-	var special = $('.special');
-	strategy.click(function () {
-		if (this.value == 0) {
-			special.css('display','none');
-		} else {
-			special.css('display','block');
-		}
-		
-	});
+//	var special = $('.special');
+//	strategy.click(function () {
+//		if (this.value == 0) {
+//			special.css('display','none');
+//		} else {
+//			special.css('display','block');
+//		}
+//		
+//	});
 	
 	
     return {
