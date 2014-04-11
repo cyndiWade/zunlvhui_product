@@ -185,10 +185,20 @@ function submit_order(id,type){
         </div>
         <div class="right p210"> 
         <span class="zx7 f30  pr_15">￥{$vo.prepay}</span></br>
+        <if condition="($vo['is_cut_off'] neq 0)" >
+       
         <span>
         <a href="javascript:void(0)" class="btn_yd" onclick="submit_order({$vo.rid},2)" > 
-        <img style="width:82px" src="{$Think.const.APP_PATH}Public/Home/images/yuding.png"> </a> 
+        <img style="width:82px" src="{$Think.const.APP_PATH}Public/Home/images/yuding.png"> 
+        </a> 
         </span> 
+        <else/>
+        <span>
+       
+        <img style="width:82px" src="{$Think.const.APP_PATH}Public/Home/images/noyuding.png"> 
+        
+        </span> 
+        </if>
         </div>
         </if>
       </li>
@@ -213,11 +223,21 @@ function submit_order(id,type){
         </div>
         <div class="right p210"> 
         <span class="zx7 f30  pr_15">￥{$vo.spot_payment}</span><br />
-        <span style="font-size:26px; color:#F4D24B;">预付</span> 
+        <span style="font-size:26px; color:#F4D24B;">预付</span>
+        <if condition="($vo['is_cut_off'] neq 0)" >
+         
         <span>
         <a href="javascript:void(0)" class="btn_yd" onclick="submit_order({$vo.rid},1)" > 
         <img style="width:82px" src="{$Think.const.APP_PATH}Public/Home/images/yuding.png"> </a> 
         </span> 
+        
+        <else/>
+        
+        <span>      
+        <img style="width:82px" src="{$Think.const.APP_PATH}Public/Home/images/noyuding.png"> 
+        </span> 
+        
+        </if>
         </div>
       </li>
       </if>

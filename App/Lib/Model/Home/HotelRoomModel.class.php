@@ -57,16 +57,17 @@ class HotelRoomModel extends HomeBaseModel {
 	
 	  
 	  //获得酒店的房型
-	  public function get_hotel_room($hotel_id=151){
+	  public function get_hotel_room($hotel_id=151,$type=1){
 
 	  	$id = $this->room_putaway();  //下架的房型的id
+	  	
 	  	$where = array(
 		  	'r.hotel_id'=>$hotel_id, //酒店的id
 		  	'r.is_del'=>0,      //房型是否删除
 		  	's.is_del'=>0,       //房型的价格是否删除
 	  	    's.room_num' =>array('gt',0), //房间数量大于0
 	  	    's.day'=>strtotime( date( 'Y-m-d',time() ) ), // 今天
-	  	    'r.id'=>array('not in',$id)
+	  	    //'r.id'=>array('not in',$id)
 	  	);
 	  	
 	  	$data = $this->field('r.id as rid ,r.title,r.info,s.spot_payment,s.prepay,s.room_num,s.id as sid') 
@@ -74,14 +75,16 @@ class HotelRoomModel extends HomeBaseModel {
 	  	->join($this->prefix.'room_schedule AS s on s.hotel_room_id = r.id')
 	  	//->join($this->prefix.'room_img AS i on i.hotel_room_id = s.id')
 	  	->where($where)->select();
-	  	
+	
 	  	foreach($data as $key=>$val){
-	  		
-	  		$data[$key]['url'] = $this->get_room_img($val['rid']);
+	  		if(in_array($val['rid'],$id)){ //判断是否下架
+	  		    $data[$key]['is_cut_off'] = 0;
+	  		}else{
+	  			$data[$key]['is_cut_off'] = $val['rid'];
+	  		}
+	  		$data[$key]['url'] = $this->get_room_img($val['rid'],$type);
 	  	}
-	  	/*echo '<pre>';print_R($data);echo '</pre>';
-	  	echo $this->getLastSql();
-	  	exit;*/
+
 	  	return $data;
 	  	
 	  }

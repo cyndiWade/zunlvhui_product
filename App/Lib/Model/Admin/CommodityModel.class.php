@@ -3,7 +3,7 @@
 /**
  * 产品表
  */
-class MerchantModel extends AdminBaseModel {
+class CommodityModel extends AdminBaseModel {
 	
 	//获取所有数据
 	public function seek_all_data ($condition) {
@@ -11,6 +11,14 @@ class MerchantModel extends AdminBaseModel {
 		array_add_to($con,$condition);
 		$data = $this->where($con)->select();
 		return $data;
+	}
+	
+	//添加一条数据
+	public function add_one_data () {
+		$this->indate_start	 = strtotime($this->indate_start);
+		$this->indate_over = strtotime($this->indate_over);
+		return $this->add();
+	
 	}
 	
 	

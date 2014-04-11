@@ -296,7 +296,7 @@ $custom= array (
 						'explain' => '住',
 				),
 				2 => array(
-						'num' => 3,
+						'num' => 2,
 						'explain' => '游',
 				),
 				3 => array(
