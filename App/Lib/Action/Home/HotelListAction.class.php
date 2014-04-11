@@ -70,16 +70,18 @@ class HotelListAction extends HomeBaseAction{
 	     if($list == true){
 	     	  
 			$list['img']         = $Hotel->get_img($list['id'],4);
+			$daytime = $list['cut_off_day']==0 ? time() : strtotime($list['cut_off_day'].' day');
 	     }
+
 	  	 $html = array(
-	  	     'date'=>"{minDate:'".date('Y-m-d',time())."'}",
+	  	     'date'=>"{minDate:'".date('Y-m-d',$daytime)."'}",
 		  	 'list'=>$list,
 	  	     'roomtype' =>$data,
 		  	 'user_code'=>$user_code,
 			 'hotel_cs'=> passport_encrypt($list['hotel_cs'],'hotel')
 	  	 );
 	
-	  	//echo '<pre>';print_R($data);echo '</pre>';exit;
+	  	//echo '<pre>';print_R($html);echo '</pre>';exit;
 		 
 	     $this->assign('html',$html);
 	  	 $this->display();
