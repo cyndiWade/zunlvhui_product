@@ -35,7 +35,11 @@ class CommodityAction extends AdminBaseAction {
 		//$this->error('研发中');
 		//连接数据库
 		$Commodity = $this->db['Commodity'];
+		$Merchant = $this->db['Merchant'];
 		$merchant_id = $this->_get('merchant_id');
+
+		$con_info = $Merchant->seek_one_data(array('id'=>$merchant_id),'id,merchant_type');
+		if (empty($con_info)) $this->error('你编辑的数据不存在');
 		
 // 		//所有数据列表
 // 		$list = $Commodity->seek_all_data();
@@ -68,22 +72,29 @@ class CommodityAction extends AdminBaseAction {
 		$Merchant = $this->db['Merchant'];
 		$Commodity = $this->db['Commodity'];
 		
-		
-		$con_info = $Merchant->seek_one_data(array('merchant_id'=>$merchant_id),'id,merchant_type');
+		$con_info = $Merchant->seek_one_data(array('id'=>$merchant_id),'id,	merchant_type');
 		if (empty($con_info)) $this->error('你编辑的数据不存在');
 		
-		$Merchant_Type = explode(',',$con_info['merchant_type']);
-	
-
+		//$Merchant_Type = explode(',',$con_info['merchant_type']);
+		
+		
+		$tmp_merchant_type = explode(',',$con_info['merchant_type']);
+		$Merchant_Type = array();
+		foreach ($tmp_merchant_type AS $v) {
+			if (!empty($this->global_system->Merchant_Type[$v]['num'])) {
+				array_push($Merchant_Type,$this->global_system->Merchant_Type[$v]);
+				//$str .= $this->global_system->Merchant_Type[$v]['explain'].',';
+			}
+		}
+		
+		
+		
 		if ($act == 'add') {								//添加
 			if ($this->isPost()) {
-				//组合商家类型
-				$Commodity_type = $this->_post('Commodity_type');
-				$Commodity_type = implode(',',$Commodity_type);
 				$Commodity->create();
-				$Commodity->Commodity_type = $Commodity_type;
-				$id = $Commodity->add();
-				$id ? $this->success('添加成功！',U('Admin/Commodity/index')) : $this->error('添加失败请重新尝试！');
+				$Commodity->merchant_id = $merchant_id;
+				$id = $Commodity->add_one_data();
+				$id ? $this->success('添加成功！') : $this->error('添加失败请重新尝试！');
 				exit;
 			}
 			//表单标题
@@ -119,9 +130,7 @@ class CommodityAction extends AdminBaseAction {
 		}
 		
 		
-		
 		$html['Merchant_Type'] = $Merchant_Type;
-
 		parent::global_tpl_view( array(
 				'action_name'=>'编辑',
 				'title_name'=>$title_name,
