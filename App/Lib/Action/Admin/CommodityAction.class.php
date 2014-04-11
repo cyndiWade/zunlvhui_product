@@ -48,7 +48,7 @@ class CommodityAction extends AdminBaseAction {
 			foreach ($commodity_list as $key=>$val) {
 				$commodity_list[$key]['commodity_type'] = $this->global_system->Merchant_Type[$val['commodity_type']]['explain'];
 				 
-				$val['strategy'] ? $strategy_explain = '普通策略' : $strategy_explain = '特价策略';
+				$val['strategy'] == 0 ? $strategy_explain = '普通策略' : $strategy_explain = '特价策略';
 				$commodity_list[$key]['strategy'] = $strategy_explain;
 			}
 		}
@@ -120,28 +120,37 @@ class CommodityAction extends AdminBaseAction {
 			$title_name = '添加产品';
 		
 		} else if ($act == 'update') {			//修改
+			
+			//特价政策数据
+			$special_info = $CommoditySpecial->get_last_one_data($commodity_id);
+			
 			if ($this->isPost()) {
+				//修改商品数据
 				$Commodity->create();
-				$Commodity->save_one_Commodity($commodity_id) ? $this->success('修改成功！') : $this->error('没有做出任何修改！');
+				$Commodity->save_one_Commodity($commodity_id);
+				
+				//修改特价数据
+				$strategy = $this->_post('strategy');	//特价类型
+				if ($strategy == 1) {
+					//get_last_one_data
+					$CommoditySpecial->create();
+					$CommoditySpecial->save_one_commodity_special($special_info['id']);
+				}
+				
+				$this->success('修改成功！');
 				exit;
 			}
 			//查找
 			$info = $Commodity->seek_one_data(array('id'=>$commodity_id));
-dump($info);
-exit;
 			if (empty($info)) $this->error('您编辑的数据不存在！');
 			
-			$Commodity_type = explode(',',$info['Commodity_type']);
-
-			foreach ($this->global_system->Commodity_Type AS $key=>$val) {
-				if (in_array($val['explain'],$Commodity_type)) {
-					$this->global_system->Commodity_Type[$key]['checked'] = 'checked="checked"';
-				}
-			}
 			
-			$title_name = $info['name'].'---编辑';
-			$html = $info;
 		
+			$html = $info;
+			$html['special_info'] = $special_info;
+
+			$title_name = $info['name'].'---编辑';
+			
 		} else if ($act == 'delete') {			//删除
 			$Commodity->del_one_data($commodity_id) ? $this->success('删除成功！') : $this->error('删除失败，请稍后重试！');
 			exit;
