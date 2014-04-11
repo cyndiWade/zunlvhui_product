@@ -34,7 +34,7 @@ class SpmerchantAction extends AdminBaseAction {
 
 		//连接数据库
 		$Merchant = $this->db['Spmerchant'];
-		
+		$this->Merchant_Type = C('Merchant_Type');
 		//所有数据列表
 		$list = $Merchant->seek_all_data();
 
@@ -59,7 +59,7 @@ class SpmerchantAction extends AdminBaseAction {
 			'action_name'=>'商家首页',
 			'title_name'=>'所有商家',
 		));
-		
+		$html['Merchant_Type'] = $this->global_system->Merchant_Type;
 		$html['list'] = $list;
 		$this->assign('html',$html);
 		$this->display();
