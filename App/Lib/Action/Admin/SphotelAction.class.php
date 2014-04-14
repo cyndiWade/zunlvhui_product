@@ -188,6 +188,7 @@ class SphotelAction extends AdminBaseAction {
 		
 		//获取酒店图片数据
 		$photo_list = $HotelImg->get_hotel_images(array('hotel_id'=>$hotel_id),'id,type,url');
+		//echo '<pre>';print_R($photo_list);echo '</pre>';
 		if (!empty($photo_list)) {
 			parent::public_file_dir($photo_list, array('url'), 'images/');		//组合访问地址
 			$photo_type_list = regroupKey($photo_list,'type');						//按照图片类似分类
