@@ -8,9 +8,9 @@ class SphotelRoomAction extends AdminBaseAction {
 	
 	//初始化数据库连接
 	protected  $db = array(
-		'Hotel'=>'Hotel',
-		'HotelRoom' => 'HotelRoom',
-		'RoomImg'	=> 'RoomImg'
+		'Sphotel'=>'Sphotel',
+		'SphotelRoom' => 'SphotelRoom',
+		'SproomImg'	=> 'SproomImg'
 	);
 	
 	
@@ -47,8 +47,8 @@ class SphotelRoomAction extends AdminBaseAction {
 		if (empty($hotel_id)) $this->error('酒店不存在！');
 		
 		//连接数据库表
-		$HotelRoom = $this->db['HotelRoom'];		//酒店房型表
-		$Hotel = $this->db['Hotel'];				//酒店表
+		$HotelRoom = $this->db['SphotelRoom'];		//酒店房型表
+		$Hotel = $this->db['Sphotel'];				//酒店表
 		
 		//查询酒店
 		$hotel_info = $Hotel->get_one_hotel(array('id'=>$hotel_id),'hotel_name');
@@ -78,8 +78,8 @@ class SphotelRoomAction extends AdminBaseAction {
 		$hotel_room_id = $this->_get('hotel_room_id');		//酒店房型ID
 		
 		//连接数据库
-		$Hotel = $this->db['Hotel'];						//酒店表
-		$HotelRoom = $this->db['HotelRoom'];		//酒店房型表
+		$Hotel = $this->db['Sphotel'];						//酒店表
+		$HotelRoom = $this->db['SphotelRoom'];		//酒店房型表
 		
 		
 		if ($act == 'add') {								//添加
@@ -129,8 +129,8 @@ class SphotelRoomAction extends AdminBaseAction {
 	//酒店图片编辑
 	public function room_img () {
 		$hotel_room_id = $this->_get('hotel_room_id');
-		$HotelRoom = $this->db['HotelRoom'];	//房型表
-		$RoomImg = $this->db['RoomImg'];		//房型图片表		
+		$HotelRoom = $this->db['SphotelRoom'];	//房型表
+		$RoomImg = $this->db['SproomImg'];		//房型图片表		
 			
 		//检测房型
 		if (empty($hotel_room_id)) $this->error('此房型不存在！');
@@ -170,7 +170,7 @@ class SphotelRoomAction extends AdminBaseAction {
 			/* 上传文件目录 */
 			$upload_dir = C('UPLOAD_DIR');
 			$dir = $upload_dir['web_dir'].$upload_dir['image'];		//图片文件保存地址
-			$RoomImg = $this->db['RoomImg'];		//酒店图片表
+			$RoomImg = $this->db['SproomImg'];		//酒店图片表
 	
 			/* 执行上传 */
 			$file = $_FILES['photo_files'];					//上传的文件
@@ -218,7 +218,7 @@ class SphotelRoomAction extends AdminBaseAction {
 	public function ajax_photo_remove () {
 		if ($this->isPost()) {
 			$id = $this->_post('id');
-			$RoomImg = $this->db['RoomImg'];		//酒店图片表
+			$RoomImg = $this->db['SproomImg'];		//酒店图片表
 			$RoomImg->del_one_image($id) ? parent::callback(C('STATUS_SUCCESS'),'删除成功') : parent::callback(C('STATUS_UPDATE_DATA'),'删除失败') ;
 		} else {
 			parent::callback(C('STATUS_ACCESS'),'非法访问！');

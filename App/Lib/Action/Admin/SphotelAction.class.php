@@ -219,7 +219,7 @@ class SphotelAction extends AdminBaseAction {
 			/* 上传文件目录 */
 			$upload_dir = C('UPLOAD_DIR');
 			$dir = $upload_dir['web_dir'].$upload_dir['image'];		//图片文件保存地址
-			$HotelImg = $this->db['HotelImg'];		//酒店图片表
+			$HotelImg = $this->db['SphotelImg'];		//酒店图片表
 	
 			/* 执行上传 */
 			$file = $_FILES['photo_files'];					//上传的文件
@@ -267,7 +267,7 @@ class SphotelAction extends AdminBaseAction {
 	public function ajax_photo_remove () {
 		if ($this->isPost()) {
 			$id = $this->_post('id');
-			$HotelImg = $this->db['HotelImg'];		//酒店图片表
+			$HotelImg = $this->db['SphotelImg'];		//酒店图片表
 			$HotelImg->del_one_image($id) ? parent::callback(C('STATUS_SUCCESS'),'删除成功') : parent::callback(C('STATUS_UPDATE_DATA'),'删除失败') ;
 		} else {
 			parent::callback(C('STATUS_ACCESS'),'非法访问！');
@@ -277,7 +277,7 @@ class SphotelAction extends AdminBaseAction {
 	
 	//显示酒店，供分配二维码时使用
 	public function show_hotel_list () {
-		$Hotel = $this->db['Hotel'];
+		$Hotel = $this->db['Sphotel'];
 		
 		$html['list'] = $Hotel->field('id,hotel_name,hotel_sf,hotel_cs,hotel_q,hotel_xj,hotel_pf,hotel_syq,hotel_dz,hotel_tel')->where(array('is_del'=>0))->select();
 		
