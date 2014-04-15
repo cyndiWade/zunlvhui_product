@@ -66,7 +66,7 @@ function submit_order(){
 		   checkinday :checkinday,
 		   checkoutday : checkoutday
    }
-   var result = ajax_post_setup('?s=/Home/HotelList/room_num_enough',$data);
+   var result = ajax_post_setup('?s=/Home/SphotelList/room_num_enough',$data);
    if(result.status != 0 ){
 
       alert(result.msg+result.data);
@@ -93,7 +93,7 @@ function changePrice(type){
 		   room_id     : room_id
 		   
   };
-  var result = ajax_post_setup('?s=/Home/HotelList/update_price',$data);
+  var result = ajax_post_setup('?s=/Home/SphotelList/update_price',$data);
 
   if(result.status ==0 ){
        document.getElementById('order_total').innerHTML ='订单总额：'+result.data.total_price+'元';
@@ -112,7 +112,7 @@ function changePrice(type){
 <!--fly_css-->
 
 <div >
-<form name="form" id="form" action="index.php?s=/Home/HotelList/done_order" method="post" onsubmit="return submit_order()" />
+<form name="form" id="form" action="index.php?s=/Home/SphotelList/done_order" method="post" onsubmit="return submit_order()" />
   <div class="m_nav f34">
   <span class="left">
   <a href="javascript:history.back();">
