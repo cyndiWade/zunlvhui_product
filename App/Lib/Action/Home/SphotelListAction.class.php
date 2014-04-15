@@ -4,10 +4,10 @@ class SphotelListAction extends HomeBaseAction{
      
     //初始化数据库连接
 	 protected  $db = array(
-		'Hotel'        => 'Hotel',
-	    'HotelRoom'    => 'HotelRoom',
-	    'RoomSchedule' => 'RoomSchedule',
-        'HotelOrder'   => 'HotelOrder',
+		'Sphotel'        => 'Sphotel',
+	    'SphotelRoom'    => 'SphotelRoom',
+	    'SproomSchedule' => 'SproomSchedule',
+        'SphotelOrder'   => 'SphotelOrder',
 	    'UsersHotel'   => 'UsersHotel',
 		'Coupon'       => 'Coupon',
 		'WxUser'       => 'WxUser',
@@ -153,7 +153,7 @@ class SphotelListAction extends HomeBaseAction{
 	  	      'user_code'=>$user_code
 	  	  );
 
-		  $lists = $Hotel->get_price(279);
+		  //$lists = $Hotel->get_price(279);
 	  	  //echo '<pre>';print_R($html);echo '</pre>';exit;
 	  	  $this->assign('html',$html);
 	  	  $this->display();
@@ -239,7 +239,7 @@ class SphotelListAction extends HomeBaseAction{
 	          'is_del'=>0      
 	      );
 	      
-	      $HotelOrder = $this->db['HotelOrder'];
+	      $HotelOrder = $this->db['SphotelOrder'];
 	      $lastid = $HotelOrder->done_add($data);
 	      
 	      $where = array(
@@ -254,7 +254,7 @@ class SphotelListAction extends HomeBaseAction{
 	      
 	  	  if(!empty($lastid)){
 
-	  	  	  header("location:index.php?s=/Home/HotelList/order_info/order_id/$lastid/showwxpaytitle/1");
+	  	  	  header("location:?s=/Home/SphotelList/order_info/order_id/$lastid/showwxpaytitle/1");
 	  	  }
 	  }
 	  
@@ -264,7 +264,7 @@ class SphotelListAction extends HomeBaseAction{
 	  	$PAY_TYPE    = C('PAY_TYPE');
 	  	$IS_PAY      = C('IS_PAY');
 	  	$order_id = $this->_get('order_id');
-	  	$HotelOrder = $this->db['HotelOrder'];
+	  	$HotelOrder = $this->db['SphotelOrder'];
 	  	$list = $HotelOrder->order_info(array('o.id'=>$order_id));
 	  	$list['order_id'] = $order_id;
 	  	$list['in_date'] = date('Y-m-d',$list['in_date']);
@@ -359,7 +359,7 @@ class SphotelListAction extends HomeBaseAction{
 	  public function quxiao_dingdan(){
 	  
 	        $order_id   =  $this->_post('order_id');
-	        $HotelOrder = $this->db['HotelOrder'];
+	        $HotelOrder = $this->db['SphotelOrder'];
 	        $OrderLog   = $this->db['OrderLog'];
 	        if($order_id){
 			  $mes = $HotelOrder->quxiao_dingdan($order_id);
@@ -441,14 +441,5 @@ class SphotelListAction extends HomeBaseAction{
 	  	}
  
 	  }
-	  public function test(){
-	  	$RoomSchedule = $this->db['RoomSchedule'];
-	  	$data = $RoomSchedule->get_hotel(661);
-	    echo '<pre>';print_r($data);echo '</pre>';  
-	      exit;
-	      
-	  }
-	  
-
 
 }
