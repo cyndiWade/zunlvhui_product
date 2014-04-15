@@ -8,6 +8,7 @@ class WeixinAction extends AppBaseAction{
     //初始化数据库连接
 	 protected  $db = array(
 		'Hotel'        => 'Hotel', //酒店
+	    'Sphotel'      => 'Sphotel', //每日特惠酒店
 	    'HotelRoom'    => 'HotelRoom',  //房型
 	    'RoomSchedule' => 'RoomSchedule', //房型的价格
         'HotelOrder'   => 'HotelOrder', //订单
@@ -18,6 +19,7 @@ class WeixinAction extends AppBaseAction{
 		'Coupon'       => 'Coupon', //优惠券
 		'WxCode'       => 'WxCode',  //酒店的二维码
 	    'Siri'         => 'Siri' //语义分析
+	 
 		
 	 );
 	  
@@ -61,7 +63,43 @@ class WeixinAction extends AppBaseAction{
 					}
 				    $OrderState = $this->db['OrderState'];
 					$step = $OrderState->get_step($user_code);
-				    $resultStr = $this->step($postObj,$step);
+					if($step==10){ //判断是否是每日特惠的输入
+						 $OrderState  = $this->db['OrderState'];
+				         $Sphotel       = $this->db['Sphotel'];
+						/*
+						 $HotelOrder  = $this->db['HotelOrder'];
+						 $HotelRoom   = $this->db['HotelRoom'];
+						 $WxUser      = $this->db['WxUser'];
+						 $UsersHotel  = $this->db['UsersHotel'];*/
+						 $Siri        = $this->db['Siri'];
+						 
+						 $text = $postObj->Content;
+						 $user_code = $postObj->FromUserName;
+						 if(empty($text)){
+						   $text = $postObj->Recognition ;
+						 }
+						 $T= 60*30;
+						 $datatext = $Siri->seek_explain(array('keyword'=>array('like',"$text")));
+						 $text = empty($datatext) ? str_replace('市','',$text) : $datatext;
+					     if(!in_array("$text",$this->get_city())){
+							$contentStr = '您输入的不是城市名称。';
+							$resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
+							die($resultStr);
+						 }else{
+							$arr_item = $Sphotel->get_all_hotel("$text");	
+							if(!$arr_item){
+		                        $contentStr = $text.'该城市是没有酒店信息。';
+								$resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
+								die($resultStr);
+							  
+							}
+							$resultStr = $this->transmitNews($postObj, $arr_item, $flag = 0);
+							
+						}
+		
+					}else{
+				       $resultStr = $this->step($postObj,$step);
+					}
 					break;
 				case "image":
 					$resultStr = $this->receiveText($postObj);
@@ -180,13 +218,29 @@ class WeixinAction extends AppBaseAction{
 							break;
 						case 'menu_1_3':
 							//每日特惠
-							$arr_item = $Hotel->get_hotel_p();
+							$T= 60*30; // 过期时间
+							$data = array(
+								'user_code'=>"$user_code",
+								'step'=>10,
+								'endtime'=>time()+$T
+							);
+							$step = $OrderState->get_step($user_code);  // 判断是否是每日特惠
+							
+							if($step == 0){
+							   $OrderState->add_step($data);
+							}elseif($step == 10){
+							   $OrderState->where(array('user_code'=>"$user_code"))->save(array('endtime'=>time()+$T));
+							  
+							}
+							$contentStr ="请输入城市获得该城市的优惠！";
+						    $resultStr = $this->transmitText($object, $contentStr);
+							/*$arr_item = $Hotel->get_hotel_p();
 							if(count($arr_item)>0){
 						       $resultStr = $this->transmitNews($object, $arr_item, $flag = 0);
 							}else{
                                 $contentStr ="今天没有特惠";
 						        $resultStr = $this->transmitText($object, $contentStr);
-							}
+							}*/
 							break;
 						case 'menu_2_1':
                             $arr_item = $HotelOrder->get_order($user_code);
