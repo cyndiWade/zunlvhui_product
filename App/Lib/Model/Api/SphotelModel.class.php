@@ -43,7 +43,7 @@ class SphotelModel extends ApiBaseModel{
 						'Title'=>$val['hotel_name']."\n". $val['hotel_syq']."\n".$val['hotel_pf'].'分 '.$spot_payment.' 现付 ￥'.$val['prepay'],
 						'Description'=>'',
 						'Picurl' =>$this->get_img($val['id'],4),//C('logo_url'),
-						'Url'    =>C('Hotel_info_url').$val['id'],
+						'Url'    =>C('Sphotel_info_url').$val['id'],
 						);
 			    
 			  $i++;

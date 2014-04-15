@@ -18,6 +18,7 @@ return array(
 		'UNLOCAKING_KEY' => 'cheshencar',
 
 		'Hotel_info_url' =>'http://yunqiserver.xicp.net/ftp/tjr/wxadmin/index.php?s=/Home/HotelList/get_hotel_info/hotel_id/',
+        'Sphotel_info_url' =>'http://yunqiserver.xicp.net/ftp/tjr/wxadmin/index.php?s=/Home/SphotelList/get_hotel_info/hotel_id/',
 		'logo_url'=>'http://yunqiserver.xicp.net/ftp/tjr/images/4.jpg',
 
 		'Hotel_more'=>'http://yunqiserver.xicp.net/ftp/tjr/wxadmin/index.php?s=/Home/HotelList/index/hotel_cs/',
