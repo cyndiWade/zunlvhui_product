@@ -22,10 +22,10 @@ class SphotelOrderModel extends AdminBaseModel {
 	//获取酒店列表
 	public function seek_order_list ($condition = array()) {
 		$data = $this->field('ho.*,u.nickname,h.hotel_name,hr.title')
-		->table($this->prefix.'hotel_order AS ho')
+		->table($this->prefix.'sphotel_order AS ho')
 		->join($this->prefix.'users AS u ON u.id = ho.user_id')
-		->join($this->prefix.'hotel AS h ON h.id = ho.hotel_id')
-		->join($this->prefix.'hotel_room AS hr ON hr.id = ho.hotel_room_id')
+		->join($this->prefix.'sphotel AS h ON h.id = ho.hotel_id')
+		->join($this->prefix.'sphotel_room AS hr ON hr.id = ho.hotel_room_id')
 		->where($condition)
 		->order('ho.order_time DESC')
 		->select();

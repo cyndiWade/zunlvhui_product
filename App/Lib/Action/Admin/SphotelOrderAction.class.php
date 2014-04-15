@@ -39,8 +39,10 @@ class SphotelOrderAction extends AdminBaseAction {
 		
 
 		//连接数据库
-		$HotelOrder = $this->db['SphotelOrder'];	
+		$HotelOrder = $this->db['SphotelOrder'];
+			
 		$order_list = $HotelOrder->seek_order_list($condition);
+		//echo $HotelOrder->getLastSql();exit;
         $PayType  = C('PayType');
 		if ($order_list == true) {
 			foreach ($order_list as $key=>$val) {
@@ -61,6 +63,7 @@ class SphotelOrderAction extends AdminBaseAction {
 		));
 		
 		$html['list'] = $order_list;
+		//echo '<pre>';print_R($html);echo'</pre>';
 		$this->assign('html',$html);
 		$this->display();
 	}
