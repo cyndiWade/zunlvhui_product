@@ -39,7 +39,7 @@ class SphotelOrderAction extends AdminBaseAction {
 		
 
 		//连接数据库
-		$HotelOrder = $this->db['HotelOrder'];	
+		$HotelOrder = $this->db['SphotelOrder'];	
 		$order_list = $HotelOrder->seek_order_list($condition);
         $PayType  = C('PayType');
 		if ($order_list == true) {
