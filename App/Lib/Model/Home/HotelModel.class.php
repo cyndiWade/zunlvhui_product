@@ -101,7 +101,7 @@ class HotelModel extends HomeBaseModel{
 	  }
 	  
 	  //根据客人选择的日期获得价格
-	  public function get_date_room_info($hotel_id,$type,$date){
+	  /*public function get_date_room_info($hotel_id,$type,$date){
 	  
 	  	 
 	  	$where = array(
@@ -124,7 +124,7 @@ class HotelModel extends HomeBaseModel{
 	  	}
 	  	return $data;
 	  
-	  }
+	  }*/
 	  //获得图片
 	  public function get_room_img($room_id,$type){	  	
 	  	$where = array(

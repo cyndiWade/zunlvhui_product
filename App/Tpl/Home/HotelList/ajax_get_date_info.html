@@ -1,5 +1,6 @@
 <ul>
      <volist name="html['roomtype']" id="vo" key='k' >
+     <if condition="($vo['prepay'] neq 0)" >
       <li>
         <div class="left plef"> 
         <span class="left detail2">
@@ -17,15 +18,27 @@
           </div>
         </div>
         <div class="right p210"> 
-        <span class="zx7 f30  pr_15">￥{$vo.prepay}</span> 
+        <span class="zx7 f30  pr_15">￥{$vo.prepay}</span></br>
+        <if condition="($vo['is_cut_off'] neq 0)" >
+       
         <span>
         <a href="javascript:void(0)" class="btn_yd" onclick="submit_order({$vo.rid},2)" > 
-        <img style="width:82px" src="{$Think.const.APP_PATH}Public/Home/images/yuding.png"> </a> 
+        <img style="width:82px" src="{$Think.const.APP_PATH}Public/Home/images/yuding.png"> 
+        </a> 
         </span> 
+        <else/>
+        <span>
+       
+        <img style="width:82px" src="{$Think.const.APP_PATH}Public/Home/images/noyuding.png"> 
+        
+        </span> 
+        </if>
         </div>
+        </if>
       </li>
    </volist>  
    <volist name="html['roomtype']" id="vo" key='k' >
+   <if condition="($vo['spot_payment'] neq 0)" >
       <li>
         <div class="left plef"> 
         <span class="left detail2">
@@ -44,12 +57,23 @@
         </div>
         <div class="right p210"> 
         <span class="zx7 f30  pr_15">￥{$vo.spot_payment}</span><br />
-        <span style="font-size:26px; color:#F4D24B;">预付</span> 
+        <span style="font-size:26px; color:#F4D24B;">预付</span>
+        <if condition="($vo['is_cut_off'] neq 0)" >
+         
         <span>
         <a href="javascript:void(0)" class="btn_yd" onclick="submit_order({$vo.rid},1)" > 
         <img style="width:82px" src="{$Think.const.APP_PATH}Public/Home/images/yuding.png"> </a> 
         </span> 
+        
+        <else/>
+        
+        <span>      
+        <img style="width:82px" src="{$Think.const.APP_PATH}Public/Home/images/noyuding.png"> 
+        </span> 
+        
+        </if>
         </div>
       </li>
+      </if>
     </volist>
     </ul>

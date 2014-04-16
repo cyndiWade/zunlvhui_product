@@ -426,14 +426,21 @@ class HotelListAction extends HomeBaseAction{
 	  	if($this->_post()){
 	  		
 	  		$hotel_id = $this->_post('hotel_id');
-	  		$date = $this->_post('checkinday');
+	  		if($this->_post('checkoutday')){
+	  			$date['checkinday'] = $this->_post('checkinday');
+	  			$date['checkoutday'] = $this->_post('checkoutday');
+	  		}else {
+	  		    $date = $this->_post('checkinday');
+	  		}
 	  		//$list = $Hotel->get_one_hotel(array('id'=>$hotel_id));
-	  		$data = $Hotel->get_hotel_room($hotel_id,2,$date); // 获得房型
+	  		$data = $HotelRoom->get_date_room_info($hotel_id,2,$date); // 获得房型
+	  	
 	  		$html = array(
 	  				'roomtype' =>$data,
 	  				//'user_code'=>$user_code,
 	  				//'hotel_cs'=> passport_encrypt($list['hotel_cs'],'hotel')
 	  		);
+	  		//echo '<pre>';print_R($html);echo '</pre>';exit;
 	  		$this->assign('html',$html);
 	  		$this->display();
 	  	}else{
@@ -442,9 +449,12 @@ class HotelListAction extends HomeBaseAction{
  
 	  }
 	  public function test(){
-	  	$RoomSchedule = $this->db['RoomSchedule'];
-	  	$data = $RoomSchedule->get_hotel(661);
-	    echo '<pre>';print_r($data);echo '</pre>';  
+	  	$HotelRoom = $this->db['HotelRoom'];
+	  	$date['checkinday'] ='2014-04-25';
+	  	$date['checkoutday'] ='2014-04-26';
+	  	$data =  $HotelRoom->get_date_room_info(266,2,$date);
+	  	
+	    //echo '<pre>';print_r($data);echo '</pre>';  
 	      exit;
 	      
 	  }

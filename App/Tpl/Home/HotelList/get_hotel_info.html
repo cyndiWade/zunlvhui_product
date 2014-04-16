@@ -64,10 +64,33 @@ function submit_order(id,type){
 
 	function get_date_price(value){
 		var hotel_id = document.getElementById('hotel_id').value;
+		
 		if(value!=''){
+			
 			var data ={
 				hotel_id : hotel_id,
 				checkinday :value
+			}
+			
+			$.post('?s=/Home/HotelList/ajax_get_date_info',data,function(content){
+				//alert(content);
+				var fangxing= $("#fangxing");
+				fangxing.empty();
+				fangxing.html(content);
+				//result = content;
+			},'html');
+		}
+		
+		
+	}
+	function get_date_prices(value){
+		var hotel_id = document.getElementById('hotel_id').value;
+		var checkinday = document.getElementById('checkinday').value;
+		if(value!=''){
+			var data ={
+				hotel_id : hotel_id,
+				checkinday :checkinday,
+				checkoutday :value
 			}
 			
 			$.post('?s=/Home/HotelList/ajax_get_date_info',data,function(content){
@@ -143,7 +166,7 @@ function submit_order(id,type){
     <input type="text" class="stclick inp3 left stclick2"  onFocus="WdatePicker({$html.date})" value="" name="" id="checkinday" readonly onblur="get_date_price(this.value)" >
   </div>
   <div class="m_boxbg1 zx6 autohei "> <span class="left f24 m_dot3">退房日期： </span>
-    <input onFocus="WdatePicker({$html.exit_date})" type="text" clicktag="2_3" class="stclick inp3 left stclick2" value="" name="" id="checkoutday" readonly>
+    <input onFocus="WdatePicker({$html.exit_date})" type="text" clicktag="2_3" class="stclick inp3 left stclick2" value="" name="" id="checkoutday" readonly onblur="get_date_prices(this.value)">
     <div class="blank"></div>
   </div>
   <!-- 房型 -->

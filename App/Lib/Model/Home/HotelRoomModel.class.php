@@ -88,6 +88,75 @@ class HotelRoomModel extends HomeBaseModel {
 	  	return $data;
 	  	
 	  }
+	  //根据客人选择的日期获得价格
+	 public function get_date_room_info($hotel_id,$type,$date){
+	 	
+	  	$datetime  = $this->room_date_putaway($hotel_id);  //某个酒店下架放房型的时间戳
+	    if(is_array($date)){
+	    	
+	    	$days_count = countDays(strtotime($date['checkinday']),strtotime($date['checkoutday']));
+	    	$day = strtotime($date['checkinday']);
+	    	
+	    	//累计添加数据
+	    	for ($i=0;$i<=$days_count;$i++) {
+	    		$checktime[]=$day;
+	    		$day = $day + 3600 * 24;		//每次写入数据库后，累加一天
+	    	}
+	    	$flag = array_intersect($datetime,$checktime);
+	    	//echo '<pre>';print_R($datetime);echo '</pre>';
+	    	//echo '<pre>';print_R($checktime);echo '</pre>';
+	    	//echo '<pre>';print_R($flag);echo '</pre>';
+	    	$where = array(
+	    			'r.hotel_id'=>$hotel_id, //酒店的id
+	    			'r.is_del'=>0,      //房型是否删除
+	    			's.is_del'=>0,       //房型的价格是否删除
+	    			's.room_num' =>array('gt',0), //房间数量大于0
+	    			's.day'=>strtotime( $date['checkoutday'] ), // 今天
+	    			 
+	    	);
+	    	 
+	    	$data = $this->field('r.id as rid ,r.title,r.info,s.spot_payment,s.prepay,s.room_num,s.id as sid')
+	    	->table($this->prefix.'hotel_room AS r')
+	    	->join($this->prefix.'room_schedule AS s on s.hotel_room_id = r.id')
+	    	->where($where)->select();
+	    	// echo $this->getLastSql();
+	    	foreach($data as $key=>$val){
+	    		if($flag){ //判断是否下架
+	    			$data[$key]['is_cut_off'] = 0;
+	    		}else{
+	    			$data[$key]['is_cut_off'] = $val['rid'];
+	    		}
+	    		$data[$key]['url'] = $this->get_room_img($val['rid'],$type);
+	    	}
+	    }else{
+	    	$id = $this->room_putaways($date);
+			$where = array(
+			  			'r.hotel_id'=>$hotel_id, //酒店的id
+			  			'r.is_del'=>0,      //房型是否删除
+			  			's.is_del'=>0,       //房型的价格是否删除
+			  			's.room_num' =>array('gt',0), //房间数量大于0
+			  			's.day'=>strtotime( $date ), // 今天
+			  			 
+			  	);
+		  	
+		  	$data = $this->field('r.id as rid ,r.title,r.info,s.spot_payment,s.prepay,s.room_num,s.id as sid')
+		  	->table($this->prefix.'hotel_room AS r')
+		  	->join($this->prefix.'room_schedule AS s on s.hotel_room_id = r.id')
+		  	->where($where)->select();
+		  	// echo $this->getLastSql();
+		  	foreach($data as $key=>$val){
+		  		if(in_array($val['rid'],$id)){ //判断是否下架
+		  			$data[$key]['is_cut_off'] = 0;
+		  		}else{
+		  			$data[$key]['is_cut_off'] = $val['rid'];
+		  		}
+		  		$data[$key]['url'] = $this->get_room_img($val['rid'],$type);
+		  	}
+	    }
+	  	//echo '<pre>';print_R($data);echo '</pre>';
+	  	return $data;
+	  	 
+	  }
 	  //获得房型图片
 	  public function get_room_img($room_id,$type=1){	  	
 	  	$where = array(
@@ -118,6 +187,43 @@ class HotelRoomModel extends HomeBaseModel {
 	  	}
 	  	return array_unique($arr);  // 去除重复的值
 	  }
+	  //根据日期获得下架的酒店的id
+	  public function room_putaways($date){
+	  	$where = array(
+	  			'p.is_del'=>0,
+	  			'p.start_time'=>array('elt',strtotime( $date)),
+	  			'p.over_time'=>array('egt',strtotime( $date ))
+	  	);
+	  
+	  	$data = $this->field('p.hotel_room_id')
+	  	->table($this->prefix.'room_putaway as p')
+	  	->where($where)->select();
+	  	foreach($data as $key=>$val){
+	  		$arr[] = $val['hotel_room_id'];
+	  	}
+	  	return array_unique($arr);  // 去除重复的值
+	  }
+	  //获得下架酒店的日期
+	  public function room_date_putaway($hotel_room_id){
+		  	$where = array(
+		  		      'p.hotel_room_id'=>$hotel_room_id,
+		  			  'p.over_time'=>array('EGT',strtotime( date( 'Y-m-d',time() ) )),
+		  			  'p.is_del'=>0  // 过滤删除掉的
+	  	            );	
+		  	$data = $this->field('p.start_time,p.over_time')
+		  	->table($this->prefix.'room_putaway as p')
+		  	->where($where)->select();
+	        foreach ($data as $k=>$v){
+	                $days_count = countDays($v['start_time'],$v['over_time']);		//计算相差天数
+					$day = $v['start_time'];		
+					//累计添加数据
+					for ($i=0;$i<=$days_count;$i++) {
+					    $arr[]=$day;
+						$day = $day + 3600 * 24;		//每次写入数据库后，累加一天
+					}
+	        }
+	  	return  array_unique($arr);
+	 }
 
 	  
 	  // 计算价格
