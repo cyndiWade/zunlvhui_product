@@ -38,14 +38,14 @@ $(function(){
 	
 	
 	//日历选择
-	$('#checkinday').Zebra_DatePicker({
+	/*$('#checkinday').Zebra_DatePicker({
 	  direction: true,
 	  pair: $('#checkoutday')
 	});
 	$('#checkoutday').Zebra_DatePicker({
 	  direction: 1
 	});
-
+*/
 
 	
 	 

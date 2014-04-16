@@ -65,20 +65,27 @@ class HotelListAction extends HomeBaseAction{
 	  	 $user_code = $this->_get('user_code');
 	  	 
 	     $list = $Hotel->get_one_hotel(array('id'=>$hotel_id));
-	     $data = $Hotel->get_hotel_room($hotel_id,2); // 获得房型
+	     $data = $HotelRoom->get_hotel_room($hotel_id,2); // 获得房型
 	   
 	     if($list == true){
 	     	  
 			$list['img']         = $Hotel->get_img($list['id'],4);
+			$daytime   = $list['cut_off_day']==0 ? time() : strtotime($list['cut_off_day'].' day');
+			$day = $list['cut_off_day']+1;
+			$exit_time = $list['cut_off_day']==0 ?strtotime('1 day') : strtotime($day.' day');
 	     }
+
 	  	 $html = array(
+	  	     'date'=>"{minDate:'".date('Y-m-d',$daytime)."'}",
+	  	     'exit_date'=>"{minDate:'".date('Y-m-d',$exit_time)."'}",
 		  	 'list'=>$list,
 	  	     'roomtype' =>$data,
 		  	 'user_code'=>$user_code,
 			 'hotel_cs'=> passport_encrypt($list['hotel_cs'],'hotel')
 	  	 );
-
-		 //echo'<pre>';print_R($html);echo '</pre>';exit;
+	
+	  	//echo '<pre>';print_R($html);echo '</pre>';exit;
+		 
 	     $this->assign('html',$html);
 	  	 $this->display();
 	  

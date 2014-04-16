@@ -19,7 +19,7 @@ class HotelOrderModel extends ApiBaseModel{
 			foreach($data as $key=>$val){
 			    if($i>10)break;
 			    $arr[$i] = array(
-						'Title'=>'订单号：'.$val['order_sn']."\n".
+						'Title'=>'订单号: '.$val['order_sn']."\n".
 
 					//  "---------------------------------\n".
 				      '入住时间: '.date('Y-m-d',$val['in_date'])."\n".
@@ -38,11 +38,11 @@ class HotelOrderModel extends ApiBaseModel{
 
 					 // "---------------------------------\n".
 
-                          '订单金额: ￥'.str_replace('.00', '', $val['total_price'])."\n".
+                      '订单金额: ￥'.str_replace('.00', '', $val['total_price'])."\n".
 
 					 // "---------------------------------\n".
 
-                          '下单日期： '.date('Y-m-d',$val['order_time'])."\n",
+                      '下单日期: '.date('Y-m-d',$val['order_time'])."\n",
 
 				     // "---------------------------------\n\n\n",
 						'Description'=>'',

@@ -36,7 +36,7 @@ a:link, a:visited { text-decoration:none; }
 a:hover { text-decoration:underline; }
 .red, .red a { color:#F00; }
 .left { float:left; }
-.right { float:right; text-align:right}
+.right { float:right; text-align:right;height:100%}
 .autohei { height:auto; overflow:hidden; zoom:1; }
 .clear { font-size:0; line-height:0; clear:both; overflow:hidden; zoom:1; }
 .blank { height:10px; font-size:0; line-height:0; clear:both; overflow:hidden; }
@@ -44,9 +44,9 @@ a:hover { text-decoration:underline; }
 .blank1 { background:#131211; height:15px; font-size:0; line-height:0; clear:both; overflow:hidden; }
 .m_nav{ background:#f6cf44;height:62px; line-height:40px;overflow:hidden;zoom:1; width:100%;}
 .m_nav span.left{ display:inline; margin:8px; position:absolute;}
-.m_nav span.right a{ display:inline-block; padding:0 30px; background:#e0ab29;font-size:30px;height:40px;vertical-align:top;}
+.m_nav span.right a{ display:inline-block; padding:0 30px; font-size:30px;height:40px;}
 .m_nav span.right a:hover{ text-decoration:none}
-.m_nav h6{font-size:30px;}
+.m_nav h6{font-size:30px; height:100%;}
 .m_txt1{line-height:30px;padding:5px 0; height:auto; overflow:hidden;zoom:1;}
 .m_txt2{line-height:30px;padding:10px 0 0;}
 small{ font-size:20px;}

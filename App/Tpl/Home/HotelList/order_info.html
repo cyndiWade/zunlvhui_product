@@ -53,7 +53,7 @@ function quxiao(id){
   <span class="left"> 
   <a href="javascript:history.back();">
   <img src="{$Think.const.APP_PATH}Public/Home/images/m_dot1.png"></a></span>
-    <h6 align="center">订单详情</h6>
+    <h6 align="center" style="margin:8px;">订单详情</h6>
   </div>
   <div class="autohei m_boxbg1">
     <span class="left f30 zx9">订单信息</span>
@@ -81,9 +81,9 @@ function quxiao(id){
   <span class="left f30 zx9">酒店信息</span></div>
   <div class="autohei m_boxbg2 jd_info padding0">
     <ul>
-      <li><span class="left f30 zx5">{$html.hotel_name}
+      <li><span class="left f30 zx5" style="width:100%;" >{$html.hotel_name}</span>
       <input type="hidden" name="name" id="name" value="{$html.hotel_name}" />
-      </span></li>
+      </li>
       <li> <span class="zx2 f22 left">{$html.in_date}</span>
        <span class="right zx5 f22">{$html.room_num}间</span> 
        </li>
@@ -128,8 +128,8 @@ function quxiao(id){
   </div>
   <div class="beizhu">
     <div class="beizhubox">
-      <p>酒店入住时间为下午14:00，退房结算时间为中午12:00 如需提前入住或者推迟离店，
-      均需酌情加收一定的费用
+      <p>酒店入住时间为下午14:00，退房结算时间为中午12:00。 如需提前入住或者推迟离店，
+      均需酌情加收一定的费用。
       <!--  如需修改取消订单，请在{$html.in_date} 12:00以前-->
       </p>
     </div>

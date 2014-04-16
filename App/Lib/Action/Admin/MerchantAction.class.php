@@ -38,9 +38,19 @@ class MerchantAction extends AdminBaseAction {
 		//所有数据列表
 		$list = $Merchant->seek_all_data();
 
+		
 		if ($list == true) {
 			foreach ($list as $key=>$val) {
 				$list[$key]['status'] = $this->Merchant_Status[$val['status']]['explain'];
+				$str = '';
+				$tmp_merchant = explode(',',$val['merchant_type']);	
+				foreach ($tmp_merchant AS $v) {
+					if (!empty($this->global_system->Merchant_Type[$v]['explain'])) {
+						$str .= $this->global_system->Merchant_Type[$v]['explain'].',';
+					}
+				}
+				$list[$key]['merchant_type'] = $str;
+				unset($str);
 			}
 		}
 
@@ -94,7 +104,7 @@ class MerchantAction extends AdminBaseAction {
 			$merchant_type = explode(',',$info['merchant_type']);
 
 			foreach ($this->global_system->Merchant_Type AS $key=>$val) {
-				if (in_array($val['explain'],$merchant_type)) {
+				if (in_array($val['num'],$merchant_type)) {
 					$this->global_system->Merchant_Type[$key]['checked'] = 'checked="checked"';
 				}
 			}
