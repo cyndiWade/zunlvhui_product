@@ -130,7 +130,7 @@ class SphotelAction extends AdminBaseAction {
 			//获取用户账号信息
 			//$account_info = $Users->get_account(array('id'=>$user_id));
 			if (empty($merchant_id)) $this->error('此酒店账号不存在或已被删除');
-			$html['account'] = $merchant_id; // $account_info['account'];		//账号
+			$html['merchant_id'] = $merchant_id; // $account_info['account'];		//账号
 
 			//模板标题
 			$title_name = '添加酒店';
