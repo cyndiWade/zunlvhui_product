@@ -635,10 +635,11 @@ private function receiveText($object)
 		  $UsersHotel  = $this->db['UsersHotel'];
 		  $Coupon      = $this->db['Coupon'];
 		  $Hotel       = $this->db['Hotel'];
+		  $Sphotel      = $this->db['Sphotel'];
 		  $WxCode      = $this->db['WxCode'];
 		  $Siri        = $this->db['Siri'];
 		  $user_code ='o_kNsuDTFNH42UvcZIN7BH4mszPY';
-		  $arr_item = $Hotel->get_all_hotel('上海');
+		  $arr_item = $Sphotel->get_all_sphotel('上海');
 		 //$data =$OrderState->get_order_info($user_code);
 		 //$arr_item = $Hotel->get_all_hotel("敦煌");
 		 //$arr_item =  $Hotel->get_Hotel("敦煌");
