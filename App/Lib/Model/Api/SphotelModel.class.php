@@ -3,7 +3,7 @@ class SphotelModel extends ApiBaseModel{
 
 
 
-      public function get_all_hotel($hotel_cs){
+      public function get_all_sphotel($hotel_cs){
 
 	        if(empty($hotel_cs))$hotel_cs ='青岛';
 			$h = passport_encrypt($hotel_cs,'hotel');

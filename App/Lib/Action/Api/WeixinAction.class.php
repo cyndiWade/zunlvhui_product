@@ -86,7 +86,7 @@ class WeixinAction extends AppBaseAction{
 							$resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
 							die($resultStr);
 						 }else{
-							$arr_item = $Sphotel->get_all_hotel("$text");	
+							$arr_item = $Sphotel->get_all_sphotel("$text");	
 							if(!$arr_item){
 		                        $contentStr = $text.'该城市是没有酒店信息。';
 								$resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
