@@ -111,7 +111,7 @@ class SphotelAction extends AdminBaseAction {
 		$act = $this->_get('act');						//操作类型
 		$user_id = $this->_get('user_id');			//酒店账号ID
 		$hotel_id = $this->_get('hotel_id');		//酒店ID
-
+        $merchant_id = $this->_get('merchant_id');
 		if ($act == 'add') {								//添加
 			if ($this->isPost()) {
 				$Hotel->create();
@@ -128,9 +128,9 @@ class SphotelAction extends AdminBaseAction {
 			}
 			
 			//获取用户账号信息
-			$account_info = $Users->get_account(array('id'=>$user_id));
-			if (empty($account_info)) $this->error('此酒店账号不存在或已被删除');
-			$html['account'] = $account_info['account'];		//账号
+			//$account_info = $Users->get_account(array('id'=>$user_id));
+			if (empty($merchant_id)) $this->error('此酒店账号不存在或已被删除');
+			$html['account'] = $merchant_id; // $account_info['account'];		//账号
 
 			//模板标题
 			$title_name = '添加酒店';
