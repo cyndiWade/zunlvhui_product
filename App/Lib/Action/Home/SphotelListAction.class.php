@@ -136,7 +136,7 @@ class SphotelListAction extends HomeBaseAction{
 	  	  }else{
 	  	  	 $con = array('hotel_cs'=>"$hotel_cs");
 	  	  }
-	  	  $Hotel  = $this->db['Hotel'];  
+	  	  $Hotel  = $this->db['Sphotel'];  
 	      $list = $Hotel->get_hotel($con);
 	      //echo '<pre>';print_R($list);echo '</pre>';exit;
 		  $list = regroupKey($list,'id',true);
@@ -171,7 +171,7 @@ class SphotelListAction extends HomeBaseAction{
 	      $house = $this->_post('house');
 	      //$countday = countDays($checkinday,$checkoutday,1);
 	      $user_code   = $this->_post('user_code');
-	      $HotelRoom = $this->db['HotelRoom'];
+	      $HotelRoom = $this->db['SpotelRoom'];
 	      $list = $HotelRoom->get_price_room(array('hr.id'=>$room_id));
 	      $price = $pay_type ==1 ? $list[0]['spot_payment']  : $list[0]['prepay'];
 	      $total_price = $HotelRoom->total_price($room_id,$checkinday,$checkoutday,$pay_type);//计算价格
@@ -212,7 +212,7 @@ class SphotelListAction extends HomeBaseAction{
 	      $countday = countDays($checkinday,$checkoutday,1);
 	      $user_code   = $this->_post('user_code');
           $UsersHotel = $this->db['UsersHotel'];
-          $RoomSchedule = $this->db['RoomSchedule'];
+          $RoomSchedule = $this->db['SproomSchedule'];
 
           $user_id = $UsersHotel->get_user_id(array('hotel_id'=>$hotel_id));
 	      $user_id = $user_id == true ? $user_id : 0;
@@ -421,8 +421,8 @@ class SphotelListAction extends HomeBaseAction{
 	  //根据客人选择的日期获得当天的价格
 	  public function ajax_get_date_info(){
 	  	 
-	  	$Hotel  = $this->db['Hotel'];
-	  	$HotelRoom  = $this->db['HotelRoom'];
+	  	$Hotel  = $this->db['Spotel'];
+	  	$HotelRoom  = $this->db['SpotelRoom'];
 	  	if($this->_post()){
 	  		
 	  		$hotel_id = $this->_post('hotel_id');
