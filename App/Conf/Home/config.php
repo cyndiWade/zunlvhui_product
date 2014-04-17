@@ -19,7 +19,7 @@ return array(
 		//'NOT_AUTH_GROUP'=> '',						//无需认证分组，多个用,号分割
 		'NOT_AUTH_MODULE' => 'HotelList,SphotelList', 	// 默认无需认证模块，多个用,号分割
 		'NOT_AUTH_ACTION' => '', 						// 默认无需认证方法，多个用,号分割
-	    'COUPON_IMG'      =>'http://yunqiserver.xicp.net/files/zun/images/',
+	    'COUPON_IMG'      =>'http://zunlvhui.com.cn/files/zun/images/',
 		'NOT_PRICE' =>'暂未价格',
 
         'PAY_TYPE' => array(
