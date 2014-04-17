@@ -32,6 +32,10 @@ class IndexAction extends HotelBaseAction{
 	  
 	  public function send_sms(){
 	  	header("Content-type:text/html;charset=utf-8");
+	    if(!$_SERVER["HTTP_REFERER"]){
+	        $this->error('非法操作！');
+	        exit;
+        }
 	  	import("@.Tool.SHP");
 	  	$SHP = new SHP('rikee','zyzylove2');
 	  	if($this->isPost()){
