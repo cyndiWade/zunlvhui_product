@@ -27,9 +27,9 @@ class SphotelListAction extends HomeBaseAction{
 	
 	  public function index(){
 	     
-	  	  $Hotel      = $this->db['Hotel']; // 酒店
-	  	  $HotelRoom  = $this->db['HotelRoom'];
-	  	  $RoomSchedule = $this->db['RoomSchedule'];
+	  	  $Hotel      = $this->db['Sphotel']; // 酒店
+	  	  $HotelRoom  = $this->db['SphotelRoom'];
+	  	  $RoomSchedule = $this->db['SproomSchedule'];
 		 
 		  $hotel_cs = passport_decrypt(urldecode($this->_get('hotel_cs')),'hotel');
 		 
