@@ -55,8 +55,8 @@ class SphotelModel extends ApiBaseModel{
 						'Url'    =>C('Sphotel_more').urlencode($h),
 						);
 			
-           
-			return $arr;
+            return empty($data) ? array() : $arr;
+			//return $arr;
 	  
 	  }
 	  
