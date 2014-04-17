@@ -114,13 +114,14 @@ class SphotelAction extends AdminBaseAction {
         $merchant_id = $this->_get('merchant_id');
 		if ($act == 'add') {								//添加
 			if ($this->isPost()) {
+				
 				$Hotel->create();
 				$hotel_id = $Hotel->add();
 				if ($hotel_id == true) {
 					/*$UsersHotel->user_id = $user_id;
 					$UsersHotel->hotel_id = $hotel_id;
 					$UsersHotel->add() */
-					$hotel_id ? $this->success('添加成功！',U('Admin/Hotel/hotel_img',array('hotel_id'=>$hotel_id))) : $this->error('添加失败请重新尝试！');
+					$hotel_id ? $this->success('添加成功！',U('Admin/Sphotel/hotel_img',array('hotel_id'=>$hotel_id))) : $this->error('添加失败请重新尝试！');
 				} else {
 					$this->error('酒店添加失败，请重新尝试！');
 				}

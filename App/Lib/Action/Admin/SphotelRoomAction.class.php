@@ -86,7 +86,7 @@ class SphotelRoomAction extends AdminBaseAction {
 			if ($this->isPost()) {
 				$HotelRoom->create();
 				$HotelRoom->hotel_id = $hotel_id;
-				$HotelRoom->add() ? $this->success('添加成功！',U('Admin/HotelRoom/index',array('hotel_id'=>$hotel_id))) : $this->error('添加失败请重新尝试！');
+				$HotelRoom->add() ? $this->success('添加成功！',U('Admin/SphotelRoom/index',array('hotel_id'=>$hotel_id))) : $this->error('添加失败请重新尝试！');
 				exit;
 			}
 			
