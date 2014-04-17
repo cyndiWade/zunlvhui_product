@@ -225,12 +225,19 @@ class WeixinAction extends AppBaseAction{
 								'endtime'=>time()+$T
 							);
 							$step = $OrderState->get_step($user_code);  // 判断是否是每日特惠
-							
-							if($step == 0){
-							   $OrderState->add_step($data);
-							}elseif($step == 10){
-							   $OrderState->where(array('user_code'=>"$user_code"))->save(array('endtime'=>time()+$T));
-							  
+							switch ($step){
+								case 0 :
+									$OrderState->add_step($data);
+									break;
+								case 10 :
+									$data = array('endtime'=>time()+$T);
+							        $OrderState->where(array('user_code'=>"$user_code"))->save($data);
+							        break;
+								default:
+									$data = array('endtime'=>time()+$T,'step'=>10);
+							        $OrderState->where(array('user_code'=>"$user_code"))->save($data);
+									break;
+									
 							}
 							$contentStr ="请输入城市获得该城市的优惠！";
 						    $resultStr = $this->transmitText($object, $contentStr);
