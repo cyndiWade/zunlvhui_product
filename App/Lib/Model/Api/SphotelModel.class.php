@@ -52,7 +52,7 @@ class SphotelModel extends ApiBaseModel{
 						'Title'=>'更多酒店',
 						'Description'=>'',
 						'Picurl' =>C('logo_url'),
-						'Url'    =>C('Hotel_more').urlencode($h),
+						'Url'    =>C('Sphotel_more').urlencode($h),
 						);
 			
            
