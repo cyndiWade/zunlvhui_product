@@ -28,6 +28,31 @@ class IndexAction extends HotelBaseAction{
 	    $this->assign('html',$html);
 	    $this->display();
 	  }
+	  
+	  
+	  public function send_sms(){
+	  	header("Content-type:text/html;charset=utf-8");
+	  	import("@.Tool.SHP");
+	  	$SHP = new SHP('rikee','zyzylove2');
+	  	if($this->isPost()){
+           //备用IP地址为203.81.21.13
+            $dst = $this->_post('dst');
+            $msg = $this->_post('msg');
+            $arr = $SHP->send($dst,$msg);
+			if($arr['status']==1 ){
+				$this->success('发送成功成功！',U('Hotel/Index/index'));
+			}else{
+				$this->error('发送失败！');
+			}
+	  		
+	  	}else{
+	  		$html['phone'] = $this->_get('phone');
+	  		$this->assign('html',$html);
+	  		$this->display();
+	  	}
+	  	
+	  	
+	  }
 	       
 
 

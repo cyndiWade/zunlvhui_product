@@ -13,6 +13,10 @@ $(function (){
    $("#sub").click(function(){
 	   var id = $("#id").val();
 	   var con = $("#con").val();
+	   if(!con){
+		   alert('输入拒绝理由');
+		   return false;
+	   }
        $data = {
     	       id:id,
     	       con:con

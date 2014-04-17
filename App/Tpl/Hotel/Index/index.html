@@ -29,7 +29,11 @@
       <tr>
         <td>{$vo.uid}</td>
         <td>{$vo.uname}</td>
-        <td>{$vo.phone}</td>
+        <td>{$vo.phone} 
+        <if condition="($vo['phone'] neq '')">
+                     <a href='?s=/Hotel/Index/send_sms/phone/{$vo.phone}.html'>发送短信</a>
+        </if>
+        </td>
         <td>{$vo.subscribe_time}</td>
         <td>{$vo.hotel_remarks}</td>
       </tr>
