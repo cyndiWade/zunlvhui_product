@@ -84,12 +84,14 @@ class SphotelAction extends AdminBaseAction {
 		$UsersHotel = $this->db['UsersHotel'];
 
 		if (empty($merchant_id)) {
+			$html['merchant_id'] = 0;
 			$html['list'] = $Hotel->field('id,hotel_name,hotel_sf,hotel_cs,hotel_q,hotel_xj,hotel_pf,hotel_syq,hotel_dz,hotel_tel')->where(array('is_del'=>0))->select();
 		} else {
+			$html['merchant_id'] = $merchant_id;
 			$html['list'] = $Hotel->field('id,hotel_name,hotel_sf,hotel_cs,hotel_q,hotel_xj,hotel_pf,hotel_syq,hotel_dz,hotel_tel')
 			->where(array('is_del'=>0,'merchant_id'=>$merchant_id))->select();
 		}
-
+        
 		parent::global_tpl_view( array(
 			'action_name'=>'酒店管理',
 			'title_name'=>'酒店列表',
@@ -115,9 +117,10 @@ class SphotelAction extends AdminBaseAction {
 				$Hotel->create();
 				$hotel_id = $Hotel->add();
 				if ($hotel_id == true) {
-					$UsersHotel->user_id = $user_id;
+					/*$UsersHotel->user_id = $user_id;
 					$UsersHotel->hotel_id = $hotel_id;
-					$UsersHotel->add() ? $this->success('添加成功！',U('Admin/Hotel/hotel_img',array('hotel_id'=>$hotel_id))) : $this->error('添加失败请重新尝试！');
+					$UsersHotel->add() */
+					$hotel_id ? $this->success('添加成功！',U('Admin/Hotel/hotel_img',array('hotel_id'=>$hotel_id))) : $this->error('添加失败请重新尝试！');
 				} else {
 					$this->error('酒店添加失败，请重新尝试！');
 				}
