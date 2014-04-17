@@ -33,7 +33,7 @@ class SphotelModel extends ApiBaseModel{
 						'Title'=>'酒店地图',
 						'Description'=>'',
 						'Picurl' =>$this->get_map("$hotel_cs"),//C('logo_url'),
-						'Url'    =>C('HOTEL_MAP').urlencode($h),
+						'Url'    =>C('SPHOTEL_MAP').urlencode($h),
 						);
 			$i = 1 ;
 			foreach($data as $key=>$val){
