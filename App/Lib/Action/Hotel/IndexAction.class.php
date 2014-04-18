@@ -37,14 +37,18 @@ class IndexAction extends HotelBaseAction{
 	        exit;
         }
 	  	import("@.Tool.SHP");
-	  	$SHP = new SHP('rikee','zyzylove2');
+	  	$info = C('SHP');
+	  	$SHP = new SHP($info['name'],$info['pwd']);
+	  	//$SHP = new SHP('rikee','zyzylove2');
 	  	if($this->isPost()){
            //备用IP地址为203.81.21.13
             $dst = $this->_post('dst');
             $msg = $this->_post('msg');
-            $arr = $SHP->send($dst,$msg);
+            echo $msg;exit;
+            $arr = $SHP->send($dst,$msg,'',1);
+            
 			if($arr['status']==1 ){
-				$this->success('发送成功成功！',U('Hotel/Index/index'));
+				$this->success('发送成功！',U('Hotel/Index/index'));
 			}else{
 				$this->error('发送失败！');
 			}

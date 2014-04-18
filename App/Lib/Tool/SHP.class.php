@@ -24,17 +24,19 @@ class SHP {
 	 * @param string $time				定时发送，格式：YYYYMMDDHHMM
 	 * @return array		
 	 */
-	public function send($phone,$msg,$time='') {
+	public function send($phone,$msg,$time='',$txt=0) {
 		
 		if (is_array($phone)) {
 			$phone = implode(',',$phone);
 		}
-		
+		if($txt!=0){
+			$t='&txt=ccdx';
+		}
 		if (!empty($time)) $time = date('YYYYMMDDHHMM',$time);
 		
 		$msg = urlencode(@iconv('UTF-8', 'GB2312', $msg));		//字体编码转换
 		//请求地址
-		$url = "http://203.81.21.34/send/gsend.asp?name=$this->name&pwd=$this->pwd&dst=$phone&msg=$msg&time=$time";
+		$url = "http://203.81.21.34/send/gsend.asp?name=$this->name&pwd=$this->pwd&dst=$phone&msg=$msg&time=$time.$t";
 		$string = @file_get_contents($url);		//获取服务器发送的状态：结果为：（num=2&success=1393710***4,1393710***5&faile=&err=发送成功&errid=0 ）
 
 		/* 对数据进行数组处理 */

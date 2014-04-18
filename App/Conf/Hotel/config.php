@@ -51,7 +51,13 @@ return array(
                               'NQR'=>2,
                               'TY'=>3,
                               'JJ'=>4
-                              )
+                              ),
+		'SHP'=>array(
+				'name'=>'zunlvhui',
+				'pwd'=>'zunlvhui88'
+				/* 'name'=>'rikee',
+				'pwd'=>'zyzylove2' */
+		)
 		
 
 );
