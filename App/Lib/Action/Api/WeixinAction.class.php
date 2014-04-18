@@ -213,7 +213,7 @@ class WeixinAction extends AppBaseAction{
 							
 							break;
 						case 'menu_1_2':
-							$contentStr ="客服电话:400-6096-906。\n 在线时间为8点~22点，客服人员将一对一为您服务。";
+							$contentStr ="客服电话:400-6096-906。\n 在线时间为09:00~18:00，客服人员将一对一为您服务。";
 						    $resultStr = $this->transmitText($object, $contentStr);
 							break;
 						case 'menu_1_3':
