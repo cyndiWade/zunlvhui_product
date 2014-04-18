@@ -217,7 +217,7 @@ class WeixinAction extends AppBaseAction{
 						    $resultStr = $this->transmitText($object, $contentStr);
 							break;
 						case 'menu_1_3':
-							//每日特惠
+							/* //每日特惠
 							$T= 60*30; // 过期时间
 							$data = array(
 								'user_code'=>"$user_code",
@@ -240,14 +240,14 @@ class WeixinAction extends AppBaseAction{
 									
 							}
 							$contentStr ="请输入城市获得该城市的优惠！";
-						    $resultStr = $this->transmitText($object, $contentStr);
-							/*$arr_item = $Hotel->get_hotel_p();
+						    $resultStr = $this->transmitText($object, $contentStr); */
+							$arr_item = $Hotel->get_all_sphotel();
 							if(count($arr_item)>0){
 						       $resultStr = $this->transmitNews($object, $arr_item, $flag = 0);
 							}else{
                                 $contentStr ="今天没有特惠";
 						        $resultStr = $this->transmitText($object, $contentStr);
-							}*/
+							}
 							break;
 						case 'menu_2_1':
                             $arr_item = $HotelOrder->get_order($user_code);

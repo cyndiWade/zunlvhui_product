@@ -3,21 +3,21 @@ class SphotelModel extends ApiBaseModel{
 
 
 
-      public function get_all_sphotel($hotel_cs){
+      public function get_all_sphotel(){
 
-	        if(empty($hotel_cs))$hotel_cs ='青岛';
+	        //if(empty($hotel_cs))$hotel_cs ='青岛';
 			$h = passport_encrypt($hotel_cs,'hotel');
 			$data =  
 			$this->table($this->prefix.'sphotel AS h')
 			->field('h.id,h.hotel_name , h.hotel_syq, h.hotel_pf')
-			->where(array('h.hotel_cs'=>$hotel_cs,'h.is_del'=>0))
+			->where(array('h.is_del'=>0))
 			->order('h.sort DESC')
 			->select();
 			$datas = $this->table($this->prefix.'sphotel AS h')
 			->field('h.id,h.hotel_name , h.hotel_syq, h.hotel_pf ,rs.spot_payment,rs.prepay')
 			->join($this->prefix.'sphotel_room AS hr ON h.id=hr.hotel_id')
 			->join($this->prefix.'sproom_schedule AS rs on rs.hotel_room_id = hr.id')
-			->where(array('hotel_cs'=>$hotel_cs,'h.is_del'=>0,'rs.day'=>strtotime( date('Y-m-d',time())) )  )
+			->where(array('h.is_del'=>0,'rs.day'=>strtotime( date('Y-m-d',time())) )  )
 			->order('h.sort DESC')
 			->select();
 			$datas = regroupKey($datas,id);
@@ -29,13 +29,13 @@ class SphotelModel extends ApiBaseModel{
 			}
 
 			$arr = array();
-            $arr[0] = array(
+            /*$arr[0] = array(
 						'Title'=>'酒店地图',
 						'Description'=>'',
 						'Picurl' =>$this->get_map("$hotel_cs"),//C('logo_url'),
 						'Url'    =>C('SPHOTEL_MAP').urlencode($h),
-						);
-			$i = 1 ;
+						);*/
+			$i = 0 ;
 			foreach($data as $key=>$val){
 			    if($i>8)break;
 			     $spot_payment = $val['spot_payment']==0 ? '':   '预付 ￥'.$val['spot_payment'];

@@ -28,7 +28,7 @@ return array(
 		'COUPON_IMG'=>'http://www.zunlvhui.com.cn/files/zunlvhui/images/',// 优惠券图片的url;
 		'COUPON_URL'=>'http://www.zunlvhui.com.cn/zunlvhui/index.php?s=/Home/HotelList/get_coupon/coupon_id/', //优惠券详情的url
 		'HOTEL_MAP' => 'http://www.zunlvhui.com.cn/zunlvhui/index.php?s=/Home/HotelList/map/hotel_cs/',
-		'SPHOTEL_MAP'=> 'http://www.zunlvhui.com.cn/zunlvhui/index.php?s=/Home/SphotelList/map/hotel_cs/',
+		//'SPHOTEL_MAP'=> 'http://www.zunlvhui.com.cn/zunlvhui/index.php?s=/Home/SphotelList/map/hotel_cs/',
 		'ORDER_INFO'=>'http://www.zunlvhui.com.cn/zunlvhui/index.php?s=/Home/HotelList/order_info/order_id/',
 
 		'PAY_TYPE' => array(
