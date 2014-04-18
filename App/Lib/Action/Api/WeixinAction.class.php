@@ -63,14 +63,14 @@ class WeixinAction extends AppBaseAction{
 					}
 				    $OrderState = $this->db['OrderState'];
 					$step = $OrderState->get_step($user_code);
-					if($step==10){ //判断是否是每日特惠的输入
+					/* if($step==10){ //判断是否是每日特惠的输入
 						 $OrderState  = $this->db['OrderState'];
 				         $Sphotel       = $this->db['Sphotel'];
-						/*
-						 $HotelOrder  = $this->db['HotelOrder'];
-						 $HotelRoom   = $this->db['HotelRoom'];
-						 $WxUser      = $this->db['WxUser'];
-						 $UsersHotel  = $this->db['UsersHotel'];*/
+						
+						// $HotelOrder  = $this->db['HotelOrder'];
+						 //$HotelRoom   = $this->db['HotelRoom'];
+						 //$WxUser      = $this->db['WxUser'];
+						// $UsersHotel  = $this->db['UsersHotel'];
 						 $Siri        = $this->db['Siri'];
 						 
 						 $text = $postObj->Content;
@@ -99,7 +99,8 @@ class WeixinAction extends AppBaseAction{
 		
 					}else{
 				       $resultStr = $this->step($postObj,$step);
-					}
+					} */
+					$resultStr = $this->step($postObj,$step);
 					break;
 				case "image":
 					$resultStr = $this->receiveText($postObj);
@@ -645,13 +646,8 @@ private function receiveText($object)
 		  $Sphotel      = $this->db['Sphotel'];
 		  $WxCode      = $this->db['WxCode'];
 		  $Siri        = $this->db['Siri'];
-		  $user_code ='o_kNsuDTFNH42UvcZIN7BH4mszPY';
-		  $arr_item = $Sphotel->get_all_sphotel('上海');
-		 //$data =$OrderState->get_order_info($user_code);
-		 //$arr_item = $Hotel->get_all_hotel("敦煌");
-		 //$arr_item =  $Hotel->get_Hotel("敦煌");
-		  //SendMail("guestservice@zunlvhui.com.cn","邮件标题","邮件正文我换行啦~~！");  //发送邮件
-		// $arr_item = $Hotel->get_map(敦煌);
+	
+		  $arr_item = $Hotel->get_all_sphotel();
         echo '<pre>';print_R($arr_item);echo '</pre>';exit;
    }
 
