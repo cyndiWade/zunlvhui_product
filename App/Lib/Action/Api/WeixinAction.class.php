@@ -143,7 +143,7 @@ class WeixinAction extends AppBaseAction{
 	     $OrderState = $this->db['OrderState'];
 		 $HotelOrder = $this->db['HotelOrder'];
          $Hotel      = $this->db['Hotel'];
-         $Sphotel       = $this->db['Sphotel'];
+         $Sphotel    = $this->db['Sphotel'];
 		 $HotelRoom  = $this->db['HotelRoom'];
 		 $WxUser     = $this->db['WxUser'];
 		 $UsersHotel = $this->db['UsersHotel'];
@@ -243,7 +243,7 @@ class WeixinAction extends AppBaseAction{
 							}
 							$contentStr ="请输入城市获得该城市的优惠！";
 						    $resultStr = $this->transmitText($object, $contentStr); */
-							$arr_item = $Hotel->get_all_sphotel();
+							$arr_item = $Sphotel->get_all_sphotel();
 							if(count($arr_item)>0){
 						       $resultStr = $this->transmitNews($object, $arr_item, $flag = 0);
 							}else{
