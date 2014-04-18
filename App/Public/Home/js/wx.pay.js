@@ -50,7 +50,7 @@
                 var banktype = "WX";
                 var body = document.getElementById('name').value;//'江诗丹顿';//商品名称信息，这里由测试网页填入。
                 var fee_type = "1";//费用类型，这里1为默认的人民币
-                var input_charset = "GBK";//字符集，这里将统一使用GBK
+                var input_charset = "utf-8";//字符集，这里将统一使用GBK
                 var notify_url = "http://www.qq.com";//支付成功后将通知该地址
                 var out_trade_no = document.getElementById('order_sn').value;//""+getANumber();//订单号，商户需要保证该字段对于本商户的唯一性
                 var partner = "1218014001";//测试商户号
