@@ -143,6 +143,7 @@ class WeixinAction extends AppBaseAction{
 	     $OrderState = $this->db['OrderState'];
 		 $HotelOrder = $this->db['HotelOrder'];
          $Hotel      = $this->db['Hotel'];
+         $Sphotel       = $this->db['Sphotel'];
 		 $HotelRoom  = $this->db['HotelRoom'];
 		 $WxUser     = $this->db['WxUser'];
 		 $UsersHotel = $this->db['UsersHotel'];
