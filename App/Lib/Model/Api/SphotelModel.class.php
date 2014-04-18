@@ -6,7 +6,7 @@ class SphotelModel extends ApiBaseModel{
       public function get_all_sphotel(){
 
 	        //if(empty($hotel_cs))$hotel_cs ='青岛';
-			$h = passport_encrypt($hotel_cs,'hotel');
+			//$h = passport_encrypt($hotel_cs,'hotel');
 			$data =  
 			$this->table($this->prefix.'sphotel AS h')
 			->field('h.id,h.hotel_name , h.hotel_syq, h.hotel_pf')
@@ -52,7 +52,7 @@ class SphotelModel extends ApiBaseModel{
 						'Title'=>'更多酒店',
 						'Description'=>'',
 						'Picurl' =>C('logo_url'),
-						'Url'    =>C('Sphotel_more').urlencode($h),
+						'Url'    =>C('Sphotel_more'),//.urlencode($h),
 						);
 			
             return empty($data) ? array() : $arr;
