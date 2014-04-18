@@ -643,12 +643,11 @@ private function receiveText($object)
 		  $WxUser      = $this->db['WxUser'];
 		  $UsersHotel  = $this->db['UsersHotel'];
 		  $Coupon      = $this->db['Coupon'];
-		  $Hotel       = $this->db['Hotel'];
 		  $Sphotel      = $this->db['Sphotel'];
 		  $WxCode      = $this->db['WxCode'];
 		  $Siri        = $this->db['Siri'];
 	
-		  $arr_item = $Hotel->get_all_sphotel();
+		  $arr_item = $Sphotel->get_all_sphotel();
         echo '<pre>';print_R($arr_item);echo '</pre>';exit;
    }
 
