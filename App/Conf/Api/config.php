@@ -17,19 +17,19 @@ return array(
 		//客户端加密、解密钥匙
 		'UNLOCAKING_KEY' => 'cheshencar',
 
-		'Hotel_info_url' =>'http://zunlvhui.com.cn/zun/index.php?s=/Home/HotelList/get_hotel_info/hotel_id/',
-        'Sphotel_info_url' =>'http://zunlvhui.com.cn/zun/index.php?s=/Home/SphotelList/get_hotel_info/hotel_id/',
-		'logo_url'=>'http://zunlvhui.com.cn/zun/App/Public/Home/images/4.jpg',
-        'Sphotel_more'=>'http://zunlvhui.com.cn/zun/index.php?s=/Home/SphotelList/index/hotel_cs/',
-		'Hotel_more'=>'http://zunlvhui.com.cn/zun/index.php?s=/Home/HotelList/index/hotel_cs/',
+		'Hotel_info_url' =>'http://zunlvhui.com.cn/zunlvhui/index.php?s=/Home/HotelList/get_hotel_info/hotel_id/',
+        'Sphotel_info_url' =>'http://zunlvhui.com.cn/zunlvhui/index.php?s=/Home/SphotelList/get_hotel_info/hotel_id/',
+		'logo_url'=>'http://zunlvhui.com.cn/zunlvhui/App/Public/Home/images/4.jpg',
+        'Sphotel_more'=>'http://zunlvhui.com.cn/zunlvhui/index.php?s=/Home/SphotelList/index/hotel_cs/',
+		'Hotel_more'=>'http://zunlvhui.com.cn/zunlvhui/index.php?s=/Home/HotelList/index/hotel_cs/',
 
-		//'HOTELMAPIMAGES'=>'http://zunlvhui.com.cn/zun/App/Public/Home/images/city/',
-		'HOTELMAPIMAGES'=>'http://www.zunlvhui.com.cn/zun/App/Public/Home/mapimages/',
-		'COUPON_IMG'=>'http://zunlvhui.com.cn/files/zun/images/',// 优惠券图片的url;
-		'COUPON_URL'=>'http://zunlvhui.com.cn/zun/index.php?s=/Home/HotelList/get_coupon/coupon_id/', //优惠券详情的url
-		'HOTEL_MAP' => 'http://zunlvhui.com.cn/zun/index.php?s=/Home/HotelList/map/hotel_cs/',
-		'SPHOTEL_MAP'=> 'http://zunlvhui.com.cn/zun/index.php?s=/Home/SphotelList/map/hotel_cs/',
-		'ORDER_INFO'=>'http://zunlvhui.com.cn/zun/index.php?s=/Home/HotelList/order_info/order_id/',
+		//'HOTELMAPIMAGES'=>'http://zunlvhui.com.cn/zunlvhui/App/Public/Home/images/city/',
+		'HOTELMAPIMAGES'=>'http://www.zunlvhui.com.cn/zunlvhui/App/Public/Home/mapimages/',
+		'COUPON_IMG'=>'http://zunlvhui.com.cn/files/zunlvhui/images/',// 优惠券图片的url;
+		'COUPON_URL'=>'http://zunlvhui.com.cn/zunlvhui/index.php?s=/Home/HotelList/get_coupon/coupon_id/', //优惠券详情的url
+		'HOTEL_MAP' => 'http://zunlvhui.com.cn/zunlvhui/index.php?s=/Home/HotelList/map/hotel_cs/',
+		'SPHOTEL_MAP'=> 'http://zunlvhui.com.cn/zunlvhui/index.php?s=/Home/SphotelList/map/hotel_cs/',
+		'ORDER_INFO'=>'http://zunlvhui.com.cn/zunlvhui/index.php?s=/Home/HotelList/order_info/order_id/',
 
 		'PAY_TYPE' => array(
                     1=>array(
