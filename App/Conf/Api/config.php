@@ -42,7 +42,10 @@ return array(
                     )
                 ),
         'TestCode'=>1,
-        'TestCodeUser'=>array('o_kNsuDTFNH42UvcZIN7BH4mszPY'),
+        'TestCodeUser'=>array(
+	        'o_kNsuDTFNH42UvcZIN7BH4mszPY', //唐吉荣
+	        'o_kNsuHIAjL5eqqiWwzvH4eDQtig' //邹朝晖
+                ),
 		
 );
 ?>
