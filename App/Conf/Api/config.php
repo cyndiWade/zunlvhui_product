@@ -41,6 +41,8 @@ return array(
                        'explain' =>'现付(酒店前台支付)'
                     )
                 ),
+        'TestCode'=>1,
+        'TestCodeUser'=>array('o_kNsuDTFNH42UvcZIN7BH4mszPY'),
 		
 );
 ?>

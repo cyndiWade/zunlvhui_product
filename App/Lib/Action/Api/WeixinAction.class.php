@@ -183,6 +183,12 @@ class WeixinAction extends AppBaseAction{
 					
 					break;
 				case "SCAN":
+					if(C('TestCode') = 1){
+						if( in_array($user_code,C('TestCodeUser')) ){
+							//$object->EventKey 
+							$resultStr = $this->transmitText($object, $object->EventKey);
+						}
+					}
 					$userinfo = $WxUser->get_wx_user($user_code); // 判断有没有用户
 					if(empty($userinfo)){ 
 						$userdata = array(
