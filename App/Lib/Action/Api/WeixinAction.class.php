@@ -183,7 +183,7 @@ class WeixinAction extends AppBaseAction{
 					
 					break;
 				case "SCAN":
-					if(C('TestCode') = 1){
+					if(C('TestCode') == 1){
 						if( in_array($user_code,C('TestCodeUser')) ){
 							//$object->EventKey 
 							$resultStr = $this->transmitText($object, $object->EventKey);
