@@ -104,11 +104,11 @@ class SphotelRoomAction extends AdminBaseAction {
 				exit;
 			}
 			//查找房型
-			$hotel_room_info = $HotelRoom->get_one_data(array('id'=>$hotel_room_id),'title,info');
+			$hotel_room_info = $HotelRoom->get_one_data(array('id'=>$hotel_room_id),'title,info,privilege_day');
 			if (empty($hotel_room_info)) $this->error('您编辑的房型不存在！');
 			$title_name = $hotel_room_info['title'].'---编辑';
 			$html = $hotel_room_info;
-			
+			print_R($html);
 		} else if ($act == 'delete') {			//删除
 			$HotelRoom->del_one_data($hotel_room_id) ? $this->success('删除成功！') : $this->error('删除失败，请稍后重试！');
 			exit;
