@@ -70,12 +70,12 @@ class SphotelRoomModel extends HomeBaseModel {
 	  	    //'r.id'=>array('not in',$id)
 	  	);
 	  	
-	  	$data = $this->field('r.id as rid ,r.title,r.info,s.spot_payment,s.prepay,s.room_num,s.id as sid') 
-	  	->table($this->prefix.'hotel_room AS r')
-	  	->join($this->prefix.'room_schedule AS s on s.hotel_room_id = r.id')
+	  	$data = $this->field('r.id as rid ,r.title,r.info,r.privilege_day,s.spot_payment,s.prepay,s.room_num,s.id as sid') 
+	  	->table($this->prefix.'sphotel_room AS r')
+	  	->join($this->prefix.'sproom_schedule AS s on s.hotel_room_id = r.id')
 	  	//->join($this->prefix.'room_img AS i on i.hotel_room_id = s.id')
 	  	->where($where)->select();
-	
+	    //echo $this->getLastSql();
 	  	foreach($data as $key=>$val){
 	  		if(in_array($val['rid'],$id)){ //判断是否下架
 	  		    $data[$key]['is_cut_off'] = 0;
