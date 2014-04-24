@@ -305,6 +305,22 @@ $custom= array (
 				),
 				
 		),
+
+		//酒店礼品
+		'Hotel_Lp' => array(
+				1 => array(
+						'num' => 1,
+						'explain' => '免费住',
+				),
+				2 => array(
+						'num' => 2,
+						'explain' => '免费游',
+				),
+				3 => array(
+						'num' => 3,
+						'explain' => '免费吃',
+				),
+		),
 		//上下架状态
 		'Merchant_Status' => array(
 				0 => array(

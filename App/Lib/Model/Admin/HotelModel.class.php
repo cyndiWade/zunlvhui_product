@@ -33,7 +33,11 @@ class HotelModel extends AdminBaseModel {
 	
 		return $this->where($con)->field($field)->limit($limit)->select();
 	}
-	
+
+	public function save_one_data ($hotel_id) {
+		return $this->where(array('id'=>$hotel_id))->save();
+	}
+
 }
 
 ?>

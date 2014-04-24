@@ -97,7 +97,6 @@ class HotelAction extends AdminBaseAction {
 		$this->display();
 	}
 	
-	
 	/**
 	 * 编辑酒店
 	 */
@@ -108,10 +107,15 @@ class HotelAction extends AdminBaseAction {
 		$act = $this->_get('act');						//操作类型
 		$user_id = $this->_get('user_id');			//酒店账号ID
 		$hotel_id = $this->_get('hotel_id');		//酒店ID
+		$this->Hotel_Lp = C('Hotel_Lp');
+
 
 		if ($act == 'add') {								//添加
 			if ($this->isPost()) {
 				$Hotel->create();
+				$hotel_lp = $this->_POST['hotel_lp'];
+				$hotel_lp = implode(',',$hotel_lp);
+				$Hotel->hotel_lp = $hotel_lp;
 				$hotel_id = $Hotel->add();
 				if ($hotel_id == true) {
 					$UsersHotel->user_id = $user_id;
@@ -133,8 +137,13 @@ class HotelAction extends AdminBaseAction {
 			
 		} else if ($act == 'update') {			//修改
 			if ($this->isPost()) {
+				$hotel_lp = $this->_POST('hotel_lp');
+				$hotel_lp = implode(',',$hotel_lp);
 				$Hotel->create();
-				$Hotel->save_one_data(array('id'=>$hotel_id)) ? $this->success('修改成功！') : $this->error('没有做出任何修改！');
+				$Hotel->hotel_lp = $hotel_lp;
+
+
+				$Hotel->save_one_data($hotel_id) ? $this->success('修改成功！') : $this->error('没有做出任何修改！'.$hotel_lp);
 				exit;
 			}
 			
@@ -142,6 +151,14 @@ class HotelAction extends AdminBaseAction {
 			if (empty($hotel_id)) $this->error('酒店不存在！');
 			$hotel_info = $Hotel->get_one_hotel(array('id'=>$hotel_id),'*');
 			if (empty($hotel_info)) $this->error('酒店不存在！');
+			$hotel_lp = explode(',',$hotel_info['hotel_lp']);
+
+
+			foreach ($this->global_system->Hotel_Lp AS $key=>$val) {
+				if (in_array($val['num'],$hotel_lp)) {
+					$this->global_system->Hotel_Lp[$key]['checked'] = 'checked="checked"';
+				}
+			}
 
 			//模板标题
 			$title_name = $hotel_info['hotel_name'].'--编辑';
@@ -160,7 +177,8 @@ class HotelAction extends AdminBaseAction {
 			
 			exit;
 		}
-		
+		$html['Hotel_Lp'] = $this->global_system->Hotel_Lp;
+
 
 		parent::global_tpl_view( array(
 				'action_name'=>'酒店编辑',
