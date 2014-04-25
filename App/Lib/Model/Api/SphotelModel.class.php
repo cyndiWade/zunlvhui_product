@@ -50,13 +50,14 @@ class SphotelModel extends ApiBaseModel{
 			    
 			  $i++;
 			}
-			$arr[10] = array(
-						'Title'=>'更多酒店',
-						'Description'=>'',
-						'Picurl' =>C('logo_url'),
-						'Url'    =>C('Sphotel_more'),//.urlencode($h),
-						);
-			
+			if(count($data)>8){
+				$arr[10] = array(
+							'Title'=>'更多酒店',
+							'Description'=>'',
+							'Picurl' =>C('logo_url'),
+							'Url'    =>C('Sphotel_more'),//.urlencode($h),
+							);
+			}
             return empty($data) ? array() : $arr;
 			//return $arr;
 	  
