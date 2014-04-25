@@ -205,6 +205,19 @@ class WeixinAction extends AppBaseAction{
                    
 					break;
 				case "CLICK":
+					$userinfo = $WxUser->get_wx_user($user_code);//验证有没有用户
+					if(empty($userinfo)){
+						$userdata = array(				
+								'subscribe'=>1,
+								'wxid'=>"$user_code",
+								'subscribe_time'=>time(),
+								'user_id'=>0,
+								'is_from'=>3, //关注以后扫描的二维码
+								'hotel_id'=>0,
+								'code_id'=>0
+								);
+						$WxUser->add($userdata);
+					}
 					//验证手机号
 					$res = $this->exist_phone($object);	
 					if(!empty($res)){
