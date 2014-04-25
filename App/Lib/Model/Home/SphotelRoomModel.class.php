@@ -28,8 +28,8 @@ class SphotelRoomModel extends HomeBaseModel {
     	$con = array('hr.is_del'=>0,'rs.is_del'=>0,'rs.day'=>strtotime(date('Y-m-d',time())));
 		array_add_to($con,$condition);
     	$data = $this->field('*')
-		->table($this->prefix.'hotel_room AS hr')
-		->join($this->prefix.'room_schedule AS rs on rs.hotel_room_id = hr.id')
+		->table($this->prefix.'sphotel_room AS hr')
+		->join($this->prefix.'sproom_schedule AS rs on rs.hotel_room_id = hr.id')
 		->where($con)
 		->select();
 
@@ -44,8 +44,8 @@ class SphotelRoomModel extends HomeBaseModel {
 	  
 	        
 
-			 $data = $this->table($this->prefix.'hotel AS h')
-			->join($this->prefix.'hotel_img AS hr ON h.id=hr.hotel_id')
+			 $data = $this->table($this->prefix.'sphotel AS h')
+			->join($this->prefix.'sphotel_img AS hr ON h.id=hr.hotel_id')
 			->where( array('hr.hotel_id'=>$hotel_id,'hr.is_del'=>0,'hr.type'=>$type) )
 			->getField('url');
 
@@ -95,7 +95,7 @@ class SphotelRoomModel extends HomeBaseModel {
 		  	'i.hotel_room_id' =>$room_id,
 	  	    'i.type'  =>$type
 	  	);	  	
-	  	$data = $this->table($this->prefix.'room_img as i')
+	  	$data = $this->table($this->prefix.'sproom_img as i')
 	  	->where($where)->getField('url');	
 	  	$img = empty($data) ? C('NO_PIC') : $data;  	
 	  	return C('PUBLIC_VISIT.domain').C('UPLOAD_DIR.image').$img;
@@ -111,7 +111,7 @@ class SphotelRoomModel extends HomeBaseModel {
 	  	);
 	  	
 	  	$data = $this->field('p.hotel_room_id')
-	  	->table($this->prefix.'room_putaway as p')
+	  	->table($this->prefix.'sproom_putaway as p')
 	  	->where($where)->select();
 	  	foreach($data as $key=>$val){
 	  		$arr[] = $val['hotel_room_id'];
@@ -135,7 +135,7 @@ class SphotelRoomModel extends HomeBaseModel {
 	  	);
 	  	
 	  	$data = $this->field('*')
-	  			->table($this->prefix.'room_schedule as s')
+	  			->table($this->prefix.'sproom_schedule as s')
 	  			->where($where)
 	  			//->select();
 	  			->sum($filed);
