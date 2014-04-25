@@ -5,4 +5,5 @@ data
 .buildpath
 .zfproject.xml
 .settings
+.project
 
