@@ -39,10 +39,12 @@ class SphotelModel extends ApiBaseModel{
 			foreach($data as $key=>$val){
 			    if($i>8)break;
 			     $spot_payment = $val['spot_payment']==0 ? '':   '预付 ￥'.$val['spot_payment'];
-			    $arr[$i] = array(
-						'Title'=>$val['hotel_name']."\n". $val['hotel_syq']."\n".$val['hotel_pf'].'分 '.$spot_payment.' 现付 ￥'.$val['prepay'],
+			     $prepay = $val['prepay']==0 ? '':   '现付 ￥'.$val['prepay'];
+			     $type = $i==0 ? 3 : 4;
+			     $arr[$i] = array(
+						'Title'=>$val['hotel_name']."\n". $val['hotel_syq']."\n".$val['hotel_pf'].'分 '.$spot_payment.$prepay,
 						'Description'=>'',
-						'Picurl' =>$this->get_img($val['id'],4),//C('logo_url'),
+						'Picurl' =>$this->get_img($val['id'],$type),//C('logo_url'),
 						'Url'    =>C('Sphotel_info_url').$val['id'],
 						);
 			    
