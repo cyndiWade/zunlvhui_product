@@ -144,11 +144,11 @@ function quxiao(id){
     <input style="vertical-align: top;" type="image" src="{$Think.const.APP_PATH}Public/Home/images/submit2.jpg" />
     </a>&nbsp;&nbsp;&nbsp;&nbsp;
     </if> 
-    <if condition="($html['order_status'] neq 3)">
+    <!--  <if condition="($html['order_status'] neq 3)">
     <input style="vertical-align: top;" type="image" src="{$Think.const.APP_PATH}Public/Home/images/submit3.jpg" onclick="javascript:quxiao({$html.order_id})" />
     <else/>
     <img style='width:209px;vertical-align: top;' src="{$Think.const.APP_PATH}Public/Home/images/quxiaodingdan.jpg" />
-    </if>
+    </if>-->
     </span>
     <span class="right f30" style="padding-right:30px" >订单总额：{$html.total_price}元
     <input type="hidden" name="order_total" id="order_total" value="{$html.total_prices}" />
