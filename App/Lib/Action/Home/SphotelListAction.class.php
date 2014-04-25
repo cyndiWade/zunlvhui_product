@@ -386,7 +386,7 @@ class SphotelListAction extends HomeBaseAction{
 	  }
 	  //判断房间 数量是否足够
 	  public function room_num_enough(){
-	  	$RoomSchedule = $this->db['RoomSchedule'];
+	  	$RoomSchedule = $this->db['SproomSchedule'];
 	  	$data = $this->_post();
 	  	$room_num = $data['house'];
 	   /* $data = array(
