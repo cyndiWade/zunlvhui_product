@@ -37,7 +37,7 @@ class SphotelModel extends ApiBaseModel{
 						);*/
 			$i = 0 ;
 			foreach($data as $key=>$val){
-			    if($i>8)break;
+			    if($i>9)break;
 			     $spot_payment = $val['spot_payment']==0 ? '':   '预付 ￥'.$val['spot_payment'];
 			     $prepay = $val['prepay']==0 ? '':   '现付 ￥'.$val['prepay'];
 			     $type = $i==0 ? 3 : 4;
@@ -50,7 +50,7 @@ class SphotelModel extends ApiBaseModel{
 			    
 			  $i++;
 			}
-			if(count($data)>8){
+			if(count($data)>9){
 				$arr[10] = array(
 							'Title'=>'更多酒店',
 							'Description'=>'',
