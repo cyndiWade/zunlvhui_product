@@ -102,7 +102,7 @@ class SphotelListAction extends HomeBaseAction{
 	      $countday = countDays($checkinday,$checkoutday,1);
 	      
 	      $user_code   = $this->_get('user_code');
-	      $HotelRoom = $this->db['HotelRoom'];
+	      $HotelRoom = $this->db['SphotelRoom'];
 	      $total_price = $HotelRoom->total_price($room_id,$checkinday,$checkoutday,$pay_type);//计算价格
 	     
 	      $list = $HotelRoom->get_price_room(array('hr.id'=>$room_id));
