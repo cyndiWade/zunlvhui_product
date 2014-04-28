@@ -44,8 +44,15 @@ return array(
         'TestCode'=>1,
         'TestCodeUser'=>array(
 	        'o_kNsuDTFNH42UvcZIN7BH4mszPY', //唐吉荣
-	        'o_kNsuHIAjL5eqqiWwzvH4eDQtig' //邹朝晖
-                ),
+	        'o_kNsuHIAjL5eqqiWwzvH4eDQtig', //邹朝晖
+            'o_kNsuBNiA-CTmQ8qegUQm4_Yc0w',
+            'o_kNsuL4xBkN_nKLohAruUK6ACDo',
+            'o_kNsuEXI_I2PzTgN4M3TKnU890Y',
+            'o_kNsuLWb2-L297-4X-gK_v2Lc50',
+            'o_kNsuCiF_jPfCkcT4Us6MygFbZs',
+            'o_kNsuGgjuHEUfT69SkXqHTulIjo',
+            'o_kNsuIsXzL4bje-I7thbB1Ppg7o'
+        ),
 		
 );
 ?>
