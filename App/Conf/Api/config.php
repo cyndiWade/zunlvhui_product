@@ -51,7 +51,8 @@ return array(
             'o_kNsuLWb2-L297-4X-gK_v2Lc50',
             'o_kNsuCiF_jPfCkcT4Us6MygFbZs',
             'o_kNsuGgjuHEUfT69SkXqHTulIjo',
-            'o_kNsuIsXzL4bje-I7thbB1Ppg7o'
+            'o_kNsuIsXzL4bje-I7thbB1Ppg7o',
+            'o_kNsuFy_tcHlExuCQl8W96zPpPs'  //小杨
         ),
 		
 );
