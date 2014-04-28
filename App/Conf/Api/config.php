@@ -52,7 +52,9 @@ return array(
             'o_kNsuCiF_jPfCkcT4Us6MygFbZs',
             'o_kNsuGgjuHEUfT69SkXqHTulIjo',
             'o_kNsuIsXzL4bje-I7thbB1Ppg7o',
-            'o_kNsuFy_tcHlExuCQl8W96zPpPs'  //小杨
+            'o_kNsuFy_tcHlExuCQl8W96zPpPs',  //小杨
+            'o_kNsuO-OezIQBhMGsSMlfAU7LRU',
+            'o_kNsuJE-txf0sBuxjg56sB_10hw'
         ),
 		
 );
