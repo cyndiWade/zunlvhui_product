@@ -109,6 +109,8 @@ class HotelAction extends AdminBaseAction {
 		$hotel_id = $this->_get('hotel_id');		//酒店ID
 		$this->Hotel_Lp = C('Hotel_Lp');
 
+		$gitf=new GiftModel();
+		$gift_list = $gitf->seek_all_data();
 
 		if ($act == 'add') {								//添加
 			if ($this->isPost()) {
@@ -154,9 +156,9 @@ class HotelAction extends AdminBaseAction {
 			$hotel_lp = explode(',',$hotel_info['hotel_lp']);
 
 
-			foreach ($this->global_system->Hotel_Lp AS $key=>$val) {
-				if (in_array($val['num'],$hotel_lp)) {
-					$this->global_system->Hotel_Lp[$key]['checked'] = 'checked="checked"';
+			foreach ($gift_list AS $key=>$val) {
+				if (in_array($val['id'],$hotel_lp)) {
+					$gift_list[$key]['checked'] = 'checked="checked"';
 				}
 			}
 
@@ -177,7 +179,8 @@ class HotelAction extends AdminBaseAction {
 			
 			exit;
 		}
-		$html['Hotel_Lp'] = $this->global_system->Hotel_Lp;
+		
+		$html['Hotel_Lp'] = $gift_list;
 
 
 		parent::global_tpl_view( array(
