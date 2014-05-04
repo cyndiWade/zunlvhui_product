@@ -470,17 +470,15 @@ private function receiveText($object)
 		 $T= 60*30;
 		 $datatext = $Siri->seek_explain(array('keyword'=>array('like',"$text")));
 		 $text = empty($datatext) ? str_replace('市','',$text) : $datatext;
-		 tolog('/web/www/ftp/tjr/wxadmin/App/Lib/Action/Api/a.txt',$text.$Siri->getLastSql());
 		 if(in_array("$text",$this->get_city())){
-		 	if($step>0){
+		 	if($step > 0 ){
 				$OrderState->del_data_user($user_code);
 				$step = 0;
 		 	}
 		 }else{
-		 	if($step <1){
+		 	if($step < 1 ){
 		 		$text = '您输入的酒店名称未存在';
 				$resultStr = $this->transmitText($postObj, $text, $funcFlag);
-				//tolog('/web/www/ftp/tjr/wxadmin/App/Lib/Action/Api/a.txt',$resultStr);
 				die($resultStr);
 			}
 		 }
@@ -498,8 +496,7 @@ private function receiveText($object)
 					if(!$arr_item){
                         $contentStr = $text.'该城市是没有酒店信息。';
 						$resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
-						die($resultStr);
-					  
+						die($resultStr);				  
 					}
 					$resultStr = $this->transmitNews($postObj, $arr_item, $flag = 0);
 					
