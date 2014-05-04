@@ -186,7 +186,7 @@ class WeixinAction extends AppBaseAction{
 							}
 	
 						}
-					    $contentStr = "欢迎关注尊旅会公众号";
+					    $contentStr = '亲，谢谢您关注"尊旅会"，请输入您的手机号码，成为VIP会员，享受订房超低价。';
 						$resultStr = $this->transmitText($object, $contentStr);
 					
 					break;
@@ -719,7 +719,7 @@ private function receiveText($object)
 	    $WxUser = $this->db['WxUser'];
 		$phone = $WxUser->The_existence_of_phone($obj->FromUserName);
 		if(empty($phone)){		   
-          $contentStr = '请输入手机号来验证。';
+          $contentStr = '恭喜您成为“尊旅会”VIP会员，请输入您想要前往的城市名称（例：上海）。';
 	      $re = $this->transmitText($obj, $contentStr, $funcFlag=0);
 		}else{
 			$re = '';
