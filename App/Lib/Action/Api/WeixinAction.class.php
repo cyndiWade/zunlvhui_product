@@ -489,7 +489,7 @@ private function receiveText($object)
 		     case 0 :
 				 //城市名
 				    if(!in_array("$text",$this->get_city())){
-						$contentStr = '您输入的不是城市名称。';
+						$contentStr = '请重新文字或语音输入您想要前往的城市（例：上海）。';
 						$resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
 						die($resultStr);
 					}
