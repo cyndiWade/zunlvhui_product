@@ -14,7 +14,7 @@ class SphotelModel extends ApiBaseModel{
 			->order('h.sort DESC')
 			->select();
 			$datas = $this->table($this->prefix.'sphotel AS h')
-			->field('h.id,h.hotel_name , h.hotel_syq, h.hotel_pf ,rs.spot_payment,rs.prepay')
+			->field('h.id,h.hotel_name , h.hotel_syq, h.hotel_pf ,rs.spot_payment,rs.prepay,hr.privilege_day')
 			->join($this->prefix.'sphotel_room AS hr ON h.id=hr.hotel_id')
 			->join($this->prefix.'sproom_schedule AS rs on rs.hotel_room_id = hr.id')
 			->where(array('h.is_del'=>0,'rs.day'=>strtotime( date('Y-m-d',time())) )  )
