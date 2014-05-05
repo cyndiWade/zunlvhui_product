@@ -26,6 +26,7 @@ class SphotelModel extends ApiBaseModel{
 		
 				$data[$k]['spot_payment'] = $datas[$v['id']][0]['spot_payment'];
 				$data[$k]['prepay'] = $datas[$v['id']][0]['prepay'];
+				$data[$k]['privilege_day'] = $datas[$v['id']][0]['privilege_day'];
 			}
 
 			$arr = array();
