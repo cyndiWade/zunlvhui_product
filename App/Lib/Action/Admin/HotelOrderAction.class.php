@@ -175,5 +175,53 @@ class HotelOrderAction extends AdminBaseAction {
 		$OrderLog->msg = $msg;
 		return $OrderLog->add_order_log();
 	}
+
+
+	//处理状态
+	public function dispose_status () {
+		$hotel_order_id = $this->_get('hotel_order_id');
+		$HotelOrder = $this->db['HotelOrder'];
+		$this->global_system->DISPOSE_STATUS = C('DISPOSE_STATUS');
+
+		if (empty($hotel_order_id)) $this->error('非法操作！');
+		$order_info = $HotelOrder->seek_one_hotel(array('id'=>$hotel_order_id),'id,order_sn,dispose_status');
+		if (empty($order_info)) $this->error('此订单不存在！');
+		
+		$dispose_status = $order_info['dispose_status'];
+		foreach ($this->global_system->DISPOSE_STATUS AS $key=>$val) {
+				if ($val['num'] <= $dispose_status) {
+					$this->global_system->DISPOSE_STATUS[$key]['checked'] = 'checked="checked"';
+					$this->global_system->DISPOSE_STATUS[$key]['disabled'] = 'disabled="disabled"';
+				}
+		}
+		if ($this->isPost()) {			//修改
+			$HotelOrder->create();
+			$dispose_status = end($this->_post('dispose_status'));//处理状态
+			$HotelOrder->dispose_status = $dispose_status;
+			$HotelOrder->order_status = $this->order_status[1]['num'];		//订单状态为已处理
+			$order_id = $HotelOrder->save_one_data(array('id'=>$hotel_order_id));		//修改订单
+		
+			if ($order_id == true) {
+				$this->add_data_order_log($hotel_order_id,$this->dispose_status[$dispose_status]['admin_explain']);		//记录订单日志
+				Tool::alertClose('chenggong');
+				//$this->success('成功');
+			} else {
+				Tool::alertClose('shibai');
+				//$this->error('失败');
+			}
+
+			exit;
+				
+		}
+
+		parent::global_tpl_view(array(
+				'action_name'=>'订单状态',
+				'title_name'=>'订单：'.$order_info['order_sn'].'-状态',
+		));
+		$html['DISPOSE_STATUS'] = $this->global_system->DISPOSE_STATUS;
+		
+		$this->assign('html',$html);
+		$this->display();
+	}
     
 }
