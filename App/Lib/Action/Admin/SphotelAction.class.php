@@ -112,10 +112,19 @@ class SphotelAction extends AdminBaseAction {
 		$user_id = $this->_get('user_id');			//酒店账号ID
 		$hotel_id = $this->_get('hotel_id');		//酒店ID
         $merchant_id = $this->_get('merchant_id');
+
+		$this->Hotel_Lp = C('Hotel_Lp');
+
+		$gitf=new GiftModel();
+		$gift_list = $gitf->seek_all_data();
+
 		if ($act == 'add') {								//添加
 			if ($this->isPost()) {
 				
 				$Hotel->create();
+				$hotel_lp = $this->_POST['hotel_lp'];
+				$hotel_lp = implode(',',$hotel_lp);
+				$Hotel->hotel_lp = $hotel_lp;
 				$hotel_id = $Hotel->add();
 				if ($hotel_id == true) {
 					/*$UsersHotel->user_id = $user_id;
@@ -138,7 +147,10 @@ class SphotelAction extends AdminBaseAction {
 			
 		} else if ($act == 'update') {			//修改
 			if ($this->isPost()) {
+				$hotel_lp = $this->_POST('hotel_lp');
+				$hotel_lp = implode(',',$hotel_lp);
 				$Hotel->create();
+				$Hotel->hotel_lp = $hotel_lp;
 				$Hotel->save_one_data(array('id'=>$hotel_id)) ? $this->success('修改成功！') : $this->error('没有做出任何修改！');
 				exit;
 			}
@@ -147,7 +159,13 @@ class SphotelAction extends AdminBaseAction {
 			if (empty($hotel_id)) $this->error('酒店不存在！');
 			$hotel_info = $Hotel->get_one_hotel(array('id'=>$hotel_id),'*');
 			if (empty($hotel_info)) $this->error('酒店不存在！');
+			$hotel_lp = explode(',',$hotel_info['hotel_lp']);
 
+			foreach ($gift_list AS $key=>$val) {
+				if (in_array($val['id'],$hotel_lp)) {
+					$gift_list[$key]['checked'] = 'checked="checked"';
+				}
+			}
 			//模板标题
 			$title_name = $hotel_info['hotel_name'].'--编辑';
 			
@@ -165,7 +183,8 @@ class SphotelAction extends AdminBaseAction {
 			
 			exit;
 		}
-		
+
+		$html['Hotel_Lp'] = $gift_list;
 
 		parent::global_tpl_view( array(
 				'action_name'=>'酒店编辑',
