@@ -12,7 +12,8 @@ class SphotelListAction extends HomeBaseAction{
 		'Coupon'       => 'Coupon',
 		'WxUser'       => 'WxUser',
         'OrderLog'     => 'OrderLog',
-		'UserCoupon'   => 'UserCoupon'
+		'UserCoupon'   => 'UserCoupon',
+		'Gift'         => 'Gift'
 	 );
 	 	/**
 	 * 构造方法
@@ -68,7 +69,7 @@ class SphotelListAction extends HomeBaseAction{
 	     $data = $HotelRoom->get_hotel_room($hotel_id,2); // 获得房型
 	   
 	     if($list == true){
-	     	  
+	     	$list['hotel_lp']  = $Gift->seek_all_data(array('id'=>array('in',$list['hotel_lp']))) ; 
 			$list['img']         = $Hotel->get_img($list['id'],4);
 			$daytime   = $list['cut_off_day']==0 ? time() : strtotime($list['cut_off_day'].' day');
 			$day = $list['cut_off_day']+1;
@@ -79,6 +80,7 @@ class SphotelListAction extends HomeBaseAction{
 	  	     'date'=>"{minDate:'".date('Y-m-d',$daytime)."'}",
 	  	     'exit_date'=>"{minDate:'".date('Y-m-d',$exit_time)."'}",
 		  	 'list'=>$list,
+	  	     'hotel_lp'=>$list['hotel_lp'],
 	  	     'roomtype' =>$data,
 		  	 'user_code'=>$user_code,
 			 'hotel_cs'=> passport_encrypt($list['hotel_cs'],'hotel')
