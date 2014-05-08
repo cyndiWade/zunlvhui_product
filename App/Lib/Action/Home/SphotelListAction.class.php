@@ -62,6 +62,7 @@ class SphotelListAction extends HomeBaseAction{
 	  	 
 	     $Hotel  = $this->db['Sphotel'];
 	     $HotelRoom  = $this->db['SphotelRoom'];
+	     $Gift       = $this->db['Gift'];
 	  	 $hotel_id = $this->_get('hotel_id');
 	  	 $user_code = $this->_get('user_code');
 	  	 
