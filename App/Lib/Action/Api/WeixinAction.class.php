@@ -487,16 +487,27 @@ private function receiveText($object)
 		     case 0 :
 				 //城市名
 				    if(!in_array("$text",$this->get_city())){
-						$contentStr = '请重新文字或语音输入您想要前往的城市（例：上海）。';
-						$resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
-						die($resultStr);
-					}
-				    $data = array('user_code'=>"$user_code",'hotel_add'=>"$text",'step'=>$step+1,'endtime'=>time()+$T);
-					$arr_item = $Hotel->get_all_hotel("$text");	
-					if(!$arr_item){
-                        $contentStr = $text.'该城市是没有酒店信息。';
-						$resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
-						die($resultStr);				  
+				    	$arr_item = $Hotel->get_Hotel("$text"); // 判断是否输入的是酒店
+				    	if(empty($arr_item)){
+				    		$contentStr = '请重新文字或语音输入您想要前往的城市（例：上海）。';
+							$resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
+							die($resultStr);
+				    	}
+				    	$data = array(
+					    	'user_code'=>"$user_code",
+					    	'hotel_add'=>"$text",
+					    	'step'=>$step+2,
+					    	'endtime'=>time()+$T
+				    	);
+						
+					}else{
+					    $data = array('user_code'=>"$user_code",'hotel_add'=>"$text",'step'=>$step+1,'endtime'=>time()+$T);
+						$arr_item = $Hotel->get_all_hotel("$text");	
+						if(!$arr_item){
+	                        $contentStr = $text.'该城市是没有酒店信息。';
+							$resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
+							die($resultStr);				  
+						}
 					}
 					$resultStr = $this->transmitNews($postObj, $arr_item, $flag = 0);
 					
