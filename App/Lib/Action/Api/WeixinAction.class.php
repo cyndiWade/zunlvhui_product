@@ -694,7 +694,16 @@ private function receiveText($object)
 		  $Siri        = $this->db['Siri'];
 	      $arr = $Hotel->get_Hotel("虹桥嘉廷");
 	      $arr_item  = $arr['list'];
+	      $data = array(
+					    	'user_code'=>"$user_code",
+					    	'hotel_add'=>"$text",
+				    	    'hotel_name'=>$arr_item[0]['hotel_name'],
+				    	    'hotel_id'=>$arr_item[0]['hotel_id'],
+					    	'step'=>$step+2,
+					    	'endtime'=>time()+$T
+				    	); 
 		  //$arr_item = $Sphotel->get_all_sphotel();
+		   echo '<pre>';print_R($data);echo '</pre>';
         echo '<pre>';print_R($arr_item);echo '</pre>';exit;
    }
 
