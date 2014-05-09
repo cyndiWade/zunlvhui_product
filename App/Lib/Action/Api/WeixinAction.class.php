@@ -697,8 +697,8 @@ private function receiveText($object)
 	      $data = array(
 					    	'user_code'=>"$user_code",
 					    	'hotel_add'=>"$text",
-				    	    'hotel_name'=>$arr_item['hotel_name'],
-				    	    'hotel_id'=>$arr_item['hotel_id'],
+				    	    'hotel_name'=>$arr['hotel_name'],
+				    	    'hotel_id'=>$arr['hotel_id'],
 					    	'step'=>$step+2,
 					    	'endtime'=>time()+$T
 				    	); 
