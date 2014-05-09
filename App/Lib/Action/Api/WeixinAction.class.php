@@ -495,7 +495,7 @@ private function receiveText($object)
 							$resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
 							die($resultStr);				  
 						}
-				    	
+				    	$resultStr = $this->transmitNews($postObj, $arr_item, $flag = 0);
 						
 					}else{
 					    $arr= $Hotel->get_Hotel("$text"); // 判断是否输入的是酒店
@@ -512,9 +512,10 @@ private function receiveText($object)
 				    	    'hotel_id'=>$arr_item[0]['hotel_id'],
 					    	'step'=>$step+2,
 					    	'endtime'=>time()+$T
-				    	);  
+				    	); 
+				    	$resultStr = $this->transmitNews($postObj, $arr_item, $flag = 0); 
 					}
-					$resultStr = $this->transmitNews($postObj, $arr_item, $flag = 0);
+					
 					
 				 break;
 			 case 1 :	
