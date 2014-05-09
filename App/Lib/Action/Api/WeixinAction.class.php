@@ -475,13 +475,14 @@ private function receiveText($object)
 				$OrderState->del_data_user($user_code);
 				$step = 0;
 		 	}
-		 }else{
+		 }
+		 /*else{
 		 	if($step < 1 ){
 		 		$text = '您输入的酒店名称未存在';
 				$resultStr = $this->transmitText($postObj, $text, $funcFlag);
 				die($resultStr);
 			}
-		 }
+		 }*/
          switch($step){
 		 
 		     case 0 :
