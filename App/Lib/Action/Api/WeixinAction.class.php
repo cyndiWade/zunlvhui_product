@@ -692,7 +692,8 @@ private function receiveText($object)
 		  $Sphotel      = $this->db['Sphotel'];
 		  $WxCode      = $this->db['WxCode'];
 		  $Siri        = $this->db['Siri'];
-	      $arr_item = $Hotel->get_Hotel("虹桥嘉廷");
+	      $arr = $Hotel->get_Hotel("虹桥嘉廷");
+	      $arr_item  = $arr['list'];
 		  //$arr_item = $Sphotel->get_all_sphotel();
         echo '<pre>';print_R($arr_item);echo '</pre>';exit;
    }
