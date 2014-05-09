@@ -703,6 +703,7 @@ private function receiveText($object)
 					    	'endtime'=>time()+$T
 				    	); 
 		  //$arr_item = $Sphotel->get_all_sphotel();
+		   echo '<pre>';print_R($arr);echo '</pre>';
 		   echo '<pre>';print_R($data);echo '</pre>';
         echo '<pre>';print_R($arr_item);echo '</pre>';exit;
    }
