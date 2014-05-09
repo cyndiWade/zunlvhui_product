@@ -33,13 +33,20 @@ class WxCodeAction extends AdminBaseAction {
 		$WxCode = $this->db['WxCode'];
 		
 		//已分配酒店的二维码
-		$condition['wc.hotel_id'] = array('neq',0); 
-		$result =  $WxCode->seek_hotel_codes($condition,'wc.id,wc.code_id,wc.code_url,wc.yuangong,wc.yuangong,hotel_remarks,h.hotel_name');
+		$condition = 'wc.hotel_id<>0'; 
+
+		$search_data = $this->_POST('search_data');
+		if(!empty($search_data)){
+			$condition = $condition." and (wc.code_id='".$search_data."' or wc.hotel_remarks like '%".$search_data."%')";
+		}
+		
+		
+		$result =  $WxCode->seek_hotel_codes($condition,'wc.id,wc.code_id,wc.code_url,wc.yuangong,wc.yuangong,wc.hotel_remarks,h.hotel_name');
 		//<if condition="($vo['prepay'] neq 0)">
 		//分页
 		$Page = $result['obj'];
 		$orderList = $result['data'];
-
+		
 		//设置分页样式
 		$Page->setConfig('prev','<span class="pageAnthor">上一页</span>');
 		$Page->setConfig('next','<span class="pageAnthor">下一页</span>');

@@ -5,8 +5,8 @@ class WxCodeModel extends AdminBaseModel {
 	
 
 	public function seek_hotel_codes ($condition,$field = '*') {
-		$con = array('wc.is_del'=>0);
-		array_add_to($con,$condition);
+		$con = 'wc.is_del=0 and '.$condition;
+		
 		
 		//计算数据条数
 		$count = $this->field('wx.id')
