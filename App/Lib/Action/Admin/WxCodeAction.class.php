@@ -37,7 +37,7 @@ class WxCodeAction extends AdminBaseAction {
 
 		$search_data = $this->_POST('search_data');
 		if(!empty($search_data)){
-			$condition = $condition." and (wc.code_id='".$search_data."' or wc.hotel_remarks like '%".$search_data."%')";
+			$condition = $condition." and (wc.code_id='".$search_data."' or h.hotel_name like '%".$search_data."%')";
 		}
 		
 		
