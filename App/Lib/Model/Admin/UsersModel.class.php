@@ -4,7 +4,7 @@
 class UsersModel extends AdminBaseModel {
 	
 	//添加账号
-	public function add_account($type) {
+	public function add_account() {
 		//写入数据库
 		$this->password = md5($this->password);
 		$time = time();
@@ -12,7 +12,7 @@ class UsersModel extends AdminBaseModel {
 		$this->last_login_ip = get_client_ip();
 		$this->create_time = $time;
 		$this->update_time = $time;
-		$this->type = $type;				//用户类型
+						//用户类型
 		return $this->add();
 	}
 	

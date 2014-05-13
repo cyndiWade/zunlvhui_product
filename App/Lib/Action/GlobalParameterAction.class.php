@@ -37,6 +37,7 @@ class GlobalParameterAction extends Action {
 		$this->global_system->siri_type = C('SiriType');		//语言类型
 		$this->global_system->Merchant_Type = C('Merchant_Type');
 		$this->global_system->Hotel_Lp = C('Hotel_Lp');
+		
 	}
 
 	

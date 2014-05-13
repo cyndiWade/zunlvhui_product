@@ -117,7 +117,7 @@ class UserAction extends AdminBaseAction {
 					if ($account_is_have) $this->error('此账号已存在');
 						
 					$Users->create();
-					$user_id = $Users->add_account(C('ACCOUNT_TYPE.HOTEL'));
+					$user_id = $Users->add_account();
 					$user_id ? $this->success('添加成功！',U('Admin/Hotel/hotel_edit',array('act'=>'add','user_id'=>$user_id))) : $this->error('添加失败，请重新尝试！');
 					exit;
 				}
