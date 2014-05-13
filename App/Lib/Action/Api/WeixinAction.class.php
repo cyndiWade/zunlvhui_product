@@ -65,7 +65,7 @@ class WeixinAction extends AppBaseAction{
 				    $is_tel = is_phone("$text");
 					if(!empty($is_tel)){
 					  $WxUser->where(array('wxid'=>"$user_code"))->save(array('phone'=>"$text"));
-					  $contentStr = '验证成功';
+					  $contentStr = '恭喜您成为“尊旅会”VIP会员，请输入您想要前往的城市名称（例：上海）。';
 					  $resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
 					  die($resultStr);
 					}
@@ -744,7 +744,7 @@ private function receiveText($object)
 	    $WxUser = $this->db['WxUser'];
 		$phone = $WxUser->The_existence_of_phone($obj->FromUserName);
 		if(empty($phone)){		   
-          $contentStr = '恭喜您成为“尊旅会”VIP会员，请输入您想要前往的城市名称（例：上海）。';
+          $contentStr = '请输入手机号来验证。';
 	      $re = $this->transmitText($obj, $contentStr, $funcFlag=0);
 		}else{
 			$re = '';
