@@ -23,10 +23,10 @@ body { font-size:12px;}
 
 
 /*main-login*/
-.login{ width:380px; height:440px;  position:absolute; top:50%;  left:50%;margin-top:-220px; margin-left:-190px;}
+.login{ width:449px; height:440px;  position:absolute; top:50%;  left:50%;margin-top:-220px; margin-left:-190px;}
 .logo{ padding-bottom:80px;}
 .login_form p { padding:0 0 25px;}
-.login_form p label{ color:#fff; font-size:18px; line-height:40px; width:75px; padding:0 15px; text-align:right; display:inline-block;}
+.login_form p label{ color:#fff; font-size:18px; line-height:40px; width:90px; padding:0 15px; text-align:right; display:inline-block;}
 .login_name{ color:#999}
 .input1{ border:#ffc05e 1px solid; background:#fff4cb; width:230px; padding:0 10px; height:38px; line-height:38px; font-size:18px;}
 .login_btn{ background:#fc7317; font-size:24px; line-height:35px; color:#fff; width:85pxpx; display:inline-block; text-align:center; height:32px; border:none; cursor:pointer;}

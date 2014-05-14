@@ -73,4 +73,37 @@ class LoginAction extends HotelBaseAction{
 	 	}
 	 }
 
+	 public function setPassWord() {
+		if (session_start()) {
+			if ($this->isPost()) {
+				$Users = D('Users');
+				$password = $_POST['password'];
+				$newPassWord = $_POST['new_password'];
+				$password_affirm = $_POST['password_affirm'];
+
+				import("@.Tool.Validate");
+				if (Validate::checkNull($password)) $this->error('密码不得为空！');
+				if (Validate::checkNull($newPassWord)) $this->error('新密码不得为空！');
+				if (!Validate::checkEquals($newPassWord,$password_affirm)) $this->error('重复密码不一致！');
+
+				$id = $_SESSION[C('SESSION_DOMAIN')][GROUP_NAME]['user_info']['id'];  //获得session中用户id
+				$user_info = $Users->get_user_info(array('id'=>$id,'is_del'=>0));	  //获得用户信息
+				
+				if(strcmp(md5($password),$user_info['password'])==0){
+					if( $Users->modifi_user_password ($id,md5($newPassWord))){
+						$this->success('修改成功',U(GROUP_NAME.'/Login/login'));
+					}else{
+						$this->error('修改失败');
+					}
+				}else{
+					$this->error('密码错误');
+				}
+			}
+			$this->display();
+	 	} else {
+    	
+    		$this->redirect('Login/login');
+    	}
+	 }
+
 }
