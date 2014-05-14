@@ -98,8 +98,10 @@ class LoginAction extends HotelBaseAction{
 				}else{
 					$this->error('密码错误');
 				}
+			}else{
+
+			    $this->display();
 			}
-			$this->display();
 	 	} else {
     	
     		$this->redirect('Login/login');
