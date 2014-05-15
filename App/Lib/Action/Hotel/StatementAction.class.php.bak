@@ -119,7 +119,7 @@ class StatementAction extends HotelBaseAction {
 		//不需要的字段
   	    $not_field = array('uid','nickname','sex','city','country','province','language','headimgurl','localimgurl','coupon','user_id','hotel_id','is_from','code_id','wxid');
 		 
-   		
+   		dump($wx_user_list);die;
 	   	//报列标题
 	   	$title .= '是否关注,关注时间,姓名,手机号,酒店名称'."\n";
 
