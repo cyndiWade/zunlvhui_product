@@ -28,7 +28,6 @@ function is_phone(obj){
 
     	obj.focus();
         alert('请输入正确的手机号'); 
-        return false;
     }
 	
 }
@@ -58,7 +57,13 @@ function submit_order(){
      alert('请填写手机号');
      return false;
    }else{
-	   is_phone(document.getElementById('tel'));
+	    var val = document.getElementById('tel').value;
+		re= /^(1[345689][0-9]{9})$/  //判断手机号的正则表达式。
+		
+	    if(!re.test(val) || val.length!=11){
+	        alert('请输入正确的手机号'); 
+	        return false;
+	    }
    }
    $data={
 		   room_id : room_id,
