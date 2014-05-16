@@ -501,7 +501,7 @@ private function receiveText($object)
 					}else{
 					    $arr= $Hotel->get_Hotel("$text"); // 判断是否输入的是酒店
 					    $arr_item  = $arr['list'];
-				    	if(count($arr_item)>0){
+				    	if(count($arr_item)==0){
 				    		$where = array(
 				    			'keyword'=>array('like',"%$text%")
 				    		);
