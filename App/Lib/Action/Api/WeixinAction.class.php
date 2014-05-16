@@ -515,16 +515,17 @@ private function receiveText($object)
 								$resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
 								die($resultStr);
 				    		}
-				    	}
-				    	$data = array(
-					    	'user_code'=>"$user_code",
-					    	'hotel_add'=>"$text",
-				    	    'hotel_name'=>$arr['hotel_name'],
-				    	    'hotel_id'=>$arr['hotel_id'],
-					    	'step'=>$step+2,
-					    	'endtime'=>time()+$T
-				    	); 
-				    	$resultStr = $this->transmitNews($postObj, $arr_item, $flag = 0); 
+				    	}else{
+					    	$data = array(
+						    	'user_code'=>"$user_code",
+						    	'hotel_add'=>"$text",
+					    	    'hotel_name'=>$arr['hotel_name'],
+					    	    'hotel_id'=>$arr['hotel_id'],
+						    	'step'=>$step+2,
+						    	'endtime'=>time()+$T
+					    	); 
+				    	    $resultStr = $this->transmitNews($postObj, $arr_item, $flag = 0);
+				    	} 
 					}
 					
 					
