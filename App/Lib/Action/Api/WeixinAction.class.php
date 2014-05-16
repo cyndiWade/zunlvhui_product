@@ -468,7 +468,7 @@ private function receiveText($object)
 		   $text = $postObj->Recognition ;
 		 }
 		 $T= 60*30;
-		 $datatext = $Siri->seek_explain(array('keyword'=>array('like',"$text")));
+		 $datatext = $Siri->seek_explain(array('keyword'=>array('like',"%$text%")));
 		 $text = empty($datatext) ? str_replace('市','',$text) : $datatext;
 		 if(in_array("$text",$this->get_city())){
 		 	if($step > 0 ){
@@ -702,20 +702,13 @@ private function receiveText($object)
 		  $Sphotel      = $this->db['Sphotel'];
 		  $WxCode      = $this->db['WxCode'];
 		  $Siri        = $this->db['Siri'];
-	      $arr = $Hotel->get_Hotel("虹桥嘉廷");
-	      $arr_item  = $arr['list'];
-	      $data = array(
-					    	'user_code'=>"$user_code",
-					    	'hotel_add'=>"$text",
-				    	    'hotel_name'=>$arr['hotel_name'],
-				    	    'hotel_id'=>$arr['hotel_id'],
-					    	'step'=>$step+2,
-					    	'endtime'=>time()+$T
-				    	); 
+	     $where = array(
+				    			'keyword'=>array('like',"%厕所%")
+				    		);
+			$keywords = $Siri->seek_explain($where);
 		  //$arr_item = $Sphotel->get_all_sphotel();
-		   echo '<pre>';print_R($arr);echo '</pre>';
-		   echo '<pre>';print_R($data);echo '</pre>';
-        echo '<pre>';print_R($arr_item);echo '</pre>';exit;
+		
+        echo '<pre>';print_R($keywords);echo '</pre>';exit;
    }
 
    public function valid()
