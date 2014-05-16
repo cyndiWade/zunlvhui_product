@@ -515,6 +515,8 @@ private function receiveText($object)
 								$resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
 								die($resultStr);
 				    		}
+				    		$resultStr = $this->transmitText($postObj, $keywords, $funcFlag);
+							die($resultStr);
 				    	}else{
 					    	$data = array(
 						    	'user_code'=>"$user_code",
