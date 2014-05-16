@@ -501,9 +501,19 @@ private function receiveText($object)
 					    $arr= $Hotel->get_Hotel("$text"); // 判断是否输入的是酒店
 					    $arr_item  = $arr['list'];
 				    	if(empty($arr_item)){
-				    		$contentStr = '请重新文字或语音输入您想要前往的城市（例：上海）。';
-							$resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
-							die($resultStr);
+				    		$where = array(
+				    			'keyword'=>array('like',"%$text%")
+				    		);
+				    		$keywords = $Siri->seek_explain($where);
+				    		if(!empty($keywords)){
+
+								$resultStr = $this->transmitText($postObj, $keywords, $funcFlag);
+								die($resultStr);
+				    		}else{
+					    		$contentStr = '请重新文字或语音输入您想要前往的城市（例：上海）。';
+								$resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
+								die($resultStr);
+				    		}
 				    	}
 				    	$data = array(
 					    	'user_code'=>"$user_code",
