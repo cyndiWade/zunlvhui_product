@@ -468,8 +468,9 @@ private function receiveText($object)
 		   $text = $postObj->Recognition ;
 		 }
 		 $T= 60*30;
-		 $datatext = $Siri->seek_explain(array('keyword'=>array('like',"%$text%")));
-		 $text = empty($datatext) ? str_replace('市','',$text) : $datatext;
+		 //$datatext = $Siri->seek_explain(array('keyword'=>array('like',"%$text%")));
+		 //$text = empty($datatext) ? str_replace('市','',$text) : $datatext;
+		 $text = str_replace('市','',$text);
 		 if(in_array("$text",$this->get_city())){
 		 	if($step > 0 ){
 				$OrderState->del_data_user($user_code);
