@@ -702,8 +702,9 @@ private function receiveText($object)
 		  $Sphotel      = $this->db['Sphotel'];
 		  $WxCode      = $this->db['WxCode'];
 		  $Siri        = $this->db['Siri'];
-	     $where = array(
-				    			'keyword'=>array('like',"%厕所%")
+		  $text = '厕所';
+	      $where = array(
+				    			'keyword'=>array('like',"%$text%")
 				    		);
 			$keywords = $Siri->seek_explain($where);
 		  //$arr_item = $Sphotel->get_all_sphotel();
