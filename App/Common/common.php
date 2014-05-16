@@ -504,7 +504,7 @@ function daysDiff($timestamp1, $timestamp2) {
 //判断是否是手机号
 function is_phone($phone_num){
 
-  $regex = "/13[0-9]{9}|15[0|1|2|3|5|6|7|8|9]\d{8}|18[0|5|6|7|8|9]\d{8}/";
+  $regex = "/13[0-9]{9}|15[0-9]\d{8}|18[0-9]\d{8}/";
   preg_match($regex,$phone_num, $phone);
 
   if(count($phone)){
