@@ -710,8 +710,8 @@ private function receiveText($object)
 				    		);
 			$keywords = $Siri->seek_explain($where);
 		  //$arr_item = $Sphotel->get_all_sphotel();
-		
-        echo '<pre>';print_R($keywords);echo '</pre>';exit;
+		$arr= $Hotel->get_Hotel("$text");
+        echo '<pre>';print_R($arr);echo '</pre>';exit;
    }
 
    public function valid()
