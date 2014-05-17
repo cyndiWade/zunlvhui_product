@@ -21,7 +21,34 @@ return array(
 	//	'NOT_AUTH_ACTION' => 'login', 						// 默认无需认证方法，多个用,号分割
 
 		'VAR_PAGE' => 'page',		//分页标识
-		
+		'USERFROM'   =>array(
+			0 => array(
+						'num' => 0,
+						'explain' => '账号搜索',
+				),
+	        1 => array(
+						'num' => 1,
+						'explain' => '扫描二维码',
+				),
+			2 => array(
+						'num' => 2,
+						'explain' => '关注后扫描',
+				),
+			3 => array(
+						'num' => 3,
+						'explain' => '关注后扫描',
+				),
+             ),
+		 'SUBSCRIBE'=>array(
+				1  => array(
+						'num' => 1,
+						'explain' =>'已关注'
+		         ),
+		 		2  => array(
+		 				'num' => 2,
+		 				'explain' =>'已取消关注'
+		 		),
+			)
 		
 
 );

@@ -31,7 +31,7 @@ class MemberAction extends AdminBaseAction {
 		$WxUser = $this->db['WxUser'];
 		
 		//所有数据列表
-		$siri_list = $WxUser->seek_all_data();
+		$siri_list = $WxUser->seek_all_data('subscribe,wxid,subscribe_time,phone,is_from,uname,code_id');
 
 		parent::global_tpl_view( array(
 			'action_name'=>'会员信息',
