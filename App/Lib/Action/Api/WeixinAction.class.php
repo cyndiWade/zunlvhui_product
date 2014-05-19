@@ -168,6 +168,7 @@ class WeixinAction extends AppBaseAction{
 			switch ($object->Event)
 			{
 				case "subscribe":  // 关注事件
+					   $code_id = str_replace('qrscene_','',$object->EventKey);
 			           if(strlen($object->EventKey)<42 and strlen($object->EventKey)>0){ //这个key不能只判断有没有
 							$code_id = str_replace('qrscene_','',$object->EventKey);
 							$data = $WxCode->get_hotel_user_id($code_id);
@@ -180,9 +181,13 @@ class WeixinAction extends AppBaseAction{
 							}
 
 				        }else{
+				            $data = $WxCode->get_hotel_user_id($code_id);
+							if(empty($data)){
+							   $data = array('user_id'=>0,'hotel_id'=>0);
+							}
                             $wxuser = $WxUser->The_existence_of_wxuser($user_code);
 							if(empty($wxuser)){
-								$WxUser->add(array('subscribe'=>1,'wxid'=>"$user_code",'subscribe_time'=>time(),'is_from'=>0,'user_id'=>0,'hotel_id'=>0,'code_id'=>0));
+								$WxUser->add(array('subscribe'=>1,'wxid'=>"$user_code",'subscribe_time'=>time(),'is_from'=>0,'user_id'=>$data['user_id'],'hotel_id'=>$data['hotel_id'],'code_id'=>$code_id));
 							}
 	
 						}
