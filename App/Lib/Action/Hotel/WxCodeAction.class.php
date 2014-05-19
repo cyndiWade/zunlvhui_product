@@ -52,6 +52,7 @@ class WxCodeAction extends HotelBaseAction {
 				'action_name'=>'已分配',
 				'title_name'=>$hotel_info['hotel_name'],
 		));
+		//echo '<pre>';print_r($html);echo'</pre>';exit;
 		$this->assign('html',$html);
 		$this->display();
 	}
@@ -72,7 +73,7 @@ class WxCodeAction extends HotelBaseAction {
 				}
 				//查找
 				$info = $WxCode->seek_one_data(array('id'=>$code_id));
-				
+				//echo '<pre>';print_r($html);echo'</pre>';exit;
 				if (empty($info)) $this->error('您编辑的二维码不存在！');
 				$title_name = '编辑';
 				$html = $info;
