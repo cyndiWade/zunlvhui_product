@@ -14,7 +14,7 @@ class WxUserModel extends AppBaseModel{
 	
 	public function get_all_wx_user($user_id){
 
-	    $data = $this->field('u.uname,u.phone,u.subscribe_time,c.yuangong,c.hotel_remarks')
+	    $data = $this->field('u.uid,u.uname,u.phone,u.subscribe_time,c.yuangong,c.hotel_remarks')
 	    ->table($this->prefix.'wx_user as u')
 	    ->join($this->prefix.'wx_code as c on u.code_id = c.code_id')
 	    ->where(array('u.user_id'=>$user_id))
