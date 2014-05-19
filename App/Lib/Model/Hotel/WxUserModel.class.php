@@ -29,7 +29,7 @@ class WxUserModel extends AppBaseModel{
 		return $data;
 	}
 	
-	public function admin_get_wx_user(){
+	/*public function admin_get_wx_user(){
 	   
 	    $data = $this->field('u.*,c.hotel_name')
 	    ->table($this->prefix.'wx_user as u')
@@ -38,5 +38,5 @@ class WxUserModel extends AppBaseModel{
 	    parent::set_all_time($data, array('subscribe_time'));
 		return $data;
 	}
-	
+	*/
 }

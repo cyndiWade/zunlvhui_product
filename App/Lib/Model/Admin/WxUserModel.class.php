@@ -40,6 +40,21 @@ class  WxUserModel extends  AdminBaseModel {
 			return array('hotel_remarks'=>$hotel_remarks,'yuangong'=>$yuangong);
 			
 		}
+
+		public function admin_get_wx_user(){
+	   
+			$data = $this->field('u.*,c.hotel_name')
+			->table($this->prefix.'wx_user as u')
+			->join($this->prefix.'hotel as c on u.hotel_id = c.id')
+			->select();
+			
+			$remarks  = $this->get_code_exp('code_id,hotel_remarks,yuangong');
+			foreach($data as $k=>$v){
+				$data[$k]['hotel_remarks']=$remarks['hotel_remarks'][$v['code_id']];
+				$data[$k]['yuangong']     =$remarks['yuangong'][$v['code_id']];
+			}
+			return $data;
+		}
 }
 
 ?>

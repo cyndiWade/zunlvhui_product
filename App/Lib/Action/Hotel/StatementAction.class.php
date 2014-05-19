@@ -109,35 +109,5 @@ class StatementAction extends HotelBaseAction {
    	$this->set_excel('订单报表',$title.$str);
    }
  
-    //后台客户数据报表
-   public function down_all_wxuser() {
-  	 	header('Content-Type:text/html;charset=utf-8');
-   		$WxUser = $this->db['WxUser'];
-   		
-  	 	$wx_user_list = $WxUser->admin_get_wx_user();
-
-		//不需要的字段
-  	    $not_field = array('uid','nickname','sex','city','country','province','language','headimgurl','localimgurl','coupon','user_id','hotel_id','is_from','code_id','wxid');
-		 
-   		
-	   	//报列标题
-	   	$title .= '是否关注,关注时间,姓名,手机号,酒店名称'."\n";
-
-		if (!empty($wx_user_list)) {
-			
-			foreach ($wx_user_list as $key=>$val) {
-
-				foreach ($wx_user_list[$key] as $k=>$v) {
-					if (in_array($k,$not_field)) continue;
-					//$str .= (iconv( "UTF-8","gbk",$val['oid'])).',';
-					if($k=='subscribe') $v = $v==1 ? '已关注' : '已取消关注';
-					if($k=='subscribe_time') $v = date('Y-m-d H:i:s');
-					$str .= $v.',';
-				}
-				$str .= "\n";
-			}		
-		}
-
-		$this->set_excel('客户报表',$title.$str);
-   }
+   
 }
