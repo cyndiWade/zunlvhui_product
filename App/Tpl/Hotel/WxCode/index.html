@@ -108,9 +108,9 @@
 									<tbody>								
 										<volist name="html['list']" id="vo" key="i">
 										<tr class="odd gradeX">
-											<td >{$i}</td>
+											<td >{$vo.code_id}</td>
 											<td><a href="{$vo.code_url}" target="_blank"><img class="code_img" src="{$vo.code_url}" /></a></td>
-											<td >{$vo.hotel_remarks}</td>
+											<td >{$vo.yuangong}</td>
 											<td class="center">
 												<a target="_blank" href="{:U('Hotel/WxCode/edit',array('act'=>'update','code_id'=>$vo['id']))}">备注</a>
 											</td>
