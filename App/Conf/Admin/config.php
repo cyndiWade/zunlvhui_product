@@ -48,8 +48,29 @@ return array(
 		 				'num' => 2,
 		 				'explain' =>'已取消关注'
 		 		),
+			),
+		 'Roomspc'=>array(
+			    0  => array(
+						'num' => 0,
+						'explain' =>'无优惠 	',
+			            'text'=>'<font color=red>(填写 0)</font>'
+		         ),
+		 		1  => array(
+		 				'num' => 1,
+		 				'explain' =>'打折',
+		 				'text'=>'<font color=red>(填写 0.9 就是大九折)</font>'
+		 		),
+		 		2  => array(
+						'num' => 2,
+						'explain' =>'立减 ',
+						'text'=>'<font color=red>(填写 1 就是减1元)</font>'
+		         ),
+		 		3  => array(
+		 				'num' => 3,
+		 				'explain' =>'送N间夜 ',
+		 				'text'=>'<font color=red>(填写 3/1 就是入住三天送一天)</font>'
+		 		),
 			)
-		
 
 );
 ?>
