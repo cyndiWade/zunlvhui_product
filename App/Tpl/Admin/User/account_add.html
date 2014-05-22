@@ -41,7 +41,7 @@
 									<a href="javascript:;" class="collapse"></a>
 									<a href="javascript:;" class="reload"></a>				
 								</div>
-							</div>
+							</div>
 							<div class="portlet-body form">
 								<!-- BEGIN FORM-->
 								<form action="" id="form_sample_1" method="post" class="form-horizontal">                     
@@ -58,22 +58,22 @@
 
 									<label class="control-label">用户类型<span class="required">*</span></label>
 
-								<div class="controls">
+								     <div class="controls">
 												
 											<label class="checkbox line">
 													<input type="radio" value="0" name="type" class="merchant_type"  /> 管理员
-												</label>
+											</label>
 
-												<label class="checkbox line">
-													<input type="radio" value="1" name="type" class="merchant_type"  /> 酒店用户
-												</label>
-											
+											<label class="checkbox line">
+													<input type="radio" value="1" name="type" checked="checked" class="merchant_type"  /> 酒店用户
+											</label>
+											<label class="checkbox line">													<input type="radio" value="2" name="type" id="hotel" />集团用户											</label>
 
 										<div id="form_2_service_error"></div>
 										</div>
 
-									</div>
-									
+									</div>									<div id="hotel_show">									</div>
+									                                    <div style="clear:both;"></div>
 									<div class="control-group">
 										<label class="control-label">账号<span class="required">*</span></label>
 										<div class="controls">
@@ -116,7 +116,7 @@
 		   App.init();
 		   FormValidation.init();
 		});
-	</script>
+	</script><script type="text/javascript" >$("#hotel").click(function(){  alert($("#hotel").val());       var data ={					}				$.post('?s=/Admin/User/ajax_get_hotel',data,function(content){			//alert(content);			$("#hotel_show").html(content);			//var fangxing= $("#fangxing");			//fangxing.empty();			//fangxing.html(content);			//result = content;		},'html');}	)</script>
 	<!-- END JAVASCRIPTS -->   
 
 <!-- END BODY -->
