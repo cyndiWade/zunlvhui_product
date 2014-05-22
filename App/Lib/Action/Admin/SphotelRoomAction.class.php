@@ -56,7 +56,7 @@ class SphotelRoomAction extends AdminBaseAction {
        
 		//酒店房型列表
 		$html['list'] = $HotelRoom->get_hotel_rooms($hotel_id);
-		echo '<pre>';print_R($html);echo'</pre>';
+		//echo '<pre>';print_R($html);echo'</pre>';
         foreach($html['list'] as $k=>$v ){
         	$html['list'][$k]['type']  = $Roomspc[$v['type']]['explain'];
         }
