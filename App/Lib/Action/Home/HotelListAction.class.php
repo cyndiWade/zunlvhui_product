@@ -13,7 +13,8 @@ class HotelListAction extends HomeBaseAction{
 		'WxUser'       => 'WxUser',
         'OrderLog'     => 'OrderLog',
 		'UserCoupon'   => 'UserCoupon',
-	    'Gift'         => 'Gift'
+	    'Gift'         => 'Gift',
+	 	
 	 );
 	 	/**
 	 * 构造方法
