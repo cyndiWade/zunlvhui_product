@@ -60,7 +60,7 @@ class GiftAction extends AdminBaseAction {
 				exit;
 			}
 			//表单标题
-			//$title_name = '添加礼包';
+			$title_name = '添加礼包';
 		
 		} else if ($act == 'update') {			//修改
 			if ($this->isPost()) {

@@ -38,6 +38,12 @@ class HotelModel extends AdminBaseModel {
 		return $this->where(array('id'=>$hotel_id))->save();
 	}
 
+
+	//人工预定获取酒店名字
+	public function get_hotel_name() {
+		return $this->field('id,hotel_name')->where(array('is_del'=>0))->select();
+	}
+
 }
 
 ?>
