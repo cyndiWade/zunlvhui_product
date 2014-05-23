@@ -49,14 +49,18 @@ class SphotelRoomAction extends AdminBaseAction {
 		//连接数据库表
 		$HotelRoom = $this->db['SphotelRoom'];		//酒店房型表
 		$Hotel = $this->db['Sphotel'];				//酒店表
-		
+		$Roomspc   = C('Roomspc');
 		//查询酒店
 		$hotel_info = $Hotel->get_one_hotel(array('id'=>$hotel_id),'hotel_name');
 		if (empty($hotel_info)) $this->error('酒店不存在！');
-
+       
 		//酒店房型列表
 		$html['list'] = $HotelRoom->get_hotel_rooms($hotel_id);
-
+		//echo '<pre>';print_R($html);echo'</pre>';
+        foreach($html['list'] as $k=>$v ){
+        	$html['list'][$k]['type']  = $Roomspc[$v['type']]['explain'];
+        }
+        //echo '<pre>';print_R($html);echo'</pre>';
 		parent::global_tpl_view( array(
 			'action_name'=>'酒店房型',
 			'title_name'=> $hotel_info['hotel_name'].'--所有房型',
@@ -78,7 +82,7 @@ class SphotelRoomAction extends AdminBaseAction {
 		$hotel_room_id = $this->_get('hotel_room_id');		//酒店房型ID
 		
 		//连接数据库
-		$Hotel = $this->db['Sphotel'];						//酒店表
+		$Hotel     = $this->db['Sphotel'];						//酒店表
 		$HotelRoom = $this->db['SphotelRoom'];		//酒店房型表
 		
 		
@@ -96,6 +100,7 @@ class SphotelRoomAction extends AdminBaseAction {
 			
 			//表单标题
 			$title_name = $hotel_info['hotel_name'].'---添加房型';
+			
 
 		} else if ($act == 'update') {			//修改
 			if ($this->isPost()) {
@@ -104,11 +109,12 @@ class SphotelRoomAction extends AdminBaseAction {
 				exit;
 			}
 			//查找房型
-			$hotel_room_info = $HotelRoom->get_one_data(array('id'=>$hotel_room_id),'title,info,privilege_day');
+			$hotel_room_info = $HotelRoom->get_one_data(array('id'=>$hotel_room_id),'title,info,privilege_day,type,special');
 			if (empty($hotel_room_info)) $this->error('您编辑的房型不存在！');
 			$title_name = $hotel_room_info['title'].'---编辑';
+		
 			$html = $hotel_room_info;
-			print_R($html);
+			
 		} else if ($act == 'delete') {			//删除
 			$HotelRoom->del_one_data($hotel_room_id) ? $this->success('删除成功！') : $this->error('删除失败，请稍后重试！');
 			exit;
@@ -119,7 +125,8 @@ class SphotelRoomAction extends AdminBaseAction {
 				'action_name'=>'房型编辑',
 				'title_name' => $title_name
 		));
-
+		$html['Roomspc']   = C('Roomspc');
+//echo'<pre>';print_R($html);echo'</pre>';exit;
 		$this->assign('html',$html);
 		$this->display();
 	}

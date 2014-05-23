@@ -268,6 +268,7 @@ class HotelListAction extends HomeBaseAction{
 	  	$IS_PAY      = C('IS_PAY');
 	  	$order_id = $this->_get('order_id');
 	  	$HotelOrder = $this->db['HotelOrder'];
+	  	$Hotel = $this->db['Hotel'];
 	  	$list = $HotelOrder->order_info(array('o.id'=>$order_id));
 	  	$list['order_id'] = $order_id;
 	  	$list['in_date'] = date('Y-m-d',$list['in_date']);
@@ -280,6 +281,7 @@ class HotelListAction extends HomeBaseAction{
 		//$list['total_price'] = str_replace('.','',$list['total_price']);
 		$list['total_prices'] = str_replace('.','',$list['total_price']);
 		$list['total_price'] =str_replace('.00','',$list['total_price']);
+		$list['Order_cancellation_rules'] = $Hotel->Get_order_cancellation_rules($list['hotel_id']);
 		//echo '<pre>';print_R($list);echo '</pre>';exit;
 	  	$this->assign('html',$list);
 	  	$this->display();

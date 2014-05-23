@@ -8,7 +8,8 @@ class UserAction extends AdminBaseAction {
 	private $module_name = '系统管理';
 	
 	protected  $db = array(
-		'Users' => 'Users'		
+		'Users' => 'Users',
+	    'Hotel' => 'Hotel'		
 	);
 	
 	/**
@@ -107,10 +108,12 @@ class UserAction extends AdminBaseAction {
 		$id = $this->_get('id');				//id
 		$act = $this->_get('act');			//动作
 		$Users = D('Users');			//注册用户表
-	
+	    $UsersHotel = D('UsersHotel');
 		switch ($act) {
 			case 'add' :
 				if ($this->isPost()) {
+					
+					//echo'<pre>';print_R($_POST);echo'</pre>';exit;
 					$this->check_data($act);		//验证提交数据			
 					/* 验证账号是否存在 */
 					$account_is_have = $Users->account_is_have($_POST['account']);
@@ -118,6 +121,14 @@ class UserAction extends AdminBaseAction {
 						
 					$Users->create();
 					$user_id = $Users->add_account();
+					if($_POST['type']==2){
+						foreach ($_POST['hotel_id'] as $key=>$val){
+							$data['user_id']  = $user_id;
+							$data['hotel_id'] = $val;
+							$data['is_del'] = 0;
+							$UsersHotel->add($data);
+						}
+					}
 					$user_id ? $this->success('添加成功！',U('Admin/Hotel/hotel_edit',array('act'=>'add','user_id'=>$user_id))) : $this->error('添加失败，请重新尝试！');
 					exit;
 				}
@@ -179,6 +190,23 @@ class UserAction extends AdminBaseAction {
 			}
 	
 		}
+	
+	}
+	
+	//获得酒店
+	public function ajax_get_hotel(){
+	
+		 $Hotel = $this->db['Hotel'];
+		 
+		 $data = $Hotel->get_hotel_name('','hotel_name,id');
+		 
+		 /*foreach($data as $k=>$v){
+		 	"<input type='check' "
+		 }*/
+		 $this->assign('data',$data);
+		 $this->display();
+		 //parent::callback(C('STATUS_SUCCESS'),'获取成功！',$data);
+		
 	
 	}
 	

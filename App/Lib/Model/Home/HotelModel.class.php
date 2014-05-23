@@ -168,5 +168,10 @@ class HotelModel extends HomeBaseModel{
 		  return $data;
 	  	
 	  }
+	 //获得每个酒店取消订单的规则
+	 public function Get_order_cancellation_rules($hotel_id){
+	 	if(empty($hotel_id)) return '';
+	 	return $this->where(array('id'=>$hotel_id))->getField('Order_cancellation_rules');
+	 }
 	
 }
