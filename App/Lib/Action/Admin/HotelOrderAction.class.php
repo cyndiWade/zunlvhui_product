@@ -59,6 +59,7 @@ class HotelOrderAction extends AdminBaseAction {
 		parent::global_tpl_view( array(
 			'action_name'=>'订单列表',
 			'title_name'=>'订单列表',
+			'add_name' =>'人工预定',
 		));
 		
 		$html['list'] = $order_list;
@@ -66,7 +67,79 @@ class HotelOrderAction extends AdminBaseAction {
 		$this->display();
 	}
 	
+	//人工预定
+	public function edit (){
+		$act = $this->_get('act');
+		$HotelOrder = $this->db['HotelOrder'];
+
+		$Hotel = new HotelModel();
+		$html['hotle_list'] = $Hotel -> get_hotel_name();
+		
+		if ($act == 'add') {
+			if ($this->isPost()) {
+				$HotelOrder -> create();
+				$order_time = strtotime(date('Y-m-d H:i:s'));
+				$HotelOrder->order_time = $order_time;
+				$HotelOrder->order_sn = date('Ymd').$order_time;
+				$HotelOrder->user_code = '人工预定';
+				$HotelOrder->in_date = strtotime($_POST['in_date']);
+				$HotelOrder->out_date = strtotime($_POST['out_date']);
+				$HotelOrder->order_type = 2;
+				$id = $HotelOrder ->add();
+				$id ? $this->success('添加成功！',U('Admin/HotelOrder/index')) : $this->error('添加失败请重新尝试！');
+				exit;
+			}
+
+			$title_name = '人工预定';
+		}
+
+
+		parent::global_tpl_view( array(
+				'action_name'=>'编辑',
+				'title_name'=>$title_name,
+		));
+		$this->assign('html',$html);
+		$this->display();
+	}
 	
+	//人工预定--查找房型ajax方法
+	public function findHotelRomm(){
+		$result = array();
+		$hotel_id =$_POST['hotel_id'];
+
+		$HotelRoom = new HotelRoomModel();
+		$result = $HotelRoom->get_hotel_rooms($hotel_id);
+		$this->ajaxReturn($result,"JSON");
+		
+	}
+	//人工预定--查找价格ajax方法
+	public function findRoomPrice(){
+		$Prices = array();
+		$data = array();
+		$result = array('room_num'=>99999,'total_price'=>0);
+
+		$data['hotel_room_id'] = $_POST['room_id'];
+		$data['in_date'] = strtotime($_POST['in_date']);
+		$data['out_date'] = strtotime($_POST['out_date']);
+
+		$RoomSchedule = new RoomScheduleModel();
+		$Prices = $RoomSchedule->Seek_Data_Schedule($data);
+		
+		foreach($Prices as $key=>$val){
+			 if($val['room_num']>0){
+				 if($result['room_num'] > $val['room_num']){
+					 $result['room_num'] = $val['room_num'];
+				 }
+
+				 $result['total_price'] += $val['prepay'];
+			 }else{
+				$result['room_num'] = 0;
+				$result['total_price'] = 0;
+			 }
+		}
+		
+		$this->ajaxReturn($result,"JSON");
+	}
 	//订单处理
 	public function order_dispose () {
 		header('Content-Type:text/html;charset=utf-8');
