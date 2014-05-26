@@ -193,6 +193,7 @@ class HotelOrderAction extends AdminBaseAction {
 		$hotel_order_id = $this->_get('hotel_order_id');
 		$HotelOrder = $this->db['HotelOrder'];
 		$OrderLog = $this->db['OrderLog'];
+		$KfLog	  = $this->db['KfLog'];
 		
 		if (empty($hotel_order_id)) $this->error('非法操作！');
 		$order_info = $HotelOrder->seek_one_hotel(array('id'=>$hotel_order_id),'id,order_sn');
@@ -200,13 +201,16 @@ class HotelOrderAction extends AdminBaseAction {
 		
 		//日志列表
 		$log_list = $OrderLog->seek_order_data($hotel_order_id,'ol.*,u.account');
-
-		parent::global_tpl_view(array(
+        $kf_list = $KfLog->get_all_data($hotel_order_id,'ol.*,u.account');
+        //echo'<pre>';print_R($log_list);echo'</pre>';
+		//echo'<pre>';print_R($kf_list);echo'</pre>';
+        parent::global_tpl_view(array(
 				'action_name'=>'订单日志',
 				'title_name'=>'订单：'.$order_info['order_sn'].'-日志',
 		));
-		
-		$html['list'] = $log_list;
+
+		$html['log_list'] = $log_list;
+		$html['kf_list'] = $kf_list;
 		$this->assign('html',$html);
 		$this->display();
 	}
@@ -315,6 +319,9 @@ class HotelOrderAction extends AdminBaseAction {
 			      'kf_id'=>$kf_id,
 		     // 'msg'=>
 		      );
+		      //判断有没有操作
+		      $existdata = $KfLogs->get_exist($kf_id,$order_id);
+		      if(!empty($existdata))parent::callback(C('STATUS_SUCCESS'),'已经处理了！',array());
 		      $user = $KfLogs->add_log($data);
 		      if($user){
 		      	$html='处理成功';
@@ -323,7 +330,17 @@ class HotelOrderAction extends AdminBaseAction {
 		     exit;
 		   }
 		   $html['order_id'] = $this->_get('hotel_order_id');
-		   $html['KF'] = C('KF');
+		   $donedata = $KfLogs->get_done($this->_get('hotel_order_id'));
+		   //echo '<pre>';print_R($donedata);echo'</pre>';
+		   $KF =array();
+		   foreach(C('KF') as  $k=>$v){
+		   	  $KF[$k]['num'] = $v['num'] ;
+		   	  $KF[$k]['explain'] = $v['explain'];
+		   	  if(in_array($v['num'],$donedata))$KF[$k]['disabled'] = 1;
+		   	  
+		   }
+		   $html['KF'] = $KF;
+		   //echo '<pre>';print_R($KF);echo'</pre>';
 	       $this->assign('html',$html);
 		   $this->display();
 	}

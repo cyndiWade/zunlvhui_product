@@ -51,14 +51,14 @@
 											<th>操作时间</th>
 										</tr>
 									</thead>
-									<tbody>																		<volist name="html['list']" id="vo" key="i">
+									<tbody>																		<volist name="html['log_list']" id="vo" key="i">
 										<tr class="odd gradeX">
 											<td >{$i}</td>
 											<td>{$vo.account}</a></td>											<td>{$vo.msg}</td>
 											<td class="center">{$vo.addtime}</td>
 										</tr>										</volist>
 									</tbody>
-								</table>
+								</table>								<div><h1>客服日志</h1></div>								<table class="table table-striped table-bordered table-hover sample_1">									<thead>										<tr>											<th>序号</th>											<th>操作账号</th>											<th>动作</th>													<th>操作时间</th>										</tr>									</thead>									<tbody>																		<volist name="html['kf_list']" id="vo" key="i">										<tr class="odd gradeX">											<td >{$i}</td>											<td>{$vo.account}</a></td>											<td>{$vo.kf_id}</td>											<td class="center">{$vo.addtime}</td>										</tr>										</volist>									</tbody>								</table>
 							</div>	
 						</div>
 						<!-- END EXAMPLE TABLE PORTLET-->
