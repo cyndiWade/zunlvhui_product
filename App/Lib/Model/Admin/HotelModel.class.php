@@ -47,7 +47,7 @@ class HotelModel extends AdminBaseModel {
 
 
 	//人工预定获取酒店名字
-	public function get_hotel_name() {
+	public function get_all_hotel_name() {
 		return $this->field('id,hotel_name')->where(array('is_del'=>0))->select();
 	}
 

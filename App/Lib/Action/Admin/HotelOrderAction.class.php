@@ -72,7 +72,7 @@ class HotelOrderAction extends AdminBaseAction {
 		$HotelOrder = $this->db['HotelOrder'];
 
 		$Hotel = new HotelModel();
-		$html['hotle_list'] = $Hotel -> get_hotel_name();
+		$html['hotle_list'] = $Hotel -> get_all_hotel_name();
 		
 		if ($act == 'add') {
 			if ($this->isPost()) {
