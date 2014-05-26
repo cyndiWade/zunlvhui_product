@@ -5,10 +5,62 @@
 	<link rel="stylesheet" type="text/css" href="{$Think.const.APP_PATH}Public/media/css/select2_metro.css" />
 	<link rel="stylesheet" href="{$Think.const.APP_PATH}Public/media/css/DT_bootstrap.css" />
 	<!-- END PAGE LEVEL STYLES -->	
+	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/jquery-ui-1.10.3.min.js"></script>	
+	<script type="text/javascript">
+		$(function() {
+			$("#add_user").click(function(e){
+				$("#add").css("left",e.pageX-200).css("top",e.pageY).show("1000");
+				$("#close").click(function(){
+					$("#add").hide("1000");
+				});
+			});
+
+			
+			/*$("#load").click(function(){
+				var arr=document.getElementsByName("feild[]");
+				var a ='id';
+				  for(var i=0;i<arr.length;i++){
+					  if(arr[i].checked){
+						 a = a+','+arr[i].value;
+					  }
+				  }
+			  $.post("{:U('/Admin/Statement/down_all_wxuser')}",{
+				 feild:$a,
+			  },function(data){
+				 if(data!=1)
+					alert("系统错误");window.location.reload();
+				 }
+			  });*/
+
+				alert(a);
+			  /*$.ajax({
+							cache:false,
+							type:"POST",
+							url:"{:U('/Admin/Statement/down_all_wxuser')}",
+							dataType:"json",
+							data:{feild:a},
+							timeout:30000,
+							error:function(){
+								alert("错误");
+							}
+							
+				});
+		   });*/
+		});
+	</script>
 </head>
-<!-- END HEAD -->
+<!-- END HEAD -->
+
+<style type="text/css">
+
+dd{ margin:10px auto; width:150px;}
+#add_user{ cursor:pointer;}
+#add{border:1px solid #ccc; margin:0 auto; width:200px; height:350px; display:none; position:absolute; background:#eee;}
+</style>
 <!-- BEGIN BODY -->
-<body class="page-header-fixed">
+<body class="page-header-fixed">
+
 	<include file="Public:header" />
 	<!-- BEGIN CONTAINER -->
 	<div class="page-container row-fluid">
@@ -20,11 +72,54 @@
 				<!-- BEGIN PAGE HEADER-->
 				<div class="row-fluid">
 					<div class="span12">
-						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+						<!-- BEGIN PAGE TITLE & BREADCRUMB      data-url="{:U('/Admin/Statement/down_all_wxuser')}"-->
 						<h3 class="page-title">
 							{$global_tpl_view.module_name}<small> {$global_tpl_view.action_name}</small>
-							<a href="javascript:;" class="btn_bak"  data-record_prev="1" data-url="{:U('/Admin/Statement/down_all_wxuser')}"
-							style="float:right;">导出Excel</a></small>
+
+							<div id="add_user" style="float:right;">导出Excel</div>
+							
+						<form action="{:U('/Admin/Statement/down_all_wxuser')}" id="form_sample_1" method="post" class="form-horizontal">	
+						<!--导出的选择弹窗  开始-->
+						 <div id="add">
+						   <div style="border-bottom:1px ridge #eee; text-align:center;">选择字段</div>
+							<div>
+								<label class="checkbox line">			
+									<input type="checkbox" value="subscribe" name="feild[]"   /> 是否关注
+								</label>
+								<label class="checkbox line">			
+									<input type="checkbox" value="subscribe_time" name="feild[]"   /> 关注日期
+								</label>
+								<label class="checkbox line">			
+									<input type="checkbox" value="uname" name="feild[]"   /> 用户姓名
+								</label>
+								<label class="checkbox line">			
+									<input type="checkbox" value="phone" name="feild[]"   /> 手机号码
+								</label>
+								<label class="checkbox line">			
+									<input type="checkbox" value="is_from" name="feild[]"   /> 来源方式
+								</label>
+								<label class="checkbox line">			
+									<input type="checkbox" value="code_id" name="feild[]"   /> 二维码参数
+								</label>
+								<label class="checkbox line">			
+									<input type="checkbox" value="hotel_name" name="feild[]"   /> 酒店名字
+								</label>
+								<label class="checkbox line">			
+									<input type="checkbox" value="hotel_remarks" name="feild[]"   /> 酒店备注
+								</label>
+								<label class="checkbox line">			
+									<input type="checkbox" value="yuangong" name="feild[]"   /> 员工
+								</label>
+									
+							</div>
+							 <div style=" text-align:center;">
+								<button type="submit"  >导出</button>
+								<input type="button" value="关闭" id="close"/>
+							</div>
+						 </div>
+						<!--导出的选择弹窗  结束-->
+					</form>
+					
 						</h3>
 						<!-- END PAGE TITLE & BREADCRUMB-->
 						
@@ -73,7 +168,9 @@
 		</div>
 		<!-- END PAGE -->
 	</div>
-	<!-- END CONTAINER -->
+	<!-- END CONTAINER -->
+	
+
 	<!-- 页脚 -->	<include file="Public:foot" />	<!-- 核心插件 -->	<include file="Public:bottom" />
 	<!-- BEGIN PAGE LEVEL PLUGINS -->
 	<script type="text/javascript" src="{$Think.const.APP_PATH}Public/media/js/select2.min.js"></script>

@@ -47,26 +47,40 @@ class StatementAction extends AdminBaseAction {
     //后台客户数据报表
    public function down_all_wxuser() {
   	 	header('Content-Type:text/html;charset=utf-8');
+		$feild = $_POST['feild'];
+		
    		$WxUser = $this->db['WxUser'];
-   		
   	 	$wx_user_list = $WxUser->admin_get_wx_user();
 
-		//不需要的字段
-  	    $not_field = array('uid','nickname','sex','city','country','province','language','headimgurl','localimgurl','coupon','user_id','hotel_id','is_from','code_id','wxid');
-		 
-	   	//报列标题
-	   	$title .= '是否关注,关注时间,姓名,手机号,酒店名称,酒店备注,二维码备注'."\n";
+		
+		 foreach($feild as $val){
+			
+			if($val=='subscribe') $title .= '是否关注,';
+			if($val=='subscribe_time') $title .= '关注日期,';
+			if($val=='uname') $title .= '用户姓名,';
+			if($val=='phone') $title .= '手机号,';
+			if($val=='is_from') $title .= '来源方式,';
+			if($val=='code_id') $title .= '二维码参数,';
+			if($val=='hotel_name') $title .= '酒店名称,';
+			if($val=='hotel_remarks') $title .= '酒店备注,';
+			if($val=='yuangong') $title .= '员工,';
+			//报列标题
+			//$title .= '是否关注,关注时间,姓名,手机号,酒店名称,酒店备注,二维码备注'."\n";
+		 }
+		$title .= "\n";
 
 		if (!empty($wx_user_list)) {
 			
 			foreach ($wx_user_list as $key=>$val) {
 
 				foreach ($wx_user_list[$key] as $k=>$v) {
-					if (in_array($k,$not_field)) continue;
-					//$str .= (iconv( "UTF-8","gbk",$val['oid'])).',';
-					if($k=='subscribe') $v = $v==1 ? '已关注' : '已取消关注';
-					if($k=='subscribe_time') $v = date('Y-m-d H:i:s',$v);
-					$str .= $v.',';
+					if (in_array($k,$feild)) {
+						//$str .= (iconv( "UTF-8","gbk",$val['oid'])).',';
+						if($k=='subscribe') $v = $v==1 ? '已关注' : '已取消关注';
+						if($k=='subscribe_time') $v = date('Y-m-d H:i:s',$v);
+						if($k=='is_from') $v = $v==1 ? '二维码' : '帐号搜索';
+						$str .= $v.',';
+					}
 				}
 				$str .= "\n";
 			}		
