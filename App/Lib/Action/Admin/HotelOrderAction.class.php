@@ -10,7 +10,8 @@ class HotelOrderAction extends AdminBaseAction {
 	protected  $db = array(
 		'HotelOrder'=>'HotelOrder',		//订单表
 		'OrderLog' => 'OrderLog',			//订单日志表
-		'RoomSchedule'=>'RoomSchedule' //酒店房型的价格
+		'RoomSchedule'=>'RoomSchedule', //酒店房型的价格
+		'KfLog'		   => 'KfLog'
 	);
 	
 
@@ -295,6 +296,44 @@ class HotelOrderAction extends AdminBaseAction {
 		
 		$this->assign('html',$html);
 		$this->display();
+	}
+	
+	//客服日志
+	public function kefu_log(){
+	       $KfLogs = $this->db['KfLog'];
+	       $OrderLog = $this->db['OrderLog'];
+	      
+		   if($this->isPost()){
+		      $kf_id  =  $this->_Post('kf_id');
+		      $order_id = $this->_Post('order_id');
+		      $user_id  = $this->oUser->id;
+		      $addtime  = time();
+		      $data = array(
+			      'user_id'=>$user_id,
+			      'order_id'=>$order_id,
+			      'addtime'=>$addtime,
+			      'kf_id'=>$kf_id,
+		     // 'msg'=>
+		      );
+		      $user = $KfLogs->add_log($data);
+		      if($user){
+		      	$html='处理成功';
+		      }
+		      parent::callback(C('STATUS_SUCCESS'),'处理成功！',$html);
+		     exit;
+		   }
+		   $html['order_id'] = $this->_get('hotel_order_id');
+		   $html['KF'] = C('KF');
+	       $this->assign('html',$html);
+		   $this->display();
+	}
+	
+    private function add_data_kefu_log ($order_id,$msg) {
+		$OrderLog = $this->db['OrderLog'];
+		$OrderLog->user_id = $this->oUser->id;
+		$OrderLog->order_id = $order_id;
+		$OrderLog->msg = $msg;
+		return $OrderLog->add_order_log();
 	}
     
 }

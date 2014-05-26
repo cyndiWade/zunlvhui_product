@@ -70,6 +70,29 @@ return array(
 		 				'explain' =>'送N间夜 ',
 		 				'text'=>'<font color=red>(填写 3/1 就是入住三天送一天)</font>'
 		 		),
+			),
+	     'KF'=>array(
+			1  => array(
+						'num' => 1,
+						'explain' =>'正在跟进'		
+		         ),
+		    2  => array(
+						'num' => 2,
+						'explain' =>'已联系酒店'		
+		         ),
+		    3  => array(
+						'num' => 3,
+						'explain' =>'已联系客人'		
+		         ),
+		    4  => array(
+						'num' => 4,
+						'explain' =>'酒店确认订单'		
+		         ),
+		    5  => array(
+						'num' => 5,
+						'explain' =>'订单处理完毕'		
+		         ),
+
 			)
 
 );
