@@ -215,7 +215,7 @@
 					</a>
 					<ul class="sub-menu">
 						<li>
-							<a href="{:U('Admin/WxMsg/index')}">图文回复</a>
+							<a href="{:U('Admin/Msg/index')}">图文回复</a>
 						</li>
 						
 					</ul>
