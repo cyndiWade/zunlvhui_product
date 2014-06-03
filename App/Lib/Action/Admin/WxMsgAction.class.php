@@ -33,6 +33,18 @@ class WxMsgAction extends AdminBaseAction {
 	
 	);
 
+	//消息类别
+	private $msg_type = array(
+		1=> array(
+			'num'=>1,
+			'explain'=>'酒店'
+		),
+		2=> array(
+			'num'=>2,
+			'explain'=>'城市'
+		)
+	);
+
 	/**
 	 * 构造方法
 	 */
@@ -66,6 +78,11 @@ class WxMsgAction extends AdminBaseAction {
 			}
 		}
 		
+		if ($msg_list == true) {
+			foreach ($msg_list as $key=>$val) {
+				$msg_list[$key]['type']= $this->msg_type[$val['type']]['explain'];
+			}
+		}
 	
 		parent::global_tpl_view( array(
 			'add_name' =>'添加消息',
@@ -91,27 +108,30 @@ class WxMsgAction extends AdminBaseAction {
 		//设置文件上传名(按照时间)  
 		$upload->saveRule = "time";  
 		if (!$upload->upload()){  
-			 $this->error($upload->getErrorMsg());  
+			 return  0;  
 		}else{  
 			//上传成功，获取上传信息  
-			$info = $upload->getUploadFileInfo();  
+			$info = $upload->getUploadFileInfo(); 
+			$savename = $info[0]['savename'];
+			$imgurl = "./Public/Uploads/".$savename;//这里是设置文件的url注意使用.不是+  
+			return  $imgurl;
 		}  
-		$savename = $info[0]['savename'];
-		$imgurl = "./Public/Uploads/".$savename;//这里是设置文件的url注意使用.不是+  
-		return  $imgurl;
+		
 	}
 
 	public function edit () {
 		$act = $this->_get('act');						//操作类型
 		$WxMsg = $this->db['WxMsg'];
 		$msg_id = $this->_get('msg_id');  
+		
 
 		if ($act == 'add') {								//添加
 			if ($this->isPost()) {
-				
 				$imgurl =$this ->upload();
 				$WxMsg->create();
-				$WxMsg->pic_url = $imgurl;
+				if($imgurl!='0'){
+					$WxMsg->pic_url = $imgurl;
+				}
 				$id = $WxMsg->add();
 				$id ? $this->success('添加成功！',U('Admin/WxMsg/index')) : $this->error('添加失败请重新尝试！');
 				exit;
@@ -123,7 +143,9 @@ class WxMsgAction extends AdminBaseAction {
 			if ($this->isPost()) {
 				$imgurl =$this ->upload();
 				$WxMsg->create();
-				$WxMsg->pic_url = $imgurl;
+				if($imgurl!='0'){
+					$WxMsg->pic_url = $imgurl;
+				}
 				$WxMsg->save_one_data($msg_id) ? $this->success('修改成功！') : $this->error('没有做出任何修改！');
 				exit;
 			}
@@ -145,6 +167,7 @@ class WxMsgAction extends AdminBaseAction {
 				'title_name'=>$title_name,
 		));
 
+		$html['msg_type'] = $this->msg_type;
 		$html['msg_use_state']= $this->msg_use_state;
 		$this->assign('html',$html);
 		$this->display();

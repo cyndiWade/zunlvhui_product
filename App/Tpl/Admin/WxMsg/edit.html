@@ -54,7 +54,29 @@
 										验证成功
 									</div>	
 
-																		
+									
+									<div class="control-group">
+										<label class="control-label">类别<span class="required">*</span></label>
+										<div class="controls">
+											
+											<foreach name="html['msg_type']" item="vo">		
+												<if condition="($html['type'] eq $vo['num'])">
+													<label class="radio">
+														<input type="radio" name="type" value="{$vo['num']}" checked="checked">
+															{$vo['explain']}
+													</label>
+												<else />
+													<label class="radio">
+														<input type="radio" name="type" value="{$vo['num']}">
+															{$vo['explain']}
+													</label>
+												</if>								
+											</foreach>
+
+										</div>
+									</div>
+
+
 									<div class="control-group">
 										<label class="control-label">标题：<span class="required">*</span></label>
 										<div class="controls">
