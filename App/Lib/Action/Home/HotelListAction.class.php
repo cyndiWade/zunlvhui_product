@@ -148,8 +148,9 @@ class HotelListAction extends HomeBaseAction{
 				$list[$id] = $list[$id];	
 			} else {
 			    $key = array_keys($list);
-				$id = $key[1];
+				$id = $key[0];
 			}
+
 	  	  $html = array(
 	  	
 		  	  'list'=>$list,
@@ -158,7 +159,7 @@ class HotelListAction extends HomeBaseAction{
 	  	  );
 
 		  $lists = $Hotel->get_price(279);
-	  	  //echo '<pre>';print_R($html);echo '</pre>';exit;
+	  	 // echo '<pre>';print_R($html);echo '</pre>';exit;
 	  	  $this->assign('html',$html);
 	  	  $this->display();
 	  }
