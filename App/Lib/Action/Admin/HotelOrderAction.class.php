@@ -11,7 +11,8 @@ class HotelOrderAction extends AdminBaseAction {
 		'HotelOrder'=>'HotelOrder',		//订单表
 		'OrderLog' => 'OrderLog',			//订单日志表
 		'RoomSchedule'=>'RoomSchedule', //酒店房型的价格
-		'KfLog'		   => 'KfLog'
+		'KfLog'		   => 'KfLog',
+		'UsersHotel'=>'UsersHotel'
 	);
 	
 
@@ -78,7 +79,12 @@ class HotelOrderAction extends AdminBaseAction {
 		if ($act == 'add') {
 			if ($this->isPost()) {
 				$HotelOrder -> create();
+
 				$order_time = strtotime(date('Y-m-d H:i:s'));
+				$UsersHotel = new UsersHotelModel();
+				$user_id = $UsersHotel->get_hotel_userid($_POST['hotel_id']);
+				
+				$HotelOrder->user_id = $user_id;
 				$HotelOrder->order_time = $order_time;
 				$HotelOrder->order_sn = date('Ymd').$order_time;
 				$HotelOrder->user_code = '人工预定';
@@ -87,6 +93,7 @@ class HotelOrderAction extends AdminBaseAction {
 				$HotelOrder->order_type = 2;
 				$id = $HotelOrder ->add();
 				$id ? $this->success('添加成功！',U('Admin/HotelOrder/index')) : $this->error('添加失败请重新尝试！');
+			
 				exit;
 			}
 

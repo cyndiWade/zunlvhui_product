@@ -81,9 +81,12 @@ $(function (){
         <th>预定日期</th>
         <th>酒店名称</th>
         <th>房型名称</th>
+		<th>房间数</th>
+		<th>价格</th>
         <th>入住人姓名</th>
         <th>电话</th>
         <th>入住日期</th>
+		<th>离店日期</th>
         <th>付款方式</th>
         <th>会员来源</th>
         <th>订单状态</th>
@@ -96,9 +99,12 @@ $(function (){
         <td>{$vo.order_time}</td>
         <td>{$vo.hotel_name}</td>
         <td>{$vo.title}</td>
+		<td>{$vo.room_num}</td>
+		<td>{$vo.total_price}</td>
         <td>{$vo.in_person}</td>
         <td>{$vo.phone}</td>
         <td>{$vo.in_date}</td>
+		<td>{$vo.out_date}</td>
         <td><span class="red">{$vo.order_type}</span></td>
         <td>{$vo.is_from}</td>
         <td>{$vo.order_status}</td>

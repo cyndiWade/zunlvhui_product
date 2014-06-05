@@ -39,8 +39,9 @@ class OrderAction extends HotelBaseAction{
 			$pay_type =  C('PAY_TYPE');
 			$is_from  =  C('IS_FROM');
 			foreach ($list as $key=>$val){
-			    $list[$key]['order_time']            = date('Y-m-d',$val['order_time']);
+			    $list[$key]['order_time']            = date('Y-m-d H:i:s',$val['order_time']);
 				$list[$key]['in_date']               = date('Y-m-d',$val['in_date']);
+				$list[$key]['out_date']               = date('Y-m-d',$val['out_date']);
 				$list[$key]['order_type']            = $pay_type[$val['order_type']];
                 $list[$key]['order_status']          = $order_status[$val['order_status']];
                 $list[$key]['dispose']          = $dispose_status[$val['dispose_status']];

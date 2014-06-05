@@ -251,11 +251,12 @@ function check(v)
                         $("#select_2").empty();
                         var count = data.length;
                         var i = 0;
-                        var b="";
+                        var b='<option value="-1" ></option>';
                            for(i=0;i<count;i++){
                                b+="<option value='"+data[i].id+"'>"+data[i].title+"</option>";
                            }
                         $("#select_2").html(b);
+						
                     }
                 });
                });
