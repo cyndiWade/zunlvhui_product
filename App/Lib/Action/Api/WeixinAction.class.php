@@ -163,6 +163,7 @@ class WeixinAction extends AppBaseAction{
 		 $UsersHotel = $this->db['UsersHotel'];
 		 $Coupon     = $this->db['Coupon'];
 		 $WxCode     = $this->db['WxCode'];
+		 $WxMsg      = $this->db['WxMsg'];
 		 $user_code  = $object->FromUserName;
 		 $contentStr = "";
 		tolog('/web/www/ftp/tjr/wxadmin/App/Lib/Action/Api/a.txt',$object->Event);
