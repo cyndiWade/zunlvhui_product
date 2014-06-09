@@ -75,14 +75,11 @@ class WxMsgAction extends AdminBaseAction {
 		if ($msg_list == true) {
 			foreach ($msg_list as $key=>$val) {
 				$msg_list[$key]['use_state']= $this->msg_use_state[$val['use_state']]['explain'];
-			}
-		}
-		
-		if ($msg_list == true) {
-			foreach ($msg_list as $key=>$val) {
 				$msg_list[$key]['type']= $this->msg_type[$val['type']]['explain'];
 			}
 		}
+		
+		
 	
 		parent::global_tpl_view( array(
 			'add_name' =>'添加消息',
@@ -114,10 +111,39 @@ class WxMsgAction extends AdminBaseAction {
 			$info = $upload->getUploadFileInfo(); 
 			$savename = $info[0]['savename'];
 			$imgurl = "./Public/Uploads/".$savename;//这里是设置文件的url注意使用.不是+  
+
+			$this->getimg($savename, "./Public/Uploads/");
 			return  $imgurl;
 		}  
 		
 	}
+
+	/*
+	 * $url 图片名称
+	 * $filepath 保存图片文件夹地址
+	 */
+	private function getimg($url, $filepath) {
+		if ($url == '') {
+			return false;
+		}
+		//判断路经是否存在
+		!is_dir($filepath)?mkdir($filepath):null;
+		$filename = 'cl.'.$url;
+
+		// 最大宽高
+		$width = 200;
+		$height = 200;
+		// 获取图片宽高
+		list($width_orig, $height_orig) = getimagesize($filepath.$url);
+		// 改变大小。和上例一样。
+		$image_p = imagecreatetruecolor($width, $height);
+		$image = imagecreatefromjpeg($filepath.$url);
+		imagecopyresampled($image_p, $image, 0, 0, 0, 0, $width, $height, $width_orig, $height_orig);
+
+		//写入图片到指定的文本
+		imagejpeg($image_p, $filepath.$filename);
+	}
+
 
 	public function edit () {
 		$act = $this->_get('act');						//操作类型
