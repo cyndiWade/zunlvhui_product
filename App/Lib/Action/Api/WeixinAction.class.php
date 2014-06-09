@@ -18,7 +18,8 @@ class WeixinAction extends AppBaseAction{
 		'WxUser'       => 'WxUser',  //微信用户
 		'Coupon'       => 'Coupon', //优惠券
 		'WxCode'       => 'WxCode',  //酒店的二维码
-	    'Siri'         => 'Siri' //语义分析
+	    'Siri'         => 'Siri', //语义分析
+	    'WxMsg'		   => 'WxMsg'
 	 
 		
 	 );
@@ -256,30 +257,6 @@ class WeixinAction extends AppBaseAction{
 						    $resultStr = $this->transmitText($object, $contentStr);
 							break;
 						case 'menu_1_3':
-							/* //每日特惠
-							$T= 60*30; // 过期时间
-							$data = array(
-								'user_code'=>"$user_code",
-								'step'=>10,
-								'endtime'=>time()+$T
-							);
-							$step = $OrderState->get_step($user_code);  // 判断是否是每日特惠
-							switch ($step){
-								case 0 :
-									$OrderState->add_step($data);
-									break;
-								case 10 :
-									$data = array('endtime'=>time()+$T);
-							        $OrderState->where(array('user_code'=>"$user_code"))->save($data);
-							        break;
-								default:
-									$data = array('endtime'=>time()+$T,'step'=>10);
-							        $OrderState->where(array('user_code'=>"$user_code"))->save($data);
-									break;
-									
-							}
-							$contentStr ="请输入城市获得该城市的优惠！";
-						    $resultStr = $this->transmitText($object, $contentStr); */
 							$arr_item = $Sphotel->get_all_sphotel();
 							if(count($arr_item)>0){
 						       $resultStr = $this->transmitNews($object, $arr_item, $flag = 0);
@@ -288,17 +265,33 @@ class WeixinAction extends AppBaseAction{
 						        $resultStr = $this->transmitText($object, $contentStr);
 							}
 							break;
-						case 'menu_2_1':
-                            $arr_item = $HotelOrder->get_order($user_code);
-						    if(count($arr_item)>0){
+						case 'menu_2_1':  //特价酒店
+							$arr_item = $WxMsg->getMsg(array('use_state'=>1));
+					        if(count($arr_item)>0){
 						       $resultStr = $this->transmitNews($object, $arr_item, $flag = 0);
 							}else{
-                                $contentStr ="您还没有订单";
+                                $contentStr ="没有特价酒店";
 						        $resultStr = $this->transmitText($object, $contentStr);
 							}
 							break;
-						case 'menu_2_2':
-						case 'menu_2_3':
+						case 'menu_2_2':  //预定送免房
+							$arr_item = $WxMsg->getMsg(array('use_state'=>2));
+					        if(count($arr_item)>0){
+						       $resultStr = $this->transmitNews($object, $arr_item, $flag = 0);
+							}else{
+                                $contentStr ="没有预定送免房的优惠";
+						        $resultStr = $this->transmitText($object, $contentStr);
+							}
+							break;
+						case 'menu_2_3':  //预定返红包
+							$arr_item = $WxMsg->getMsg(array('use_state'=>3));
+							if(count($arr_item)>0){
+						       $resultStr = $this->transmitNews($object, $arr_item, $flag = 0);
+							}else{
+                                $contentStr ="没有预定返红包的优惠";
+						        $resultStr = $this->transmitText($object, $contentStr);
+							}
+							break;
 						case 'menu_2_4':
 							$contentStr ="敬请期待......";
 						    $resultStr = $this->transmitText($object, $contentStr);
@@ -329,14 +322,21 @@ class WeixinAction extends AppBaseAction{
 							}
 							break;
 						case 'menu_3_4':
-							//3购物
-						    $arr_item = $Coupon->get_coupon(3);
+							//我的订单
+					        $arr_item = $HotelOrder->get_order($user_code);
+						    if(count($arr_item)>0){
+						       $resultStr = $this->transmitNews($object, $arr_item, $flag = 0);
+							}else{
+                                $contentStr ="您还没有订单";
+						        $resultStr = $this->transmitText($object, $contentStr);
+							}
+						    /*$arr_item = $Coupon->get_coupon(3);
 							if(count($arr_item)>0){
 						       $resultStr = $this->transmitNews($object, $arr_item, $flag = 0);
 							}else{
                                 $contentStr ="没有此优惠券";
 						        $resultStr = $this->transmitText($object, $contentStr);
-							}
+							}*/
 							break;
 						case 'menu_3_5':
 							//4娱乐
@@ -710,13 +710,9 @@ private function receiveText($object)
 		  $Sphotel      = $this->db['Sphotel'];
 		  $WxCode      = $this->db['WxCode'];
 		  $Siri        = $this->db['Siri'];
-		  $text = '厕所';
-	      $where = array(
-				    			'keyword'=>array('like',"%$text%")
-				    		);
-			$keywords = $Siri->seek_explain($where);
-		  //$arr_item = $Sphotel->get_all_sphotel();
-		$arr= $Hotel->get_Hotel("$text");
+		  $WxMsg       = $this->db['WxMsg'];
+		  
+		  $arr = $WxMsg->getMsg(array('use_state'=>1));
         echo '<pre>';print_R($arr);echo '</pre>';exit;
    }
 
