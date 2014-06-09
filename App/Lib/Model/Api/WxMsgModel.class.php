@@ -50,7 +50,7 @@ class WxMsgModel extends ApiBaseModel{
 		$arr[$i] = array(
 				'Title'=>$val['title'],
 				'Description'=>$val['description'],
-				'Picurl' =>$domain['domain'].'zunlvhui'.$val['pic_url'],//C('logo_url'),
+				'Picurl' =>$domain['domain'].'zunlvhui/'.$val['pic_url'],//C('logo_url'),
 				'Url'    =>$Url,
 			);			    
 		$i++;
