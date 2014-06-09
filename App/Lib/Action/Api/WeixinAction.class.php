@@ -166,7 +166,7 @@ class WeixinAction extends AppBaseAction{
 		 $WxMsg      = $this->db['WxMsg'];
 		 $user_code  = $object->FromUserName;
 		 $contentStr = "";
-		tolog('/web/www/ftp/tjr/wxadmin/App/Lib/Action/Api/a.txt',$object->Event);
+		tolog('/data/www/zunlvhui/App/Lib/Action/Api/a.txt',$object->Event);
 			switch ($object->Event)
 			{
 				case "subscribe":  // 关注事件
