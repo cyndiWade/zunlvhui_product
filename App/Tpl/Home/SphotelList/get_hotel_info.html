@@ -169,7 +169,7 @@ function submit_order(id,type){
         <img src="{$vo.url}" style="width:80px;"  ></span>
           <div class="left plef2">
             <P class="zx6  fj_fx">{$vo.title}</P>
-           <if condition="($html['hotel_lp'] neq '')" >
+            <if condition="($html['hotel_lp'] neq '')" >
             <div class="liwu">
             <img src="{$Think.const.APP_PATH}Public/Home/images/liwu.png" style="width:37px;" height="36">
               <div class="fuwubox">
@@ -183,8 +183,6 @@ function submit_order(id,type){
               </div>
             </div>
            </if>
-               <span style="color: #fff;">{$vo.privilege_day}</span>
-            </div>
           </div>
         </div>
         <div class="right p210"> 
@@ -215,20 +213,21 @@ function submit_order(id,type){
         <img src="{$vo.url}" style="width:80px;"  ></span>
           <div class="left plef2">
             <P class="zx6  fj_fx">{$vo.title}</P>
-            
-            <div class="liwu">
             <if condition="($html['hotel_lp'] neq '')" >
+            <div class="liwu">
             <img src="{$Think.const.APP_PATH}Public/Home/images/liwu.png" style="width:37px;" height="36">
               <div class="fuwubox">
                 <div class="ddt">
                 <img src="{$Think.const.APP_PATH}Public/Home/images/ddt.png"></div>
-                <p><volist name="html['hotel_lp']" id="v" key='vk'>
+                
+                <p>
+                <volist name="html['hotel_lp']" id="v" key='vk'>
                 <span>{$v.name}</span></br>
-                </volist></p>
+                </volist>
+                </p>
               </div>
-              </if>
-              <span style="color: #fff;font-size:18px;">{$vo.privilege_day}</span>
             </div>
+            </if>
           </div>
         </div>
         <div class="right p210"> 
