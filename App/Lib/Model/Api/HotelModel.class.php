@@ -83,8 +83,10 @@ class HotelModel extends ApiBaseModel{
 			$i = 1 ;
 			foreach($data as $key=>$val){
 			    if($i>10)break;
+			    $spot_payment   = $val['spot_payment'] ==0 ? '' :   '预付 ￥'.$val['spot_payment'];
+			    $prepay         = $val['prepay'] ==0 ? '' : ' 现付 ￥'.$val['prepay'];
 			    $arr[] = array(
-						'Title'=>$val['hotel_name']."\n". $val['title']."\n".$val['hotel_pf'].'分 预付 ￥'.$val['spot_payment'].' 现付 ￥'.$val['prepay'],
+						'Title'=>$val['hotel_name']."\n". $val['title']."\n".$val['hotel_pf'].'分 '.$spot_payment.$prepay,
 						'Description'=>'',
 						'Picurl' =>$this->get_room_img($val['id'],2),//C('logo_url'),
 						'Url'    =>C('Hotel_info_url').$val['id'],
