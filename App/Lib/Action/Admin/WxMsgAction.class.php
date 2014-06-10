@@ -93,15 +93,18 @@ class WxMsgAction extends AdminBaseAction {
 	}
 	
 	private function upload(){
+		
+		$path = './Public/Uploads/';
+
 		//导入图片上传类  
 		import("ORG.Net.UploadFile");  
 		//实例化上传类  
 		$upload = new UploadFile();  
-		$upload->maxSize = 3145728;  
+		$upload->maxSize = 1048576;  
 		//设置文件上传类型  
 		$upload->allowExts = array('jpg','gif','png','jpeg');  
 		//设置文件上传位置  
-		$upload->savePath = "./Public/Uploads/"; 
+		$upload->savePath = $path; 
 		//设置文件上传名(按照时间)  
 		$upload->saveRule = "time";  
 		if (!$upload->upload()){  
@@ -110,9 +113,9 @@ class WxMsgAction extends AdminBaseAction {
 			//上传成功，获取上传信息  
 			$info = $upload->getUploadFileInfo(); 
 			$savename = $info[0]['savename'];
-			$imgurl = "./Public/Uploads/".$savename;//这里是设置文件的url注意使用.不是+  
+			$imgurl = $path.$savename;//这里是设置文件的url注意使用.不是+  
 
-			$this->getimg($savename, "./Public/Uploads/");
+			$this->getimg($savename,$path);
 			return  $imgurl;
 		}  
 		
@@ -122,26 +125,27 @@ class WxMsgAction extends AdminBaseAction {
 	 * $url 图片名称
 	 * $filepath 保存图片文件夹地址
 	 */
-	private function getimg($url, $filepath) {
-		if ($url == '') {
+	private function getimg($name,$path) {
+		if ($name == '') {
 			return false;
 		}
 		//判断路经是否存在
-		!is_dir($filepath)?mkdir($filepath):null;
-		$filename = 'cl.'.$url;
+		!is_dir($path)?mkdir($path):null;
 
+		$filename='cl'.$name;
 		// 最大宽高
 		$width = 200;
 		$height = 200;
 		// 获取图片宽高
-		list($width_orig, $height_orig) = getimagesize($filepath.$url);
+		list($width_orig, $height_orig) = getimagesize($path.$name);
 		// 改变大小。和上例一样。
 		$image_p = imagecreatetruecolor($width, $height);
-		$image = imagecreatefromjpeg($filepath.$url);
+		$image = imagecreatefromjpeg($path.$name);
 		imagecopyresampled($image_p, $image, 0, 0, 0, 0, $width, $height, $width_orig, $height_orig);
-
+		
+		
 		//写入图片到指定的文本
-		imagejpeg($image_p, $filepath.$filename);
+		imagejpeg($image_p, $path.$filename);
 	}
 
 
