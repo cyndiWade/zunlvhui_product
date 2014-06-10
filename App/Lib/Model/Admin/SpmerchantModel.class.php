@@ -24,7 +24,7 @@ class SpmerchantModel extends AdminBaseModel {
 	
 
 	public function save_one_merchant ($merchant_id) {
-		return $this->where(array('merchant_id'=>$merchant_id))->save();
+		return $this->where(array('id'=>$merchant_id))->save();
 	}
 	
 	//删除一条数据
