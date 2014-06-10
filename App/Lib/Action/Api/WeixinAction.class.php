@@ -712,9 +712,11 @@ private function receiveText($object)
 		  $WxCode      = $this->db['WxCode'];
 		  $Siri        = $this->db['Siri'];
 		  $WxMsg       = $this->db['WxMsg'];
-		  
-		  $arr = $WxMsg->getMsg(array('use_state'=>1));
-        echo '<pre>';print_R($arr);echo '</pre>';exit;
+		  //$arr_item = $HotelRoom->get_room_type("北京饭店",$hotel_id,$pay_type);
+		  //$arr = $WxMsg->getMsg(array('use_state'=>1));
+		  $arr_item = $Hotel->get_Hotel("北京饭店");
+		  //echo $Hotel->getLastSql();
+        echo '<pre>';print_R($arr_item);echo '</pre>';exit;
    }
 
    public function valid()

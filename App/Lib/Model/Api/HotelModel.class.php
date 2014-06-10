@@ -65,13 +65,20 @@ class HotelModel extends ApiBaseModel{
 	  
 	  public function get_Hotel($hotel_name){
 	  
-	  	    if(empty($hotel_name))$hotel_name ='上海中环';
+	  	    if(empty($hotel_name))return array();
+	  	    $where = array(
+		  	    'hotel_name'=>array('like',"%$hotel_name%"),
+		  	    'h.is_del'=>0,
+		  	    'hr.is_del'=>0,
+		  	    'rs.day'=>strtotime( date('Y-m-d',time())) 
+	  	    )  ;
 			$data = $this->field('h.id,h.hotel_name , hr.title, h.hotel_pf ,rs.spot_payment,rs.prepay')
 			->table($this->prefix.'hotel AS h')
 			->join($this->prefix.'hotel_room AS hr ON h.id=hr.hotel_id')
 			->join($this->prefix.'room_schedule AS rs on rs.hotel_room_id = hr.id')
-			->where(array('hotel_name'=>array('like',"%$hotel_name%"),'h.is_del'=>0,'rs.day'=>strtotime( date('Y-m-d',time())) )  )
+			->where($where)
 			->select();
+
 			$arr = array();
 			$i = 1 ;
 			foreach($data as $key=>$val){
