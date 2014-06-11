@@ -70,7 +70,7 @@ class SphotelRoomModel extends HomeBaseModel {
 	  	    //'r.id'=>array('not in',$id)
 	  	);
 	  	
-	  	$data = $this->field('r.id as rid ,r.title,r.info,r.privilege_day,s.spot_payment,s.prepay,s.room_num,s.id as sid') 
+	  	$data = $this->field('r.id as rid ,r.title,r.info,r.privilege_day,r.type,r.special,s.spot_payment,s.prepay,s.room_num,s.id as sid') 
 	  	->table($this->prefix.'sphotel_room AS r')
 	  	->join($this->prefix.'sproom_schedule AS s on s.hotel_room_id = r.id')
 	  	//->join($this->prefix.'room_img AS i on i.hotel_room_id = s.id')
@@ -82,6 +82,28 @@ class SphotelRoomModel extends HomeBaseModel {
 	  		}else{
 	  			$data[$key]['is_cut_off'] = $val['rid'];
 	  		}
+	  		/*
+	  		 * 无优惠 (填写 0)	
+打折(填写 0.9 就是大九折)	
+立减 (填写 1 就是减1元)	
+送N间夜 (填写 3/1 就是入住三天送一天)	
+	  		 */
+	  		switch ($val['type']){
+	  			case 0 :
+	  				$mprepay = $val['prepay'];
+	  				$mspot_payment  =  $val['spot_payment'];
+	  				break;
+	  			case 1 :
+	  				$mprepay = $val['prepay']*$val['special'];
+	  				$mspot_payment  =  $val['spot_payment']*$val['special'];
+	  				break ;
+	  			case 2 :
+	  				$mprepay = $val['prepay']-$val['special'];
+	  				$mspot_payment  =  $val['spot_payment']-$val['special'];
+	  				break ;
+	  		}
+	  		$data[$key]['mprepay'] = $mprepay;
+	  		$data[$key]['mspot_payment'] = $mspot_payment;
 	  		$data[$key]['url'] = $this->get_room_img($val['rid'],$type);
 	  	}
 

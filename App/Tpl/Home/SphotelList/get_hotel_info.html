@@ -181,12 +181,18 @@ function submit_order(id,type){
                 </volist>
                 </p>
               </div>
+              <span style="color:#fff">{$vo.privilege_day}
+              </span>
             </div>
            </if>
           </div>
         </div>
         <div class="right p210"> 
-        <span class="zx7 f30  pr_15">￥{$vo.prepay}</span></br>
+        <span class="zx7 f30  pr_15">
+        <span style="TEXT-DECORATION: line-through;font-size:12px;">
+        ￥{$vo.mprepay}
+        </span>
+        ￥{$vo.prepay}</span></br>
         <if condition="($vo['is_cut_off'] neq 0)" >
        
         <span>
@@ -205,6 +211,7 @@ function submit_order(id,type){
         </if>
       </li>
    </volist>  
+
    <volist name="html['roomtype']" id="vo" key='k' >
    <if condition="($vo['spot_payment'] neq 0)" >
       <li>
@@ -226,12 +233,19 @@ function submit_order(id,type){
                 </volist>
                 </p>
               </div>
+            
+              <span style="color:#fff">{$vo.privilege_day}
+              </span>
             </div>
             </if>
           </div>
         </div>
         <div class="right p210"> 
-        <span class="zx7 f30  pr_15">￥{$vo.spot_payment}</span><br />
+        <span class="zx7 f30  pr_15">
+        <span style="TEXT-DECORATION: line-through;font-size:12px;">
+        ￥{$vo.spot_payment}
+        </span>￥{$vo.mspot_payment}</span>
+        <br />
         <span style="font-size:26px; color:#F4D24B;">预付</span>
         <if condition="($vo['is_cut_off'] neq 0)" >
          
