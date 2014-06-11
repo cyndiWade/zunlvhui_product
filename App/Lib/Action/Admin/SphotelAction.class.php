@@ -38,6 +38,27 @@ class SphotelAction extends AdminBaseAction {
 			'explain'=>'五星级'
 		)
 	);
+
+	//酒店类型
+	private $hotel_type_value = array(
+		4=> array(
+			'num'=>4,
+			'explain'=>'不使用'
+		),
+		1=> array(
+			'num'=>1,
+			'explain'=>'特价酒店'
+		),
+		2=> array(
+			'num'=>2,
+			'explain'=>'预定送免房'
+		),
+		3=> array(
+			'num'=>3,
+			'explain'=>'订房返红包'
+		),
+	
+	);
 	
 	//酒店图片类型
 	private $img_type = array(
@@ -190,7 +211,7 @@ class SphotelAction extends AdminBaseAction {
 				'action_name'=>'酒店编辑',
 				'title_name' => $title_name
 		));
-		
+		$html['hotel_type_value']= $this->hotel_type_value;
 		$html['hotel_xj_type'] = $this->hotel_xj_type; 
 		$this->assign('html',$html);
 		$this->display();
