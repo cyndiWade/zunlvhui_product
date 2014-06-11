@@ -280,7 +280,8 @@ class WeixinAction extends AppBaseAction{
 					        if(count($arr_item)>0){
 						       $resultStr = $this->transmitNews($object, $arr_item, $flag = 0);
 							}else{
-                                $contentStr ="没有预定送免房的优惠";
+                                //$contentStr ="没有预定送免房的优惠";
+                                $contentStr ="正在开发中，敬请期待";
 						        $resultStr = $this->transmitText($object, $contentStr);
 							}
 							break;
