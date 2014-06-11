@@ -31,10 +31,13 @@ class SphotelListAction extends HomeBaseAction{
 	  	  $Hotel      = $this->db['Sphotel']; // 酒店
 	  	  $HotelRoom  = $this->db['SphotelRoom'];
 	  	  $RoomSchedule = $this->db['SproomSchedule'];
-		 
+		  $hotel_type  = $this->_get('hotel_type');
 		  $hotel_cs = passport_decrypt(urldecode($this->_get('hotel_cs')),'hotel');
-		 
-	      $list = $Hotel->get_hotels(array('hotel_cs'=>"$hotel_cs"));
+		  $where = array(
+		  		'hotel_cs'=>"$hotel_cs"
+		  );
+		  if($hotel_type !=0)$where['hotel_type'] = $hotel_type;
+	      $list = $Hotel->get_hotels();
 	      
 	      if($list == true){
 	      	 $hotel_ids = getArrayByField($list,'id'); // 获得酒店的id
