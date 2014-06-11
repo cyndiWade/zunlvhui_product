@@ -58,7 +58,33 @@
 										<div class="controls">
 											<input type="text" disabled="disabled" value="{$html.merchant_id}" data-required="1" class="span2 m-wrap"/>
 										    <input type="hidden"  value="{$html.merchant_id}"  name="merchant_id" />										</div>
-									</div>																		<div class="control-group">										<label class="control-label">酒店名称：<span class="required">*</span></label>										<div class="controls">											<input type="text" name="hotel_name" value="{$html.hotel_name}" data-required="1" class="span2 m-wrap"/>										</div>									</div>	
+									</div>
+
+									<div class="control-group">
+										<label class="control-label">类型:<span class="required">*</span></label>
+										<div class="controls">
+											
+											<foreach name="html['hotel_type_value']" item="vo">		
+												<if condition="($html['hotel_type'] eq $vo['num'])">
+													<label class="radio">
+														<input type="radio" name="hotel_type" value="{$vo['num']}" checked="checked">
+															{$vo['explain']}
+													</label>
+												<else />
+													<label class="radio">
+														<input type="radio" name="hotel_type" value="{$vo['num']}">
+															{$vo['explain']}
+													</label>
+												</if>								
+											</foreach>
+
+										</div>
+									</div>
+
+									<div class="control-group">
+									<label class="control-label">酒店名称：<span class="required">*</span></label>										<div class="controls">
+									<input type="text" name="hotel_name" value="{$html.hotel_name}" data-required="1" class="span2 m-wrap"/>					</div>
+									</div>	
 									<div class="control-group">
 										<label class="control-label">礼品：</label>
 									<div class="controls">
