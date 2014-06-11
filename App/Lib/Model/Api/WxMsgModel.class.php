@@ -37,7 +37,7 @@ class WxMsgModel extends ApiBaseModel{
 
 	public function getMsg($condition,$field = '*'){
 	   
-	  $where = array('isdel'=>0);
+	  $where = array('is_del'=>0);
 	  array_add_to($where,$condition);
 	  $data = $this->where($where)->field($field)->order('sort asc')->limit(9)->select();
 	  $arr = array();
