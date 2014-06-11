@@ -37,7 +37,7 @@ class SphotelListAction extends HomeBaseAction{
 		  		'hotel_cs'=>"$hotel_cs"
 		  );
 		  if($hotel_type !=0)$where['hotel_type'] = $hotel_type;
-	      $list = $Hotel->get_hotels();
+	      $list = $Hotel->get_hotels($where);
 	      
 	      if($list == true){
 	      	 $hotel_ids = getArrayByField($list,'id'); // 获得酒店的id
