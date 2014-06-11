@@ -159,9 +159,24 @@ class SphotelRoomModel extends HomeBaseModel {
 	  	$data = $this->field('*')
 	  			->table($this->prefix.'sproom_schedule as s')
 	  			->where($where)
-	  			//->select();
 	  			->sum($filed);
-	  	return $data;
+	  	$num = $this->field('*')
+	  	->table($this->prefix.'sphotel_room')
+	  	->where(array('id'=>$hotel_room_id,'is_del'=>0))
+	  	->find();
+	  	switch ($num['type']){
+
+	  		case 1 :
+	  			$mprepay = $data*$num['special'];
+	  			
+	  			break ;
+	  		case 2 :
+	  			$mprepay = $data-$num['special'];
+
+	  			break ;
+	  	}
+	  	return empty($mprepay) ? $data : $mprepay;
+	  	
 	  
 	  	
 	  }

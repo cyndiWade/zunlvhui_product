@@ -62,17 +62,19 @@ class SphotelListAction extends HomeBaseAction{
 	  }
 //单个酒店的详细信息
 	  public function get_hotel_info(){
-	  	 
+	  	
 	     $Hotel  = $this->db['Sphotel'];
 	     $HotelRoom  = $this->db['SphotelRoom'];
 	     $Gift       = $this->db['Gift'];
 	  	 $hotel_id = $this->_get('hotel_id');
 	  	 $user_code = $this->_get('user_code');
+	  	
+	  	 
 	  	 
 	     $list = $Hotel->get_one_hotel(array('id'=>$hotel_id));
 	     $data = $HotelRoom->get_hotel_room($hotel_id,2); // 获得房型
 	     //echo '<pre>';print_R($list);echo'</pre>';
-	     //echo '<pre>';print_R($data);echo'</pre>';
+	     //echo '<pre>';print_R($arr_item);echo'</pre>';exit;
 	     if($list == true){
 	     	$list['hotel_lp']  = $Gift->seek_all_data(array('id'=>array('in',$list['hotel_lp']))) ; 
 			$list['img']         = $Hotel->get_img($list['id'],4);
