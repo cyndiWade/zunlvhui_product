@@ -72,7 +72,7 @@ class SphotelListAction extends HomeBaseAction{
 	     $list = $Hotel->get_one_hotel(array('id'=>$hotel_id));
 	     $data = $HotelRoom->get_hotel_room($hotel_id,2); // 获得房型
 	     //echo '<pre>';print_R($list);echo'</pre>';
-	     echo '<pre>';print_R($data);echo'</pre>';
+	     //echo '<pre>';print_R($data);echo'</pre>';
 	     if($list == true){
 	     	$list['hotel_lp']  = $Gift->seek_all_data(array('id'=>array('in',$list['hotel_lp']))) ; 
 			$list['img']         = $Hotel->get_img($list['id'],4);
