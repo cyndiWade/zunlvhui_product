@@ -113,9 +113,8 @@ class WxMsgAction extends AdminBaseAction {
 			//上传成功，获取上传信息  
 			$info = $upload->getUploadFileInfo(); 
 			$savename = $info[0]['savename'];
-			$imgurl = $path.$savename;//这里是设置文件的url注意使用.不是+  
-
-			$this->getimg($savename,$path);
+			$imgurl['path'] = $path;//这里是设置文件的url注意使用.不是+ 
+			$imgurl['savename'] =$savename;
 			return  $imgurl;
 		}  
 		
@@ -146,6 +145,7 @@ class WxMsgAction extends AdminBaseAction {
 		
 		//写入图片到指定的文本
 		imagejpeg($image_p, $path.$filename);
+		return $path.$filename;
 	}
 
 
@@ -158,9 +158,11 @@ class WxMsgAction extends AdminBaseAction {
 		if ($act == 'add') {								//添加
 			if ($this->isPost()) {
 				$imgurl =$this ->upload();
+				$imgurl_xiaotu=$this->getimg($imgurl['savename'],$imgurl['path']);
 				$WxMsg->create();
 				if($imgurl!='0'){
-					$WxMsg->pic_url = $imgurl;
+					$WxMsg->pic_url = $imgurl['path'].$imgurl['savename'];
+					$WxMsg->pic_url_xiao = $imgurl_xiaotu;
 				}
 				$id = $WxMsg->add();
 				$id ? $this->success('添加成功！',U('Admin/WxMsg/index')) : $this->error('添加失败请重新尝试！');
@@ -172,9 +174,11 @@ class WxMsgAction extends AdminBaseAction {
 		} else if ($act == 'update') {			//修改
 			if ($this->isPost()) {
 				$imgurl =$this ->upload();
+				$imgurl_xiaotu=$this->getimg($imgurl['savename'],$imgurl['path']);
 				$WxMsg->create();
 				if($imgurl!='0'){
-					$WxMsg->pic_url = $imgurl;
+					$WxMsg->pic_url = $imgurl['path'].$imgurl['savename'];
+					$WxMsg->pic_url_xiao = $imgurl_xiaotu;
 				}
 				$WxMsg->save_one_data($msg_id) ? $this->success('修改成功！') : $this->error('没有做出任何修改！');
 				exit;
