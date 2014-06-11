@@ -116,7 +116,6 @@ $custom= array (
 				'web_dir' => $_SERVER['DOCUMENT_ROOT'].'/',
 				'image' => 'files/zun/images/',		//图片地址
 				'mapimage'=>'Public/Home/mapimages/',
-				
 		),
 
 		
