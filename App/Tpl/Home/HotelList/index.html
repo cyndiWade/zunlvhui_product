@@ -46,7 +46,14 @@
 	    </div>
             <div class="m_txt1 autohei"> 
 	    <span class="left zx1 f24">{$vo.hotel_pf}分</span> 
-	    <span class='right zx7 f22'><small>￥</small>{$vo.spot_payment}起</span> 
+	    <span class='right zx7 f22'>
+	    <if condition="($html['prepay'] neq 0)" >
+	    <small>￥</small>{$html.prepay}起12
+	    </if>
+	    <if condition="($html['spot_payment'] neq 0)" >
+	    <small>￥</small>{$html.spot_payment}起3
+	    </if>
+	    </span> 
 	    </div>
             <div class="m_txt2">
 	    <span class="f24 zx2">{$vo.hotel_syq}</span> 

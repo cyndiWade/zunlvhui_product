@@ -25,7 +25,11 @@ class SphotelRoomModel extends HomeBaseModel {
     public function get_price_room ($condition,$field = '*') {
     	
 
-    	$con = array('hr.is_del'=>0,'rs.is_del'=>0,'rs.day'=>strtotime(date('Y-m-d',time())));
+    	$con = array(
+	    	'hr.is_del'=>0,
+	    	'rs.is_del'=>0,
+	    	'rs.day'=>strtotime(date('Y-m-d',time()))
+    	);
 		array_add_to($con,$condition);
     	$data = $this->field('*')
 		->table($this->prefix.'sphotel_room AS hr')

@@ -42,12 +42,14 @@ class SphotelListAction extends HomeBaseAction{
 	      if($list == true){
 	      	 $hotel_ids = getArrayByField($list,'id'); // 获得酒店的id
 	      	 $rooms    = $HotelRoom->get_price_room(array('hotel_id'=>array('in',$hotel_ids) )); 
-		     $room_sort     = regroupKey($rooms,'hotel_id');  
+		     
+	      	 $room_sort     = regroupKey($rooms,'hotel_id');  
+	      	 //echo '<pre>';print_R($room_sort);echo '</pre>';
 	         foreach ($list AS $key=>$val) {
 				$list[$key]['img']          = $Hotel->get_img($val['id'],4);
 				$list[$key]['roomtype']     = $room_sort[$val['id']];
-				$list[$key]['spot_payment'] = !empty($room_sort[$val['id']][0]['spot_payment']) ? $room_sort[$val['id']][0]['prepay'] : C('NOT_PRICE'); // 微信支付
-				$list[$key]['prepay'] =       !empty($room_sort[$val['id']][0]['prepay']) ? $room_sort[$val['id']][0]['prepay'] : C('NOT_PRICE') ;//到店支付
+				$list[$key]['spot_payment'] = $room_sort[$val['id']][0]['spot_payment'];//!empty($room_sort[$val['id']][0]['spot_payment']) ? $room_sort[$val['id']][0]['prepay'] : C('NOT_PRICE'); // 微信支付
+				$list[$key]['prepay'] =       $room_sort[$val['id']][0]['prepay'];//!empty($room_sort[$val['id']][0]['prepay']) ? $room_sort[$val['id']][0]['prepay'] : C('NOT_PRICE') ;//到店支付
 				
 			 }
 	      }
