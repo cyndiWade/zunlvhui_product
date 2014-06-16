@@ -232,12 +232,12 @@ class WeixinAction extends AppBaseAction{
 							break;
 						case 'menu_2_1':  //特价酒店
 							$arr_item = $WxMsg->getMsg(array('use_state'=>1));
-							tolog('/data/www/zunlvhui/App/Lib/Action/Api/a.txt',$WxMsg->getLastsql());
+							
 							
 					        if(count($arr_item)>0){
-					        	tolog('/data/www/zunlvhui/App/Lib/Action/Api/a.txt','aaaaaaa');
+					        	
 						       $resultStr = $this->transmitNews($object, $arr_item, $flag = 0);
-						       tolog('/data/www/zunlvhui/App/Lib/Action/Api/a.txt',$resultStr);
+						      
 							}else{
                                 $contentStr ="没有特价酒店";
 						        $resultStr = $this->transmitText($object, $contentStr);
@@ -248,7 +248,7 @@ class WeixinAction extends AppBaseAction{
 							$arr_item = $WxMsg->getMsg(array('use_state'=>2));
 					        if(count($arr_item)>0){
 						       $resultStr = $this->transmitNews($object, $arr_item, $flag = 0);
-						       tolog('/data/www/zunlvhui/App/Lib/Action/Api/a.txt',$resultStr);
+						       
 					        }else{
                                 $contentStr ="没有预定送免房的优惠";
                                 
