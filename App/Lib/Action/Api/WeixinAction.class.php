@@ -236,16 +236,19 @@ class WeixinAction extends AppBaseAction{
 							
 					        if(count($arr_item)>0){
 						       $resultStr = $this->transmitNews($object, $arr_item, $flag = 0);
+						       tolog('/data/www/zunlvhui/App/Lib/Action/Api/a.txt',$resultStr);
 							}else{
                                 $contentStr ="没有特价酒店";
 						        $resultStr = $this->transmitText($object, $contentStr);
+						        
 							}
 							break;
 						case 'menu_2_2':  //预定送免房
 							$arr_item = $WxMsg->getMsg(array('use_state'=>2));
 					        if(count($arr_item)>0){
 						       $resultStr = $this->transmitNews($object, $arr_item, $flag = 0);
-							}else{
+						       tolog('/data/www/zunlvhui/App/Lib/Action/Api/a.txt',$resultStr);
+					        }else{
                                 $contentStr ="没有预定送免房的优惠";
                                 
 						        $resultStr = $this->transmitText($object, $contentStr);
