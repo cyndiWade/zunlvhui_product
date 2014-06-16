@@ -56,7 +56,7 @@ class WxMsgModel extends ApiBaseModel{
 			);			    
 		$i++;
 	   }
-	  return $arr;
+	  return empty($arr) ? array() : $arr;
 	 
 	 // return $data;
 	
