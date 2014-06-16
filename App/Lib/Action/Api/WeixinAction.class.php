@@ -77,43 +77,6 @@ class WeixinAction extends AppBaseAction{
 					}
 				    $OrderState = $this->db['OrderState'];
 					$step = $OrderState->get_step($user_code);
-					/* if($step==10){ //判断是否是每日特惠的输入
-						 $OrderState  = $this->db['OrderState'];
-				         $Sphotel       = $this->db['Sphotel'];
-						
-						// $HotelOrder  = $this->db['HotelOrder'];
-						 //$HotelRoom   = $this->db['HotelRoom'];
-						 //$WxUser      = $this->db['WxUser'];
-						// $UsersHotel  = $this->db['UsersHotel'];
-						 $Siri        = $this->db['Siri'];
-						 
-						 $text = $postObj->Content;
-						 $user_code = $postObj->FromUserName;
-						 if(empty($text)){
-						   $text = $postObj->Recognition ;
-						 }
-						 $T= 60*30;
-						 $datatext = $Siri->seek_explain(array('keyword'=>array('like',"$text")));
-						 $text = empty($datatext) ? str_replace('市','',$text) : $datatext;
-					     if(!in_array("$text",$this->get_city())){
-							$contentStr = '您输入的不是城市名称。';
-							$resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
-							die($resultStr);
-						 }else{
-							$arr_item = $Sphotel->get_all_sphotel("$text");	
-							if(!$arr_item){
-		                        $contentStr = $text.'该城市是没有酒店信息。';
-								$resultStr = $this->transmitText($postObj, $contentStr, $funcFlag);
-								die($resultStr);
-							  
-							}
-							$resultStr = $this->transmitNews($postObj, $arr_item, $flag = 0);
-							
-						}
-		
-					}else{
-				       $resultStr = $this->step($postObj,$step);
-					} */
 					$resultStr = $this->step($postObj,$step);
 					break;
 				case "image":
