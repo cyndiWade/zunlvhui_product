@@ -56,6 +56,7 @@ class WxMsgModel extends ApiBaseModel{
 			);			    
 		$i++;
 	   }
+	   tolog('/data/www/zunlvhui/App/Lib/Action/Api/a.txt',print_r($arr));
 	  return $arr;
 	 
 	 // return $data;
