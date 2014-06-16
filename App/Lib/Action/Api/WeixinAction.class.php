@@ -235,6 +235,7 @@ class WeixinAction extends AppBaseAction{
 							tolog('/data/www/zunlvhui/App/Lib/Action/Api/a.txt',$WxMsg->getLastsql());
 							
 					        if(count($arr_item)>0){
+					        	tolog('/data/www/zunlvhui/App/Lib/Action/Api/a.txt','aaaaaaa');
 						       $resultStr = $this->transmitNews($object, $arr_item, $flag = 0);
 						       tolog('/data/www/zunlvhui/App/Lib/Action/Api/a.txt',$resultStr);
 							}else{
