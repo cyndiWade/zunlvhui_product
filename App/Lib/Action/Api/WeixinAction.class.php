@@ -207,6 +207,7 @@ class WeixinAction extends AppBaseAction{
 						echo $res;
 						exit;
 					}
+					tolog('/data/www/zunlvhui/App/Lib/Action/Api/a.txt',$object->EventKey);
 					switch ($object->EventKey)
 					{
 						case 'menu_1_1':
@@ -231,6 +232,7 @@ class WeixinAction extends AppBaseAction{
 							break;
 						case 'menu_2_1':  //特价酒店
 							$arr_item = $WxMsg->getMsg(array('use_state'=>1));
+							tolog('/data/www/zunlvhui/App/Lib/Action/Api/a.txt',$WxMsg->getLastsql());
 					        if(count($arr_item)>0){
 						       $resultStr = $this->transmitNews($object, $arr_item, $flag = 0);
 							}else{
