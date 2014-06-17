@@ -94,7 +94,7 @@ class WxMsgAction extends AdminBaseAction {
 	
 	private function upload(){
 		
-		$path = './Public/Uploads/';
+		$path = 'Public/Uploads/';
 
 		//导入图片上传类  
 		import("ORG.Net.UploadFile");  

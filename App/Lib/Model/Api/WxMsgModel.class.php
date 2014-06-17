@@ -52,11 +52,11 @@ class WxMsgModel extends ApiBaseModel{
 				'Title'=>$val['title'],
 				'Description'=>$val['description'],
 				'Picurl' =>$domain['domain'].'zunlvhui/'.$image,//C('logo_url'),
-				'Url'    =>$Url,
+				'Url'    =>$Url
 			);			    
 		$i++;
 	   }
-	  return $arr;
+	  return empty($arr) ? array() : $arr;
 	 
 	 // return $data;
 	
