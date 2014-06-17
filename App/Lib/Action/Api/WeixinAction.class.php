@@ -435,7 +435,7 @@ private function receiveText($object)
 		 $WxUser      = $this->db['WxUser'];
 		 $UsersHotel  = $this->db['UsersHotel'];
 		 $Siri        = $this->db['Siri'];
-		 
+		 $WxMsg       = $this->db['WxMsg'];
 		 $text = $postObj->Content;
 		 $user_code = $postObj->FromUserName;
 		 if(empty($text)){
@@ -451,13 +451,7 @@ private function receiveText($object)
 				$step = 0;
 		 	}
 		 }
-		 /*else{
-		 	if($step < 1 ){
-		 		$text = '您输入的酒店名称未存在';
-				$resultStr = $this->transmitText($postObj, $text, $funcFlag);
-				die($resultStr);
-			}
-		 }*/
+	
          switch($step){
 		 
 		     case 0 :
@@ -683,8 +677,9 @@ private function receiveText($object)
 		  //$arr_item = $HotelRoom->total_price(13,'2014-06-18','2014-06-20',2);
 		  //$arr_item = $HotelRoom->get_room_type("北京饭店",$hotel_id,$pay_type);
 		  $arr_item = $WxMsg->getMsg(array('use_state'=>1));
-		  //$arr_item = $Hotel->get_Hotel("北京饭店");
-		  //echo $Hotel->getLastSql();
+		  echo '<pre>';print_R($arr_item);echo '</pre>';
+		  $arr_item = $Hotel->get_Hotel("北京");
+		  
         echo '<pre>';print_R($arr_item);echo '</pre>';exit;
    }
 
