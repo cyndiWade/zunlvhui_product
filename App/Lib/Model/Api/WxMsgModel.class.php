@@ -62,26 +62,7 @@ class WxMsgModel extends ApiBaseModel{
           $datas[$key]['Picurl']      = $domain.'zunlvhui/'.$image;
           $datas[$key]['Url']         = $Url;
 	  }
-	   $arr = array();
-       $arr[0] = array(
-						'Title'=>'酒店地图',
-						'Description'=>'',
-						'Picurl' =>$this->get_map("$hotel_cs"),//C('logo_url'),
-						'Url'    =>C('HOTEL_MAP').urlencode($h),
-						);
-	  $i = 1 ;
-	  foreach($datas as $key=>$val){
-			    if($i>8)break;
-			    
-			    $arr[$i] = array(
-						'Title'=>$val['Title'],
-				        'Description'=>$val['Description'],
-				        'Picurl' =>$val['Picurl'],
-						'Url'    =>$val['Url']
-						);
-			    
-			  $i++;
-	  }
+
 
 	  return  $datas;
 	 
