@@ -231,8 +231,8 @@ class WeixinAction extends AppBaseAction{
 							}
 							break;
 						case 'menu_2_1':  //特价酒店
-							$arr_item = $Hotel->get_all_hotel("上海");	
-							//$arr_item = $WxMsg->getMsg(array('use_state'=>1),'*');
+							//$arr_item = $Hotel->get_all_hotel("上海");	
+							$arr_item = $WxMsg->getMsg(array('use_state'=>1),'*');
 							
 							
 					        if(count($arr_item)>0){
