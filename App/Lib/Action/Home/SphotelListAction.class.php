@@ -35,7 +35,7 @@ class SphotelListAction extends HomeBaseAction{
 		  $city = $this->_get('hotel_cs');
 		  
 		  if(!empty($city)){
-		  	  $hotel_cs = passport_decrypt(urldecode($this->_get('$city')),'hotel');
+		  	  $hotel_cs = passport_decrypt(urldecode($city),'hotel');
 			  $where = array(
 			  		'hotel_cs'=>"$hotel_cs"
 			  );
@@ -43,7 +43,7 @@ class SphotelListAction extends HomeBaseAction{
 		  
 		  if($hotel_type !=0)$where['hotel_type'] = $hotel_type;
 	      $list = $Hotel->get_hotels($where);
-	      
+	   
 	      if($list == true){
 	      	 $hotel_ids = getArrayByField($list,'id'); // 获得酒店的id
 	      	 $rooms    = $HotelRoom->get_price_room(array('hotel_id'=>array('in',$hotel_ids) )); 
