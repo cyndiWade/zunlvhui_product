@@ -39,7 +39,13 @@ class WxMsgModel extends ApiBaseModel{
 	  $domain = C('PUBLIC_VISIT.domain'); 
 	  $where = array('is_del'=>0);
 	  array_add_to($where,$condition);
-	  $data = $this->where($where)->order('sort asc')->limit(9)->select();
+	  $data = $this->table($this->prefix.'wxmsg AS w')
+			->field('*')
+			->where($where)
+			->order('w.sort ASC')
+			->limit(9)
+			->select();
+	  //$data = $this->where($where)->order('sort  ASC ')->limit(9)->select();
 	  $i = 1 ;
 
 	  foreach($data as $key=>$val){
