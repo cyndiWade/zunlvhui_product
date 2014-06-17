@@ -48,21 +48,22 @@ class WxMsgModel extends ApiBaseModel{
 
 	  //$data = $this->where($where)->order('sort  ASC ')->limit(9)->select();
 	  $i = 1 ;
-
+      $datas = array();
 	  foreach($data as $key=>$val){
+	  	  if($i>10)break;
 	      if($val['type'] == 2){
 	      	$h = passport_encrypt($val['url'],'hotel');
 	      	$url = urlencode($h);
 	      }
 	      $Url = $val['type'] == 2 ? C('Sphotel_more').$url.'/hotel_type/'.$condition['use_state'] : C('Sphotel_info_url').$val['url'] ;
 		  $image = $i==1 ? $val['pic_url'] : $val['pic_url_xiao'];
-	      $data[$key]['Title']       = $val['title'];
-          $data[$key]['Description'] = $val['description'];
-          $data[$key]['Picurl']      =  $domain.'zunlvhui/'.$image;
-          $data[$key]['Url']         = $Url;
+	      $datas[$key]['Title']       = $val['title'];
+          $datas[$key]['Description'] = $val['description'];
+          $datas[$key]['Picurl']      =  $domain.'zunlvhui/'.$image;
+          $datas[$key]['Url']         = $Url;
 	  }
 
-	  $arr = array();
+/*	  $arr = array();
 	  $i = 1 ;
 	  foreach($data as $key=>$val){
 	  	if($i>10)break;
@@ -73,9 +74,9 @@ class WxMsgModel extends ApiBaseModel{
 				'Url'    =>$val['Url']
 			);			    
 		$i++;
-	   }
-	
-	  return  $arr;
+	   }*/
+	   //echo '<pre>';print_R($datas);echo'</pre>a';
+	  return  $datas;
 	 
 	 // return $data;
 	
