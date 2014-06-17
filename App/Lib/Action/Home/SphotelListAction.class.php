@@ -33,12 +33,14 @@ class SphotelListAction extends HomeBaseAction{
 	  	  $RoomSchedule = $this->db['SproomSchedule'];
 		  $hotel_type  = $this->_get('hotel_type');
 		  $city = $this->_get('hotel_cs');
-		  if(empty($city)){
+		  
+		  if(!empty($city)){
 		  	  $hotel_cs = passport_decrypt(urldecode($this->_get('$city')),'hotel');
 			  $where = array(
 			  		'hotel_cs'=>"$hotel_cs"
 			  );
-		  }  
+		  } 
+		  
 		  if($hotel_type !=0)$where['hotel_type'] = $hotel_type;
 	      $list = $Hotel->get_hotels($where);
 	      

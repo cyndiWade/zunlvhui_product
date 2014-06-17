@@ -64,10 +64,10 @@ class WxMsgModel extends ApiBaseModel{
 	  }
 	   $arr = array();
        $arr[0] = array(
-						'Title'=>'预留',
+						'Title'=>'酒店地图',
 						'Description'=>'',
-						'Picurl' =>'',//C('logo_url'),
-						'Url'    =>'',
+						'Picurl' =>$this->get_map("$hotel_cs"),//C('logo_url'),
+						'Url'    =>C('HOTEL_MAP').urlencode($h),
 						);
 	  $i = 1 ;
 	  foreach($datas as $key=>$val){
@@ -82,20 +82,8 @@ class WxMsgModel extends ApiBaseModel{
 			    
 			  $i++;
 	  }
-/*	  $arr = array();
-	  $i = 1 ;
-	  foreach($data as $key=>$val){
-	  	if($i>10)break;
-		$arr[] = array(
-				'Title'=>$val['Title'],
-				'Description'=>'',//$val['Description'],
-				'Picurl' =>$val['Picurl'],
-				'Url'    =>$val['Url']
-			);			    
-		$i++;
-	   }*/
-	   //echo '<pre>';print_R($datas);echo'</pre>a';
-	  return  $arr;
+
+	  return  $datas;
 	 
 	 // return $data;
 	
