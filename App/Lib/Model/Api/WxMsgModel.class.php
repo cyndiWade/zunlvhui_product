@@ -64,7 +64,7 @@ class WxMsgModel extends ApiBaseModel{
 	  }
 	   $arr = array();
        $arr[0] = array(
-						'Title'=>'',
+						'Title'=>'预留',
 						'Description'=>'',
 						'Picurl' =>'',//C('logo_url'),
 						'Url'    =>'',
