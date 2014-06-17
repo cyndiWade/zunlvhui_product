@@ -41,17 +41,20 @@ class WxMsgModel extends ApiBaseModel{
 	  array_add_to($where,$condition);
 	  $data = $this->where($where)->field($field)->order('sort asc')->limit(9)->select();
 	  $i = 1 ;
-	  
+
 	  foreach($data as $key=>$val){
-	      if($val['type'] == 2)$h = passport_encrypt($val['url'],'hotel');
-	  	  $Url = $val['type'] == 2 ? C('Sphotel_more').urlencode($h).'/hotel_type/'.$condition['use_state'] : C('Sphotel_info_url').$val['url'] ;
+	      if($val['type'] == 2){
+	      	$h = passport_encrypt($val['url'],'hotel');
+	      	$url = urlencode($h);
+	      }
+	      $Url = $val['type'] == 2 ? C('Sphotel_more').$url.'/hotel_type/'.$condition['use_state'] : C('Sphotel_info_url').$val['url'] ;
 		  $image = $i==1 ? $val['pic_url'] : $val['pic_url_xiao'];
-	      $data[$key]['Title'] = $val['title'];
+	      $data[$key]['Title']       = $val['title'];
           $data[$key]['Description'] = $val['description'];
-          $data[$key]['Picurl'] =  $domain.'zunlvhui/'.$image;
-          $data[$key]['Url']  = $Url;
+          $data[$key]['Picurl']      =  $domain.'zunlvhui/'.$image;
+          $data[$key]['Url']         = $Url;
 	  }
-	  
+
 	  $arr = array();
 	  $i = 1 ;
 	  foreach($data as $key=>$val){
@@ -64,6 +67,7 @@ class WxMsgModel extends ApiBaseModel{
 			);			    
 		$i++;
 	   }
+	
 	  return empty($arr) ? array() : $arr;
 	 
 	 // return $data;
