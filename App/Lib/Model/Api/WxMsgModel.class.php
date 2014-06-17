@@ -68,7 +68,7 @@ class WxMsgModel extends ApiBaseModel{
 	  	if($i>10)break;
 		$arr[] = array(
 				'Title'=>$val['Title'],
-				'Description'=>$val['Description'],
+				'Description'=>'',//$val['Description'],
 				'Picurl' =>$val['Picurl'],
 				'Url'    =>$val['Url']
 			);			    
