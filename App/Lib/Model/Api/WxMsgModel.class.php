@@ -42,7 +42,7 @@ class WxMsgModel extends ApiBaseModel{
 	  $data = $this->where($where)->field($field)->order('sort asc')->limit(9)->select();
 	  $arr = array();
 	  $i = 1 ;
-	  $domain = C('PUBLIC_VISIT');
+	  $domain = C('PUBLIC_VISIT.domain');
 	  foreach($data as $key=>$val){
 	  	if($val['type'] == 2)$h = passport_encrypt($val['url'],'hotel');
 	  	$Url = $val['type'] == 2 ? C('Sphotel_more').urlencode($h).'/hotel_type/'.$condition['use_state'] : C('Sphotel_info_url').$val['url'] ;
@@ -51,7 +51,7 @@ class WxMsgModel extends ApiBaseModel{
 		$arr[] = array(
 				'Title'=>$val['title'],
 				'Description'=>$val['description'],
-				'Picurl' =>$domain['domain'].'zunlvhui/'.$image,//C('logo_url'),
+				'Picurl' =>$domain.'zunlvhui/'.$image,//C('logo_url'),
 				'Url'    =>$Url
 			);			    
 		$i++;

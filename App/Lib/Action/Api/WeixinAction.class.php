@@ -231,7 +231,7 @@ class WeixinAction extends AppBaseAction{
 							}
 							break;
 						case 'menu_2_1':  //特价酒店
-							$arr_item = $WxMsg->getMsg(array('use_state'=>1));
+							$arr_item = $WxMsg->getMsg(array('use_state'=>1),'*');
 							
 							
 					        if(count($arr_item)>0){
@@ -245,7 +245,7 @@ class WeixinAction extends AppBaseAction{
 							}
 							break;
 						case 'menu_2_2':  //预定送免房
-							$arr_item = $WxMsg->getMsg(array('use_state'=>2));
+							$arr_item = $WxMsg->getMsg(array('use_state'=>2),'*');
 					        if(count($arr_item)>0){
 						       $resultStr = $this->transmitNews($object, $arr_item, $flag = 0);
 						       
@@ -256,7 +256,7 @@ class WeixinAction extends AppBaseAction{
 							}
 							break;
 						case 'menu_2_3':  //预定返红包
-							$arr_item = $WxMsg->getMsg(array('use_state'=>3));
+							$arr_item = $WxMsg->getMsg(array('use_state'=>3),'*');
 							if(count($arr_item)>0){
 						       $resultStr = $this->transmitNews($object, $arr_item, $flag = 0);
 							}else{
@@ -303,13 +303,7 @@ class WeixinAction extends AppBaseAction{
                                 $contentStr ="您还没有订单";
 						        $resultStr = $this->transmitText($object, $contentStr);
 							}
-						    /*$arr_item = $Coupon->get_coupon(3);
-							if(count($arr_item)>0){
-						       $resultStr = $this->transmitNews($object, $arr_item, $flag = 0);
-							}else{
-                                $contentStr ="没有此优惠券";
-						        $resultStr = $this->transmitText($object, $contentStr);
-							}*/
+		
 							break;
 						case 'menu_3_5':
 							//4娱乐
