@@ -33,7 +33,7 @@ class HotelModel extends ApiBaseModel{
 						'Title'=>'酒店地图',
 						'Description'=>'',
 						'Picurl' =>$this->get_map("$hotel_cs"),//C('logo_url'),
-						'Url'    =>C('HOTEL_MAP').urlencode($h),
+						'Url'    =>C('HOTEL_MAP').$h,
 						);
 			$i = 1 ;
 			foreach($data as $key=>$val){
@@ -52,7 +52,7 @@ class HotelModel extends ApiBaseModel{
 						'Title'=>'更多酒店',
 						'Description'=>'',
 						'Picurl' =>C('logo_url'),
-						'Url'    =>C('Hotel_more').urlencode($h),
+						'Url'    =>C('Hotel_more').$h,
 						);
 			
            
@@ -199,7 +199,7 @@ class HotelModel extends ApiBaseModel{
 			->where(array('h.id'=>$hotel_id,'h.is_del'=>0,'rs.day'=>strtotime( date('Y-m-d',time())) )  )
 			->order('h.sort DESC')
 			->select();
-			echo $this->getLastSql();
+			
 			return $data;
       }
 
