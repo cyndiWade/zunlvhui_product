@@ -34,6 +34,19 @@ class HotelOrderModel extends AdminBaseModel {
 		return $data;
 	}
 	
+	public function check_order(){
+		$result = array('new_orders' => 0,'msg'=>'', 'new_paid' => 0);
+		$where = array(
+			'order_time'=>array('egt',$_SESSION[last_check]),
+		    'order_status'=>0
+		);
+		$result['new_orders'] = $this->where($where)->count('*');
+        if($result['new_orders']>0){
+        	$result['msg'] = '新订单';
+        } 
+		die(json_encode($result));	
+	}
+	
 
 	
 }

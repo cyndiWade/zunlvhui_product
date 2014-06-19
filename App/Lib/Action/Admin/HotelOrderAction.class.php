@@ -359,5 +359,38 @@ class HotelOrderAction extends AdminBaseAction {
 		$OrderLog->msg = $msg;
 		return $OrderLog->add_order_log();
 	}
+	
+	//自动检测订单
+	public function check_order(){
+		$HotelOrder = $this->db['HotelOrder'];
+		if (empty($_SESSION['last_check']))
+	    {
+	        $_SESSION['last_check'] = time();
+	        //make_json_result('', '', array('new_orders' => 0, 'new_paid' => 0));
+	    }
+        $HotelOrder->check_order();
+        exit;
+    /* 新订单 */
+    $sql = 'SELECT COUNT(*) FROM ' . $ecs->table('order_info').
+    " WHERE add_time >= '$_SESSION[last_check]'";
+    $arr['new_orders'] = $db->getOne($sql);
+
+    /* 新付款的订单 */
+    $sql = 'SELECT COUNT(*) FROM '.$ecs->table('order_info').
+    ' WHERE pay_time >= ' . $_SESSION['last_check'];
+    $arr['new_paid'] = $db->getOne($sql);
+
+    $_SESSION['last_check'] = gmtime();
+
+    if (!(is_numeric($arr['new_orders']) && is_numeric($arr['new_paid'])))
+    {
+        make_json_error($db->error());
+    }
+    else
+    {
+        make_json_result('', '', $arr);
+    }
+	}
+	
     
 }

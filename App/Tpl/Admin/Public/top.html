@@ -37,4 +37,95 @@
 			color:red;
 		}
 	</style>
+<script type="Text/Javascript" language="JavaScript">
+<!--
+
+onload = function()
+{
+  // 开始检查订单
+  startCheckOrder();
+}
+/* 检查新订单的时间间隔 */
+var NEW_ORDER_INTERVAL = 180000;
+
+/* *
+ * 开始检查新订单；
+ */
+function startCheckOrder()
+{
+  checkOrder()
+  window.setInterval("checkOrder()", NEW_ORDER_INTERVAL);
+}
+
+function checkOrder()
+{
+  var lastCheckOrder = new Date(getCookie('ECS_LastCheckOrder'));
+  var today = new Date();
+
+  if (lastCheckOrder == null || today-lastCheckOrder >= NEW_ORDER_INTERVAL)
+  {
+	  document.cookie=name + "="+today.toGMTString()
+    //document.setCookie('ECS_LastCheckOrder', today.toGMTString());
+
+    try
+    { 
+        $.ajax({
+        	type: "GET",
+
+            url: "index.php?s=/Admin/HotelOrder/check_order",
+
+            data: {},
+
+            dataType: "json",
+
+            success:function(data){
+                if(data.new_orders>0){
+                   var html = '<span>'+data.msg+'('+data.new_orders+')</span>';
+                   $("#show_order").show();
+                   $("#show_order_info").html(html);  
+                }
+
+            }
+    
+            })
+      //Ajax.call('index.php?is_ajax=1&act=check_order','', checkOrderResponse, 'GET', 'JSON');
+    }
+    catch (e) { }
+  }
+}
+function getCookie(name)
+{
+    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+ 
+    if(arr=document.cookie.match(reg))
+ 
+        return unescape(arr[2]);
+    else
+        return null;
+} 
+/* *
+ * 处理检查订单的反馈信息
+ */
+function checkOrderResponse(result)
+{
+  //出错屏蔽
+  if (result.error != 0 || (result.new_orders == 0 && result.new_paid == 0))
+  {
+    return;
+  }
+  try
+  {
+    document.getElementById('spanNewOrder').innerHTML = result.new_orders;
+    document.getElementById('spanNewPaid').innerHTML = result.new_paid;
+    Message.show();
+  }
+  catch (e) { }
+}
+function close(){
+
+  $("#show_order").hide();
+	
+}
+//-->
+</script>
 	
