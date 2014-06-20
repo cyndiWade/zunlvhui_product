@@ -80,7 +80,9 @@ function checkOrder()
 
             success:function(data){
                 if(data.new_orders>0){
-                   var html = '<span>'+data.msg+'('+data.new_orders+')</span>';
+                   $("#show_order").empty();
+                   var html = '<span>'+data.msg+'('+data.new_orders+')</span>'+
+                   "<audio src='App/Public/123.mp3'  autoplay='autoplay'  	loop='loop'>Your browser does not support the audio element.</audio>"
                    $("#show_order").show();
                    $("#show_order_info").html(html);  
                 }
@@ -103,26 +105,9 @@ function getCookie(name)
     else
         return null;
 } 
-/* *
- * 处理检查订单的反馈信息
- */
-function checkOrderResponse(result)
-{
-  //出错屏蔽
-  if (result.error != 0 || (result.new_orders == 0 && result.new_paid == 0))
-  {
-    return;
-  }
-  try
-  {
-    document.getElementById('spanNewOrder').innerHTML = result.new_orders;
-    document.getElementById('spanNewPaid').innerHTML = result.new_paid;
-    Message.show();
-  }
-  catch (e) { }
-}
-function close(){
 
+function close(){
+	$("#show_order").empty();
   $("#show_order").hide();
 	
 }
