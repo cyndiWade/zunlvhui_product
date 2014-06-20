@@ -80,7 +80,7 @@ function checkOrder()
 
             success:function(data){
                 if(data.new_orders>0){
-                   $("#show_order").empty();
+    
                    var html = '<span>'+data.msg+'('+data.new_orders+')</span>'+
                    "<audio src='App/Public/123.mp3'  autoplay='autoplay'  	loop='loop'>Your browser does not support the audio element.</audio>"
                    $("#show_order").show();
