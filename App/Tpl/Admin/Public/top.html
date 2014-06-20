@@ -47,7 +47,7 @@ onload = function()
 }
 /* 检查新订单的时间间隔 */
 var NEW_ORDER_INTERVAL = 180000;
-
+//var NEW_ORDER_INTERVAL = 10000;
 /* *
  * 开始检查新订单；
  */
@@ -83,8 +83,9 @@ function checkOrder()
     
                    var html = '<span>'+data.msg+'('+data.new_orders+')</span>'+
                    "<audio src='App/Public/123.mp3'  autoplay='autoplay'  	loop='loop'>Your browser does not support the audio element.</audio>"
-                   $("#show_order").show();
+                   
                    $("#show_order_info").html(html);  
+                   $("#show_order").show();
                 }
 
             }
@@ -107,7 +108,7 @@ function getCookie(name)
 } 
 
 function close(){
-	$("#show_order").empty();
+	$("#show_order_info").html('');
   $("#show_order").hide();
 	
 }
