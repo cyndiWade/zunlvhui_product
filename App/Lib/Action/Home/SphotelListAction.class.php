@@ -45,7 +45,7 @@ class SphotelListAction extends HomeBaseAction{
 		  	$city  = $Hotel->get_city();
 		  	echo '<pre>';print_R($list);echo '</pre>';exit;
 		  } 
-		  echo 'a';exit;
+		  
 		  if($hotel_type !=0)$where['hotel_type'] = $hotel_type;
 	      $list = $Hotel->get_hotels($where);
 	      //echo '<pre>';print_R($list);echo '</pre>';exit; 
