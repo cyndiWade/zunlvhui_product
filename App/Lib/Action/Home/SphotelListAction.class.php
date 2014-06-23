@@ -102,7 +102,7 @@ class SphotelListAction extends HomeBaseAction{
 			 'hotel_cs'=> passport_encrypt($list['hotel_cs'],'hotel')
 	  	 );
 	
-	  	echo '<pre>';print_R($html);echo '</pre>';exit;
+	  	//echo '<pre>';print_R($html);echo '</pre>';exit;
 		 
 	     $this->assign('html',$html);
 	  	 $this->display();
