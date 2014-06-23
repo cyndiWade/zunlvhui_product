@@ -45,7 +45,8 @@ class SphotelListAction extends HomeBaseAction{
 			  );
 		  }else{
 		  	$allcity  = $Hotel->get_city();
-		  	$this->assign('allcity',$allcity);
+		  	$this->assign('allcity','');
+		  	//$this->assign('allcity',$allcity);
 		  	//echo $Hotel->getLastSql();
 		  	//echo '<pre>';print_R($allcity);echo '</pre>';exit;
 		  } 
