@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors',1);
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
 class SphotelListAction extends HomeBaseAction{
   
      
@@ -35,15 +37,15 @@ class SphotelListAction extends HomeBaseAction{
 		  $hotel_type  = $this->_get('hotel_type');
 		  $city = $this->_get('hotel_cs');
 		  
-		  if(!empty($city) and $city!='all'){
+		  if(!empty($city) and $city !='all'){
 		  	  $city = str_replace('ABCDE','%',$city);
 		  	  $hotel_cs = passport_decrypt(urldecode($city),'hotel');
 			  $where = array(
 			  		'hotel_cs'=>"$hotel_cs"
 			  );
 		  }else{
-		  	$city  = $Hotel->get_city();
-		  	echo '<pre>';print_R($list);echo '</pre>';exit;
+		  	$allcity  = $Hotel->get_city();
+		  	echo '<pre>';print_R($allcity);echo '</pre>';exit;
 		  } 
 		  
 		  if($hotel_type !=0)$where['hotel_type'] = $hotel_type;

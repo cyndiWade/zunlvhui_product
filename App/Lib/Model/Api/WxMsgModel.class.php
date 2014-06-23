@@ -66,6 +66,7 @@ class WxMsgModel extends ApiBaseModel{
           $datas[$key]['Description'] = $val['description'];
           $datas[$key]['Picurl']      = $domain.'zunlvhui/'.$image;
           $datas[$key]['Url']         = $Url;
+          $i++;
 	  }
 
 
