@@ -10,9 +10,19 @@ class GiftModel extends AppBaseModel {
 		$con = array('is_del'=>0);
 		array_add_to($con,$condition);
 		$data = $this->where($con)->select();
+
 		return $data;
 	}
-	
+   public function all_data ($condition) {
+		$con = array('is_del'=>0);
+		array_add_to($con,$condition);
+		$data = $this->where($con)->select();
+		$arr=array();
+		foreach ($data as $key=>$val){
+			$arr[] = $val['name'];
+		}
+		return empty($data) ? ' ' : $arr;
+	}
 	
 	//获取一条数据
 	public function seek_one_data ($condition,$field = '*') {

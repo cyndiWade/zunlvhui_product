@@ -30,6 +30,7 @@ class SphotelListAction extends HomeBaseAction{
 	     
 	  	  $Hotel      = $this->db['Sphotel']; // 酒店
 	  	  $HotelRoom  = $this->db['SphotelRoom'];
+	  	  $Gift       = $this->db['Gift'];
 	  	  $RoomSchedule = $this->db['SproomSchedule'];
 		  $hotel_type  = $this->_get('hotel_type');
 		  $city = $this->_get('hotel_cs');
@@ -43,27 +44,28 @@ class SphotelListAction extends HomeBaseAction{
 		  
 		  if($hotel_type !=0)$where['hotel_type'] = $hotel_type;
 	      $list = $Hotel->get_hotels($where);
-	   
+	      //echo '<pre>';print_R($list);echo '</pre>';exit; 
 	      if($list == true){
 	      	 $hotel_ids = getArrayByField($list,'id'); // 获得酒店的id
 	      	 $rooms    = $HotelRoom->get_price_room(array('hotel_id'=>array('in',$hotel_ids) )); 
 		     
 	      	 $room_sort     = regroupKey($rooms,'hotel_id');  
-	      	 //echo '<pre>';print_R($room_sort);echo '</pre>';
+	      	 
 	         foreach ($list AS $key=>$val) {
+	         	//$HotelRoom->get_hotel_room($val['hotel_id'],2);
+	         	$list[$key]['lb']           = $Gift->all_data(array('id'=>array('in',$val['hotel_lp'])));
 				$list[$key]['img']          = $Hotel->get_img($val['id'],4);
-				$list[$key]['roomtype']     = $room_sort[$val['id']];
-				$list[$key]['spot_payment'] = $room_sort[$val['id']][0]['spot_payment'];//!empty($room_sort[$val['id']][0]['spot_payment']) ? $room_sort[$val['id']][0]['prepay'] : C('NOT_PRICE'); // 微信支付
-				$list[$key]['prepay'] =       $room_sort[$val['id']][0]['prepay'];//!empty($room_sort[$val['id']][0]['prepay']) ? $room_sort[$val['id']][0]['prepay'] : C('NOT_PRICE') ;//到店支付
-				
+				$list[$key]['roomtype']     = $HotelRoom->get_hotel_room($val['id'],2);//$room_sort[$val['id']];
+				$list[$key]['spot_payment'] = $list[$key]['roomtype'][0]['mspot_payment'];//!empty($room_sort[$val['id']][0]['spot_payment']) ? $room_sort[$val['id']][0]['prepay'] : C('NOT_PRICE'); // 微信支付
+				$list[$key]['prepay']       = $list[$key]['roomtype'][0]['mprepay'];//!empty($room_sort[$val['id']][0]['prepay']) ? $room_sort[$val['id']][0]['prepay'] : C('NOT_PRICE') ;//到店支付
 			 }
 	      }
 	      //echo '<pre>';print_R($list);echo '</pre>';exit;
 	      $html = array(
-			  'list'=>$list,
-			  'hotel_cs'=> passport_encrypt($hotel_cs,'hotel'),
-	          'user_code'=>$this->_get('user_code')
-			  );
+			  'list'     => $list,
+			  'hotel_cs' => passport_encrypt($hotel_cs,'hotel'),
+	          'user_code'=> $this->_get('user_code')
+		  );
 	      $this->assign('html',$html);
 	      $this->display();
 	  }
@@ -100,7 +102,7 @@ class SphotelListAction extends HomeBaseAction{
 			 'hotel_cs'=> passport_encrypt($list['hotel_cs'],'hotel')
 	  	 );
 	
-	  	//echo '<pre>';print_R($html);echo '</pre>';exit;
+	  	echo '<pre>';print_R($html);echo '</pre>';exit;
 		 
 	     $this->assign('html',$html);
 	  	 $this->display();
