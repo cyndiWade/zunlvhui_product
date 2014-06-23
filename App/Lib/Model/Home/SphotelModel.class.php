@@ -157,5 +157,14 @@ class SphotelModel extends HomeBaseModel{
 		  return $data;
 	  	
 	  }
+	  
+	  //获得有酒店的城市
+	  public function get_city(){
+	  	 $where = array(
+	  	     'is_del'=>0
+	  	 );
+	  	 $data = $this->Distinct('hotel_cs')->where($where)->getField('hotel_cs');
+	     return $data;	
+	  }
 	
 }

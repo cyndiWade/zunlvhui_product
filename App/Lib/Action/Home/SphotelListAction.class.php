@@ -35,14 +35,17 @@ class SphotelListAction extends HomeBaseAction{
 		  $hotel_type  = $this->_get('hotel_type');
 		  $city = $this->_get('hotel_cs');
 		  
-		  if(!empty($city)){
+		  if(!empty($city) and $city!='all'){
 		  	  $city = str_replace('ABCDE','%',$city);
 		  	  $hotel_cs = passport_decrypt(urldecode($city),'hotel');
 			  $where = array(
 			  		'hotel_cs'=>"$hotel_cs"
 			  );
+		  }else{
+		  	$city  = $Hotel->get_city();
+		  	echo '<pre>';print_R($list);echo '</pre>';exit;
 		  } 
-		  
+		  echo 'a';exit;
 		  if($hotel_type !=0)$where['hotel_type'] = $hotel_type;
 	      $list = $Hotel->get_hotels($where);
 	      //echo '<pre>';print_R($list);echo '</pre>';exit; 
