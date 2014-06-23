@@ -53,7 +53,7 @@ class WxMsgModel extends ApiBaseModel{
 	  	  if($i>10)break;
 	      if($val['type'] == 2){
 	      	$cityurl = urlencode($val['url']);
-	      	$cityurl = str_repeat('%','ABCDE',$cityurl);
+	      	$cityurl = str_replace('%','ABCDE',$cityurl);
 	      	$url = passport_encrypt($cityurl,'hotel');
 	      	//$url = urlencode($h);
 	      }
