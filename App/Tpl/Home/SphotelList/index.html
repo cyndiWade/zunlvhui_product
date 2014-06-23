@@ -14,15 +14,26 @@
 <body>
 <!--fly_css-->
 <div >
-  <div class="m_nav f34">
-  <span class="right">
-  <a style="height:100%" href="?s=/Home/SphotelList/map/hotel_cs/{$html.hotel_cs}/user_code/{$html.user_code}">
-  <h6>地图</h6></a>
-  </span>
-    <h6  class="left" style="padding-left:28px;line-height:52px">酒店列表</h6></div>
-    <div class="blank8"></div>
-  <div class="m_jdlist">
-    <ul>
+<div class="m_nav f34">
+	  <span class="right">
+	  <a style="height:100%" href="?s=/Home/SphotelList/map/hotel_cs/{$html.hotel_cs}/user_code/{$html.user_code}">
+	  <h6>地图</h6></a>
+	  </span>
+	    <h6  class="left" style="padding-left:28px;line-height:52px">酒店列表</h6>
+</div>
+<div class="blank8"></div>
+<if condition="($allcity neq '')" >
+<div class="m_nav f34">
+<select>
+<volist name="allcity" id="voc" key="k" >
+<option>{$voc.hotel_cs}</option>
+</volist>
+</select>
+</div>
+<div class="blank8"></div>
+</if>
+<div class="m_jdlist">
+<ul>
 
 <volist name="html['list']" id="vo" key="k" >
 <li>

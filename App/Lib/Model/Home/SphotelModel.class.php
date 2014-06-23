@@ -163,7 +163,7 @@ class SphotelModel extends HomeBaseModel{
 	  	 $where = array(
 	  	     'is_del'=>0
 	  	 );
-	  	 $data = $this->Distinct('hotel_cs')->where($where)->getField('hotel_cs');
+	  	 $data = $this->Distinct('hotel_cs')->FIELD('hotel_cs')->where($where)->select();
 	     return $data;	
 	  }
 	

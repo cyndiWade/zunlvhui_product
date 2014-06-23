@@ -45,7 +45,9 @@ class SphotelListAction extends HomeBaseAction{
 			  );
 		  }else{
 		  	$allcity  = $Hotel->get_city();
-		  	echo '<pre>';print_R($allcity);echo '</pre>';exit;
+		  	$this->assign('allcity',$allcity);
+		  	//echo $Hotel->getLastSql();
+		  	//echo '<pre>';print_R($allcity);echo '</pre>';exit;
 		  } 
 		  
 		  if($hotel_type !=0)$where['hotel_type'] = $hotel_type;
@@ -72,6 +74,7 @@ class SphotelListAction extends HomeBaseAction{
 			  'hotel_cs' => passport_encrypt($hotel_cs,'hotel'),
 	          'user_code'=> $this->_get('user_code')
 		  );
+		  
 	      $this->assign('html',$html);
 	      $this->display();
 	  }
