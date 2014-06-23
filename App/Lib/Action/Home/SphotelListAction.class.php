@@ -36,6 +36,7 @@ class SphotelListAction extends HomeBaseAction{
 		  $city = $this->_get('hotel_cs');
 		  
 		  if(!empty($city)){
+		  	  $city = str_replace('ABCDE','%',$city);
 		  	  $hotel_cs = passport_decrypt(urldecode($city),'hotel');
 			  $where = array(
 			  		'hotel_cs'=>"$hotel_cs"
