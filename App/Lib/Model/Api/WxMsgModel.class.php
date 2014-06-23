@@ -52,10 +52,9 @@ class WxMsgModel extends ApiBaseModel{
 	  foreach($data as $key=>$val){
 	  	  if($i>10)break;
 	      if($val['type'] == 2){
-	      	$cityurl = urlencode($val['url']);
-	      	$cityurl = str_replace('%','ABCDE',$cityurl);
-	      	$url = passport_encrypt($cityurl,'hotel');
-	      	//$url = urlencode($h);
+	      	$url = passport_encrypt($val['url'],'hotel');
+	      	$url = urlencode($url);
+	      	$url = str_replace('%','ABCDE',$url);
 	      }
 	      $Url = $val['type'] == 2 ? C('Sphotel_more').$url.'/hotel_type/'.$condition['use_state'] : C('Sphotel_info_url').$val['url'] ;
 		  $image = $i==1 ? $val['pic_url'] : $val['pic_url_xiao'];
