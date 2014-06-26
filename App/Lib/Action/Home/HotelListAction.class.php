@@ -53,7 +53,7 @@ class HotelListAction extends HomeBaseAction{
 	      //echo '<pre>';print_R($list);echo '</pre>';exit;
 	      $html = array(
 			  'list'=>$list,
-			  'hotel_cs'=> passport_encrypt($hotel_cs,'hotel'),
+			  'hotel_cs'=> $hotel_cs,//passport_encrypt($hotel_cs,'hotel'),
 	          'user_code'=>$this->_get('user_code')
 			  );
 	      $this->assign('html',$html);
@@ -135,7 +135,10 @@ class HotelListAction extends HomeBaseAction{
 	  public function map(){
 	  	  $id = $this->_get('hotel_id');
 	  	  $user_code = $this->_get('user_code');
-		  $hotel_cs  = passport_decrypt(urldecode($this->_get('hotel_cs')),'hotel');
+	  	  $city = $this->_get('hotel_cs');
+	  	  $city = $this->_get('hotel_cs');
+		  $city = str_replace('ABCDE','%',$city);
+		  $hotel_cs  = passport_decrypt(urldecode($city),'hotel');
 	  	  if(!empty($id)){
 	  	  	 $con = array('id'=>$id);
 	  	  }else{
