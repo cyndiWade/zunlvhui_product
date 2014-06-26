@@ -32,8 +32,9 @@ class HotelListAction extends HomeBaseAction{
 	  	  $Hotel      = $this->db['Hotel']; // 酒店
 	  	  $HotelRoom  = $this->db['HotelRoom'];
 	  	  $RoomSchedule = $this->db['RoomSchedule'];
-		 
-		  $hotel_cs = passport_decrypt(urldecode($this->_get('hotel_cs')),'hotel');
+	  	  $city = $this->_get('hotel_cs');
+		  $city = str_replace('ABCDE','%',$city);
+		  $hotel_cs = passport_decrypt(urldecode($city),'hotel');
 		 
 	      $list = $Hotel->get_hotels(array('hotel_cs'=>"$hotel_cs"));
 	      
