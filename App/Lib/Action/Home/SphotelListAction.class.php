@@ -42,7 +42,7 @@ class SphotelListAction extends HomeBaseAction{
 			  		'hotel_cs'=>"$hotel_cs"
 			  );
 		  }else{
-		  	$allcity  = $Hotel->get_city();
+		  	$allcity  = $Hotel->get_city(); 
 		  	$this->assign('allcity','');
 		  } 
 		  

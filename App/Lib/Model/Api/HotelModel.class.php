@@ -5,8 +5,9 @@ class HotelModel extends ApiBaseModel{
 
       public function get_all_hotel($hotel_cs){
 
-	        if(empty($hotel_cs))$hotel_cs ='青岛';
+	        if(empty($hotel_cs))return array();//$hotel_cs ='青岛';
 			$h = passport_encrypt($hotel_cs,'hotel');
+			$h = str_replace('ABCDE','%',$h);
 			$data =  
 			$this->table($this->prefix.'hotel AS h')
 			->field('h.id,h.hotel_name , h.hotel_syq, h.hotel_pf')
