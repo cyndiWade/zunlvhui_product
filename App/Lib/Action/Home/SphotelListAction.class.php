@@ -67,7 +67,7 @@ class SphotelListAction extends HomeBaseAction{
 	      //echo '<pre>';print_R($list);echo '</pre>';exit;
 	      $html = array(
 			  'list'     => $list,
-			  'hotel_cs' => $hotel_cs,//passport_encrypt($city,'hotel'),
+			  'hotel_cs' => str_replace('ABCDE','%',$city),//passport_encrypt($city,'hotel'),
 	          'user_code'=> $this->_get('user_code')
 		  );
 		  
