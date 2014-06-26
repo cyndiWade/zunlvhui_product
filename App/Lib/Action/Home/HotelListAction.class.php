@@ -53,7 +53,7 @@ class HotelListAction extends HomeBaseAction{
 	      //echo '<pre>';print_R($list);echo '</pre>';exit;
 	      $html = array(
 			  'list'=>$list,
-			  'hotel_cs'=> $hotel_cs,//passport_encrypt($hotel_cs,'hotel'),
+			  'hotel_cs'=> $this->_get('hotel_cs'),//passport_encrypt($hotel_cs,'hotel'),
 	          'user_code'=>$this->_get('user_code')
 			  );
 	      $this->assign('html',$html);
