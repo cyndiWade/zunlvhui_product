@@ -55,10 +55,10 @@
 				</for>
 			    </span> 	    
 		    </div>
-		    <div>
-		    <if condition="($vo['lb'] neq '')" >;
-		    <foreach name="html['list']['lb']" item="vo">
-		    {$vo}
+		    <div style="color:#fff;">
+		    <if condition="($vo['lb'] neq ' ')" >
+		    <foreach name="vo['lb']" item="vod">
+		    {$vod}&nbsp;&nbsp;
 		    </foreach>
 		    </if>
 		    </div>
