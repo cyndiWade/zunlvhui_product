@@ -675,11 +675,12 @@ private function receiveText($object)
 		  $WxMsg       = $this->db['WxMsg'];
 		  //$arr_item = $HotelRoom->total_price(13,'2014-06-18','2014-06-20',2);
 		  //$arr_item = $HotelRoom->get_room_type("北京饭店",$hotel_id,$pay_type);
-		  $arr_item = $WxMsg->getMsg(array('use_state'=>1));
+		  //$arr_item = $WxMsg->getMsg(array('use_state'=>1));
+		  $arr_item = $Hotel->get_all_hotel("天津");
 		  echo '<pre>';print_R($arr_item);echo '</pre>';
-		  $arr_item = $Hotel->get_Hotel("北京");
+		 // $arr_item = $Hotel->get_Hotel("北京");
 		  
-        echo '<pre>';print_R($arr_item);echo '</pre>';exit;
+       // echo '<pre>';print_R($arr_item);echo '</pre>';exit;
    }
 
    public function valid()
