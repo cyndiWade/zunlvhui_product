@@ -9,8 +9,34 @@
 <meta HTTP-EQUIV="Expires" CONTENT="-1">
 <title>酒店列表</title>
 <include file="Public:top" />
+<script>
+$(document).ready(function(){ 
+	var hotel_type = $("#hotel_type").val();
+	if(!hotel_type){
+		alert('类型错误');
+        return ;
+	}
+	$("#allcity").change(function(){
+        var  city = $("#allcity").val();
+        $.ajax({
+        	type: "POST",
+            url: "?s=/Home/SphotelList/allcity",
+            data: {hotel_type:$("#hotel_type").val(), city:$("#allcity").val()},
+            dataType: "html",
+            success : function(data){
+                $(".m_jdlist").empty();
+                $(".m_jdlist").html(data);
+                //alert(data);
+            },
+            error  : function(){
+                alert('请求错误');
+            }
+        })
+	  
+	})
+})
+</script>
 </head>
-
 <body>
 <!--fly_css-->
 <div >
@@ -24,11 +50,12 @@
 <div class="blank8"></div>
 <if condition="($allcity neq '')" >
 <div class="m_nav f34">
-<select>
-<volist name="allcity" id="voc" key="k" >
-<option>{$voc.hotel_cs}</option>
+<select id="allcity">
+<volist  name="allcity" id="voc" key="k" >
+    <option value="{$voc.hotel_cs}">{$voc.hotel_cs}</option>
 </volist>
 </select>
+<input type="hidden" id="hotel_type" name="hotel_type" value="{$hotel_type}"  />
 </div>
 <div class="blank8"></div>
 </if>

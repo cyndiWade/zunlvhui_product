@@ -43,7 +43,15 @@ class SphotelListAction extends HomeBaseAction{
 			  );
 		  }else{
 		  	$allcity  = $Hotel->get_city(); 
-		  	$this->assign('allcity','');
+		  	foreach($allcity as $key=>$val){
+		  		$hc =  urlencode($val['hotel_cs']);
+		  		$hc = passport_encrypt($hc,'hotel');
+		  		$hc = str_replace('%','ABCDE',$hc);		
+		  		$allcity[$key]['v']  = $hc;
+		  	}
+		  	//echo '<pre>';print_R($allcity);echo '</pre>';exit;
+		  	$this->assign('hotel_type',$hotel_type);
+		  	$this->assign('allcity',$allcity);
 		  } 
 		  
 		  if($hotel_type !=0)$where['hotel_type'] = $hotel_type;
@@ -463,6 +471,48 @@ class SphotelListAction extends HomeBaseAction{
 	  		
 	  	}
  
+	  }
+	  
+	  //选择城市显示该城市下面的酒店
+	  public function allcity(){
+	    
+	  	   
+	      $Hotel      = $this->db['Sphotel']; // 酒店
+	  	  $HotelRoom  = $this->db['SphotelRoom'];
+	  	  $Gift       = $this->db['Gift'];
+	  	  $RoomSchedule = $this->db['SproomSchedule'];
+		  $city         =  $this->_post('city');
+	  	  $hotel_type   =  $this->_post('hotel_type');
+		  $where =array(
+			  'hotel_type'=>$hotel_type,
+			  'hotel_cs'=>$city,
+		  );
+	      $list = $Hotel->get_hotels($where);
+	      
+	      if($list == true){
+	      	 $hotel_ids = getArrayByField($list,'id'); // 获得酒店的id
+	      	 $rooms    = $HotelRoom->get_price_room(array('hotel_id'=>array('in',$hotel_ids) )); 
+		     
+	      	 $room_sort     = regroupKey($rooms,'hotel_id');  
+	      	 
+	         foreach ($list AS $key=>$val) {
+	         	//$HotelRoom->get_hotel_room($val['hotel_id'],2);
+	         	$list[$key]['lb']           = $Gift->all_data(array('id'=>array('in',$val['hotel_lp'])));
+				$list[$key]['img']          = $Hotel->get_img($val['id'],4);
+				$list[$key]['roomtype']     = $HotelRoom->get_hotel_room($val['id'],2);//$room_sort[$val['id']];
+				$list[$key]['spot_payment'] = $list[$key]['roomtype'][0]['mspot_payment'];//!empty($room_sort[$val['id']][0]['spot_payment']) ? $room_sort[$val['id']][0]['prepay'] : C('NOT_PRICE'); // 微信支付
+				$list[$key]['prepay']       = $list[$key]['roomtype'][0]['mprepay'];//!empty($room_sort[$val['id']][0]['prepay']) ? $room_sort[$val['id']][0]['prepay'] : C('NOT_PRICE') ;//到店支付
+			 }
+	      }else{
+	          return  array();
+	      }
+	      //echo '<pre>';print_R($list);echo '</pre>';exit;
+	      $html = array(
+			  'list'     => $list,
+		  );
+		  
+	      $this->assign('html',$html);
+	      $this->display();
 	  }
 
 }
