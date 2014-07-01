@@ -11,12 +11,12 @@
 <include file="Public:top" />
 <script>
 $(document).ready(function(){ 
-	var hotel_type = $("#hotel_type").val();
-	if(!hotel_type){
-		alert('类型错误');
-        return ;
-	}
 	$("#allcity").change(function(){
+		var hotel_type = $("#hotel_type").val();
+		if(!hotel_type){
+			alert('类型错误');
+	        return ;
+		}
         var  city = $("#allcity").val();
         $.ajax({
         	type: "POST",
