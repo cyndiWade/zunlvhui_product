@@ -323,12 +323,12 @@ $custom= array (
 
 
 //域名配置默认模块
-$domain_name = $_SERVER['SERVER_NAME'];
+/*$domain_name = $_SERVER['SERVER_NAME'];
 if ($domain_name == 'admin.zunlvhui.com.cn') {
 	$system['DEFAULT_GROUP'] = 'Admin';
 } else if ($domain_name == 'hotel.zunlvhui.com.cn') {
 	$system['DEFAULT_GROUP'] = 'Hotel';
-}
+}*/
 
 
 return array_merge($db_config,$system,$custom);
